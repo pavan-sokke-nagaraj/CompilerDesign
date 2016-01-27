@@ -1,0 +1,24 @@
+if then else for class int float get put return
+= == <> < <= > >=
++ - * / =
+and or not
+( ) [ ] { }
+; , .  
+//this is a single line comment
+/*
+	This is a multiple
+	line comment
+*/
+
+/* This is a 
+	/*
+		nested multiple
+		/*
+			line
+		*/
+		comments
+	*/
+	End of multiple nested comments
+*/
+// expected errors special characters
+~ @ # $ % ^ & "" ' ' ? : 

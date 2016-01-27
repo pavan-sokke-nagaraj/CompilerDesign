@@ -2,8 +2,14 @@ package lexer;
 
 public class Token {
 	private String tokenType;
-	private String lexeme;
+	private String value;
 	private int position;
+
+	public Token(int position, String value, String tokenType) {
+		this.position = position;
+		this.value = value;
+		this.tokenType = tokenType;
+	}
 
 	public String getTokenType() {
 		return tokenType;
@@ -13,12 +19,12 @@ public class Token {
 		this.tokenType = tokenType;
 	}
 
-	public String getLexeme() {
-		return lexeme;
+	public String getValue() {
+		return value;
 	}
 
-	public void setLexeme(String lexeme) {
-		this.lexeme = lexeme;
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 	public int getPosition() {
@@ -27,6 +33,12 @@ public class Token {
 
 	public void setPosition(int position) {
 		this.position = position;
+	}
+
+	public String toString() {
+		 return "\nLINE:\t" + position + "\tVALUE:\t" + value + "\t\tTOKEN:\t"
+		 + tokenType;
+//		return position + "\t" + value + "\t" + tokenType;
 	}
 
 }

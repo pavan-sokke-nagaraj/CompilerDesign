@@ -2,21 +2,32 @@ package lexer;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.StreamTokenizer;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
 public class Lexer {
-	
-	static String fileName = "Input.java";
-	Vector<Token> tokens;
+
+	static String inputFile = "INPUT.txt";
+	static String tokenFile = "TOKEN.txt";
+	static String errorFile = "ERROR.txt";
+	static String commentFile = "COMMENT.txt";
+
+	private static Vector<Token> tokens;
+	private static Vector<Token> errors;
+	private static Vector<Token> comments;
 
 	public static void main(String[] args) {
 
+		tokens = new Vector<Token>();
+		errors = new Vector<Token>();
+		comments = new Vector<Token>();
 		try {
-			
-			FileReader fileReader = new FileReader(fileName);
+
+			FileReader fileReader = new FileReader(inputFile);
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			StreamTokenizer st = new StreamTokenizer(bufferedReader);
 
@@ -46,25 +57,15 @@ public class Lexer {
 				case StreamTokenizer.TT_WORD:
 					tokenizeWords(st);
 					break;
-				case StreamTokenizer.TT_NUMBER:
-					// tokenizeNumber(st);
-					break;
 				case StreamTokenizer.TT_EOF:
-					System.out.println("End of File encountered.");
+					System.out.println("END OF FILE ENCOUNTERED.");
 					eof = true;
 					break;
 				case StreamTokenizer.TT_EOL:
-					// System.out.println("End of Line encountered.");
 					break;
 				default:
 					char tokenValue = (char) token;
-					// System.out.println("|"+ tokenValue + "|");
-					// if (tokenValue > 31) {
 					tokenizeOrdinarChars(st, tokenValue);
-					// }
-					// if (token == '!') {
-					// eof = true;
-					// }
 				}
 			} while (!eof);
 
@@ -72,47 +73,75 @@ public class Lexer {
 			ex.printStackTrace();
 		}
 
+		writeToFile(tokens, tokenFile);
+		writeToFile(errors, errorFile);
+		writeToFile(comments, commentFile);
+
+	}
+
+	private static void writeToFile(Vector<Token> tokens, String fileName) {
+		PrintWriter out;
+		try {
+			out = new PrintWriter(new FileWriter(fileName));
+			out.println(tokens);
+			// for(Token token:tokens){
+			// out.println(token);
+			// }
+			out.flush();
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	private static void tokenizeOrdinarChars(StreamTokenizer st, char tokenValue) {
-		// System.out.println(tokenValue + "\t" + st.lineno());
 		switch (tokenValue) {
 		case TokenType.T_OP_ADD:
-			System.out.println("LINE:\t" + st.lineno() + "\tLEXEME\t"
-					+ tokenValue + "\tTOKEN:\tADDITION OPERATOR");
+			tokens.add(new Token(st.lineno(), "" + tokenValue, "T_OP_ADD"));
+			System.out.println("LINE:\t" + st.lineno() + "\tLEXEME:\t"
+					+ tokenValue + "\tTOKEN:\tT_OP_ADD");
 			break;
 		case TokenType.T_OP_SUB:
-			System.out.println("LINE:\t" + st.lineno() + "\tLEXEME\t"
-					+ tokenValue + "\tTOKEN:\tSUBSTRACTION OPERATOR");
+			tokens.add(new Token(st.lineno(), "" + tokenValue, "T_OP_SUB"));
+			System.out.println("LINE:\t" + st.lineno() + "\tLEXEME:\t"
+					+ tokenValue + "\tTOKEN:\tT_OP_SUB");
 			break;
 		case TokenType.T_OP_MUL:
-			System.out.println("LINE:\t" + st.lineno() + "\tLEXEME\t"
-					+ tokenValue + "\tTOKEN:\tMULTIPLICATION OPERATOR");
+			tokens.add(new Token(st.lineno(), "" + tokenValue, "T_OP_MUL"));
+			System.out.println("LINE:\t" + st.lineno() + "\tLEXEME:\t"
+					+ tokenValue + "\tTOKEN:\tT_OP_MUL");
 			break;
 		case TokenType.T_OP_DIV:
 			int divLineNum = st.lineno();
 			try {
 				char nextToken = (char) st.nextToken();
 				if (nextToken == TokenType.T_OP_DIV) {
-					System.out.println("LINE:\t" + divLineNum + "\tLEXEME\t"
-							+ "//" + "\tTOKEN:\tSINGLE LINE COMMENT");
+					comments.add(new Token(st.lineno(), "//",
+							"T_SINGLE_LINE_COMMENT"));
+					System.out.println("LINE:\t" + divLineNum + "\tLEXEME:\t"
+							+ "//" + "\tTOKEN:\tT_SINGLE_LINE_COMMENT");
 					while (st.nextToken() != StreamTokenizer.TT_EOL) {
 					}
 				} else if (nextToken == TokenType.T_OP_MUL) {
-					System.out.println("LINE:\t" + divLineNum + "\tLEXEME\t"
-							+ "/*" + "\tTOKEN:\tMULTIPLE LINE COMMENT BEGIN");
+					comments.add(new Token(st.lineno(), "/*",
+							"T_MULTIPLE_LINE_COMMENT_START"));
+					System.out.println("LINE:\t" + divLineNum + "\tLEXEME:\t"
+							+ "/*" + "\tTOKEN:\tT_MULTIPLE_LINE_COMMENT_START");
 					int commmentCount = 1;
 					char n1Token = (char) st.nextToken();
 					char n2Token = (char) st.nextToken();
-					// System.out.println(n1Token + "\t" + n2Token);
 					while (commmentCount != 0) {
 						if (n1Token == '/' && n2Token == '*') {
+							comments.add(new Token(st.lineno(), "/*",
+									"T_NESTED_MULTIPLE_LINE_COMMENT_START LEVEL:\t"
+											+ commmentCount));
 							System.out
 									.println("LINE:\t"
 											+ st.lineno()
-											+ "\tLEXEME\t"
+											+ "\tLEXEME:\t"
 											+ "/*"
-											+ "\tTOKEN:\tNESTED MULTIPLE LINE COMMENT BEGIN - LEVEL:\t"
+											+ "\tTOKEN:\tT_NESTED_MULTIPLE_LINE_COMMENT_START LEVEL:\t"
 											+ commmentCount);
 							commmentCount++;
 							n1Token = (char) st.nextToken();
@@ -120,20 +149,25 @@ public class Lexer {
 						} else if (n1Token == '*' && n2Token == '/') {
 							commmentCount--;
 							if (commmentCount == 0) {
+								comments.add(new Token(st.lineno(), "*/",
+										"T_MULTIPLE_LINE_COMMENT_END"));
 								System.out
 										.println("LINE:\t"
 												+ st.lineno()
-												+ "\tLEXEME\t"
+												+ "\tLEXEME:\t"
 												+ "*/"
-												+ "\tTOKEN:\tMULTIPLE LINE COMMENT END");
+												+ "\tTOKEN:\tT_MULTIPLE_LINE_COMMENT_END");
 								break;
 							} else {
+								comments.add(new Token(st.lineno(), "*/",
+										"T_NESTED_MULTIPLE_LINE_COMMENT_END LEVEL:\t"
+												+ commmentCount));
 								System.out
 										.println("LINE:\t"
 												+ st.lineno()
-												+ "\tLEXEME\t"
+												+ "\tLEXEME:\t"
 												+ "*/"
-												+ "\tTOKEN:\tNESTED MULTIPLE LINE COMMENT END - LEVEL:\t"
+												+ "\tTOKEN:\tT_NESTED_MULTIPLE_LINE_COMMENT_END LEVEL:\t"
 												+ commmentCount);
 							}
 							n1Token = (char) st.nextToken();
@@ -141,10 +175,15 @@ public class Lexer {
 						} else if (n2Token == (char) StreamTokenizer.TT_EOF
 								|| n1Token == (char) StreamTokenizer.TT_EOF) {
 							if (commmentCount != 0) {
+								errors.add(new Token(
+										st.lineno(),
+										"END OF FILE ENCOUNTERED",
+										commmentCount
+												+ "\tMULIPLE LINE COMMENTS ARE NOT ENDED"));
 								System.out
-										.println("ERROR:\tEnd Of File Occured.\t"
+										.println("ERROR:\tEND OF FILE ENCOUNTERED.\t"
 												+ commmentCount
-												+ " MULIPLE LINE COMMENTS ARE NOT ENDED");
+												+ "\tMULIPLE LINE COMMENTS ARE NOT ENDED");
 							} else {
 								System.out
 										.println("All Is Well Call 911...!!!");
@@ -155,30 +194,30 @@ public class Lexer {
 							n2Token = (char) st.nextToken();
 						}
 					}
-					;
 				} else {
-					System.out.println("LINE:\t" + divLineNum + "\tLEXEME\t"
-							+ tokenValue
-							+ "\tTOKEN:\tASSIGNMENT EQUALS OPERATOR");
+					tokens.add(new Token(divLineNum, "" + tokenValue,
+							"T_OP_DIV"));
+					System.out.println("LINE:\t" + divLineNum + "\tLEXEME:\t"
+							+ tokenValue + "\tTOKEN:\tT_OP_DIV");
 					st.pushBack();
 				}
 			} catch (IOException e) {
 				st.pushBack();
 				e.printStackTrace();
 			}
-			// System.out.println("LINE:\t" + st.lineno() + "\tLEXEME\t" +
-			// tokenValue + "\tTOKEN:\tDIVISION OPERATOR");
 			break;
 		case TokenType.T_OP_EQUAL:
 			try {
 				char nextToken = (char) st.nextToken();
 				if (nextToken == TokenType.T_OP_EQUAL) {
-					System.out.println("LINE:\t" + st.lineno() + "\tLEXEME\t"
-							+ "==" + "\tTOKEN:\tRELATIONAL EQUALS OPERATOR");
+					tokens.add(new Token(st.lineno(), "==", "T_OP_REL_EQUAL"));
+					System.out.println("LINE:\t" + st.lineno() + "\tLEXEME:\t"
+							+ "==" + "\tTOKEN:\tT_OP_REL_EQUAL");
 				} else {
-					System.out.println("LINE:\t" + st.lineno() + "\tLEXEME\t"
-							+ tokenValue
-							+ "\tTOKEN:\tASSIGNMENT EQUALS OPERATOR");
+					tokens.add(new Token(st.lineno(), "" + tokenValue,
+							"T_OP_ASSIGN_EQUAL"));
+					System.out.println("LINE:\t" + st.lineno() + "\tLEXEME:\t"
+							+ tokenValue + "\tTOKEN:\tT_OP_ASSIGN_EQUAL");
 					st.pushBack();
 				}
 			} catch (IOException e) {
@@ -190,19 +229,18 @@ public class Lexer {
 			try {
 				char nextToken = (char) st.nextToken();
 				if (nextToken == TokenType.T_OP_GT) {
-					System.out.println("LINE:\t" + st.lineno() + "\tLEXEME\t"
-							+ "<>" + "\tTOKEN:\tRELATIONALEQUALS OPERATOR");
+					tokens.add(new Token(st.lineno(), "<>", "T_OP_REL_EQUAL"));
+					System.out.println("LINE:\t" + st.lineno() + "\tLEXEME:\t"
+							+ "<>" + "\tTOKEN:\tT_OP_REL_EQUAL");
 				} else if (nextToken == TokenType.T_OP_EQUAL) {
-					System.out
-							.println("LINE:\t"
-									+ st.lineno()
-									+ "\tLEXEME\t"
-									+ "<="
-									+ "\tTOKEN:\tRELATIONAL LESS THAN OR EQUALS OPERATOR");
+					tokens.add(new Token(st.lineno(), "<=",
+							"T_OP_REL_LESSTHAN_EQUAL"));
+					System.out.println("LINE:\t" + st.lineno() + "\tLEXEME:\t"
+							+ "<=" + "\tTOKEN:\tT_OP_REL_LESSTHAN_EQUAL");
 				} else {
-					System.out.println("LINE:\t" + st.lineno() + "\tLEXEME\t"
-							+ tokenValue
-							+ "\tTOKEN:\tRELATIONAL LESS THAN OPERATOR");
+					tokens.add(new Token(st.lineno(), "<", "T_OP_REL_LESSTHAN"));
+					System.out.println("LINE:\t" + st.lineno() + "\tLEXEME:\t"
+							+ tokenValue + "\tTOKEN:\tT_OP_REL_LESSTHAN");
 					st.pushBack();
 				}
 			} catch (IOException e) {
@@ -214,16 +252,15 @@ public class Lexer {
 			try {
 				char nextToken = (char) st.nextToken();
 				if (nextToken == TokenType.T_OP_EQUAL) {
-					System.out
-							.println("LINE:\t"
-									+ st.lineno()
-									+ "\tLEXEME\t"
-									+ ">="
-									+ "\tTOKEN:\tRELATIONAL GREATER THAN OR EQUALS OPERATOR");
+					tokens.add(new Token(st.lineno(), ">=",
+							"T_OP_REL_GREATERTHAN_EQUAL"));
+					System.out.println("LINE:\t" + st.lineno() + "\tLEXEME:\t"
+							+ ">=" + "\tTOKEN:\tT_OP_REL_GREATERTHAN_EQUAL");
 				} else {
-					System.out.println("LINE:\t" + st.lineno() + "\tLEXEME\t"
-							+ tokenValue
-							+ "\tTOKEN:\tRELATIONAL GREATER THAN OPERATOR");
+					tokens.add(new Token(st.lineno(), "" + tokenValue,
+							"T_OP_REL_GREATERTHAN"));
+					System.out.println("LINE:\t" + st.lineno() + "\tLEXEME:\t"
+							+ tokenValue + "\tTOKEN:\tT_OP_REL_GREATERTHAN");
 					st.pushBack();
 				}
 			} catch (IOException e) {
@@ -231,43 +268,46 @@ public class Lexer {
 				e.printStackTrace();
 			}
 			break;
-		case TokenType.T_DEL_R_OP:
-			System.out.println("LINE:\t" + st.lineno() + "\tLEXEME\t"
-					+ tokenValue + "\tTOKEN:\tDELIMETER"
-					+ "\tOPEN ROUND PARANTHESIS");
+		case TokenType.T_DEL_R_LPAREN:
+			tokens.add(new Token(st.lineno(), "" + tokenValue, "T_DEL_R_LPAREN"));
+			System.out.println("LINE:\t" + st.lineno() + "\tLEXEME:\t"
+					+ tokenValue + "\tTOKEN:\tT_DEL_R_LPAREN");
 			break;
-		case TokenType.T_DEL_R_CL:
-			System.out.println("LINE:\t" + st.lineno() + "\tLEXEME\t"
-					+ tokenValue + "\tTOKEN:\tDELIMETER"
-					+ "\tCLOSE ROUND PARANTHESIS");
+		case TokenType.T_DEL_R_RPAREN:
+			tokens.add(new Token(st.lineno(), "" + tokenValue, "T_DEL_R_RPAREN"));
+			System.out.println("LINE:\t" + st.lineno() + "\tLEXEME:\t"
+					+ tokenValue + "\tTOKEN:\tT_DEL_R_RPAREN");
 			break;
-		case TokenType.T_DEL_S_OP:
-			System.out.println("LINE:\t" + st.lineno() + "\tLEXEME\t"
-					+ tokenValue + "\tTOKEN:\tDELIMETER"
-					+ "\tOPEN SQUARE PARANTHESIS");
+		case TokenType.T_DEL_S_LPAREN:
+			tokens.add(new Token(st.lineno(), "" + tokenValue, "T_DEL_S_LPAREN"));
+			System.out.println("LINE:\t" + st.lineno() + "\tLEXEME:\t"
+					+ tokenValue + "\tTOKEN:\tT_DEL_S_LPAREN");
 			break;
-		case TokenType.T_DEL_S_CL:
-			System.out.println("LINE:\t" + st.lineno() + "\tLEXEME\t"
-					+ tokenValue + "\tTOKEN:\tDELIMETER"
-					+ "\tCLOSE SQUARE PARANTHESIS");
+		case TokenType.T_DEL_S_RPAREN:
+			tokens.add(new Token(st.lineno(), "" + tokenValue, "T_DEL_S_RPAREN"));
+			System.out.println("LINE:\t" + st.lineno() + "\tLEXEME:\t"
+					+ tokenValue + "\tTOKEN:\tT_DEL_S_RPAREN");
 			break;
-		case TokenType.T_DEL_C_OP:
-			System.out.println("LINE:\t" + st.lineno() + "\tLEXEME\t"
-					+ tokenValue + "\tTOKEN:\tDELIMETER"
-					+ "\tOPEN CURLY PARANTHESIS");
+		case TokenType.T_DEL_C_LPAREN:
+			tokens.add(new Token(st.lineno(), "" + tokenValue, "T_DEL_C_LPAREN"));
+			System.out.println("LINE:\t" + st.lineno() + "\tLEXEME:\t"
+					+ tokenValue + "\tTOKEN:\tT_DEL_C_LPAREN");
 			break;
-		case TokenType.T_DEL_C_CL:
-			System.out.println("LINE:\t" + st.lineno() + "\tLEXEME\t"
-					+ tokenValue + "\tTOKEN:\tDELIMETER"
-					+ "\tCLOSE CURLY PARANTHESIS");
+		case TokenType.T_DEL_C_RPAREN:
+			tokens.add(new Token(st.lineno(), "" + tokenValue, "T_DEL_C_RPAREN"));
+			System.out.println("LINE:\t" + st.lineno() + "\tLEXEME:\t"
+					+ tokenValue + "\tTOKEN:\tT_DEL_C_RPAREN");
 			break;
 		case TokenType.T_DEL_SEMICOLON:
-			System.out.println("LINE:\t" + st.lineno() + "\tLEXEME\t"
-					+ tokenValue + "\tTOKEN:\tDELIMETER" + "\tSEMI COLON");
+			tokens.add(new Token(st.lineno(), "" + tokenValue,
+					"T_DEL_SEMICOLON"));
+			System.out.println("LINE:\t" + st.lineno() + "\tLEXEME:\t"
+					+ tokenValue + "\tTOKEN:\tT_DEL_SEMICOLON");
 			break;
 		case TokenType.T_DEL_COMMA:
-			System.out.println("LINE:\t" + st.lineno() + "\tLEXEME\t"
-					+ tokenValue + "\tTOKEN:\tDELIMETER" + "\tCOMMA");
+			tokens.add(new Token(st.lineno(), "" + tokenValue, "T_DEL_COMMA"));
+			System.out.println("LINE:\t" + st.lineno() + "\tLEXEME:\t"
+					+ tokenValue + "\tTOKEN:\tT_DEL_COMMA");
 			break;
 		case TokenType.T_DEL_DOT:
 			int dotLineNum = st.lineno();
@@ -279,43 +319,54 @@ public class Lexer {
 					String idPattern = "([a-z]+[a-z0-9]*)";
 
 					if (Pattern.matches(intPattern, nextStr)) {
-						String floatVal = tokenValue + nextStr;
+						String fractionVal = tokenValue + nextStr;
+						tokens.add(new Token(dotLineNum, fractionVal,
+								"T_FRACTION"));
 						System.out.println("LINE:\t" + dotLineNum
-								+ "\tLEXEME\t" + floatVal
-								+ "\tTOKEN:\tNUMBER - FLOAT");
+								+ "\tLEXEME:\t" + fractionVal
+								+ "\tTOKEN:\tT_FRACTION");
 					} else if (Pattern.matches(idPattern, nextStr)) {
+						tokens.add(new Token(dotLineNum, "" + tokenValue,
+								"T_DEL_DOT"));
 						System.out.println("LINE:\t" + dotLineNum
-								+ "\tLEXEME\t" + tokenValue
-								+ "\tTOKEN:\tDELIMETER" + "\tDOT");
+								+ "\tLEXEME:\t" + tokenValue
+								+ "\tTOKEN:\tT_DEL_DOT");
 						st.pushBack();
 					} else {
 						int index = splitStrTokens(nextStr);
 						String intString = nextStr.substring(0, index);
-						String floatVal = tokenValue + intString;
-						System.out.println("LINE:\t" + dotLineNum
-								+ "\tLEXEME\t" + floatVal
-								+ "\tTOKEN:\tNUMBER - FLOAT");
+						String fractionVal = tokenValue + intString;
 						String idString = nextStr.substring(index,
 								nextStr.length());
+						tokens.add(new Token(dotLineNum, fractionVal,
+								"T_FRACTION"));
+						tokens.add(new Token(dotLineNum, idString,
+								"T_IDENTIFIER"));
 						System.out.println("LINE:\t" + dotLineNum
-								+ "\tLEXEME\t" + idString
-								+ "\tTOKEN:\tIDENTIFIER");
+								+ "\tLEXEME:\t" + fractionVal
+								+ "\tTOKEN:\tT_FRACTION");
+						System.out.println("LINE:\t" + dotLineNum
+								+ "\tLEXEME:\t" + idString
+								+ "\tTOKEN:\tT_IDENTIFIER");
 					}
 				} else {
-					System.out.println("LINE:\t" + dotLineNum + "\tLEXEME\t"
-							+ tokenValue + "\tTOKEN:\tDELIMETER" + "\tDOT");
+					tokens.add(new Token(dotLineNum, "" + tokenValue,
+							"T_DEL_DOT"));
+					System.out.println("LINE:\t" + dotLineNum + "\tLEXEME:\t"
+							+ tokenValue + "\tTOKEN:\tT_DEL_DOT");
 					st.pushBack();
 				}
 			} catch (IOException e) {
-				// System.out.println("LOL");
 				st.pushBack();
 				e.printStackTrace();
 			}
 			break;
 		default:
-			if (tokenValue > 32)
-				System.out.println("LINE:\t" + st.lineno() + "\tLEXEME\t"
+			if (tokenValue > 32) {
+				errors.add(new Token(st.lineno(), "" + tokenValue, "ERROR"));
+				System.out.println("LINE:\t" + st.lineno() + "\tLEXEME:\t"
 						+ tokenValue + "\tTOKEN:\tERROR");
+			}
 		}
 	}
 
@@ -327,60 +378,71 @@ public class Lexer {
 		String idPattern = "([a-z]+[a-z0-9]*)";
 
 		if (TokenType.RESERVE_WORD.contains(strValue)) {
-			System.out.println("LINE:\t" + lineNum + "\tLEXEME\t" + strValue
-					+ "\tTOKEN:\tRESERVE WORD");
+			tokens.add(new Token(lineNum, strValue, "T_RESERVE_WORD"));
+			System.out.println("LINE:\t" + lineNum + "\tLEXEME:\t" + strValue
+					+ "\tTOKEN:\tT_RESERVE_WORD");
 		} else if (strValue.equals(TokenType.T_OP_AND)) {
-			System.out.println("LINE:\t" + lineNum + "\tLEXEME\t" + strValue
-					+ "\tTOKEN:\tLOGICAL AND");
+			tokens.add(new Token(lineNum, strValue, "T_LOGICAL_AND"));
+			System.out.println("LINE:\t" + lineNum + "\tLEXEME:\t" + strValue
+					+ "\tTOKEN:\tT_LOGICAL_AND");
 		} else if (strValue.equals(TokenType.T_OP_OR)) {
-			System.out.println("LINE:\t" + lineNum + "\tLEXEME\t" + strValue
-					+ "\tTOKEN:\tLOGICAL OR");
+			tokens.add(new Token(lineNum, strValue, "T_LOGICAL_OR"));
+			System.out.println("LINE:\t" + lineNum + "\tLEXEME:\t" + strValue
+					+ "\tTOKEN:\tT_LOGICAL_OR");
 		} else if (strValue.equals(TokenType.T_OP_NOT)) {
-			System.out.println("LINE:\t" + lineNum + "\tLEXEME\t" + strValue
-					+ "\tTOKEN:\tLOGICAL NOT");
+			tokens.add(new Token(lineNum, strValue, "T_LOGICAL_NOT"));
+			System.out.println("LINE:\t" + lineNum + "\tLEXEME:\t" + strValue
+					+ "\tTOKEN:\tT_LOGICAL_NOT");
 		} else if (Pattern.matches(idPattern, strValue)) {
-			System.out.println("LINE:\t" + lineNum + "\tLEXEME\t" + strValue
-					+ "\tTOKEN:\tIDENTIFIER");
+			tokens.add(new Token(lineNum, strValue, "T_IDENTIFIER"));
+			System.out.println("LINE:\t" + lineNum + "\tLEXEME:\t" + strValue
+					+ "\tTOKEN:\tT_IDENTIFIER");
 		} else if (Pattern.matches(intPattern, strValue)) {
 			try {
 				char dotToken = (char) st.nextToken();
-				// System.out.println(nextToken);
 				if (dotToken == '.') {
 					if (st.nextToken() == StreamTokenizer.TT_WORD) {
 						String nextStr = st.sval;
-						// System.out.println(nextStr);
 						if (nextStr.matches("([a-z][a-z0-9]*)")) {
 							st.pushBack();
+							errors.add(new Token(lineNum, strValue, "ERROR"));
 							System.out.println("LINE:\t" + lineNum
-									+ "\tLEXEME\t" + strValue + dotToken
+									+ "\tLEXEME:\t" + strValue + dotToken
 									+ "\tTOKEN:\tERROR");
 						} else if (Pattern.matches(intPattern, nextStr)) {
 							String floatVal = strValue + dotToken + nextStr;
+							tokens.add(new Token(lineNum, floatVal, "T_FLOAT"));
 							System.out.println("LINE:\t" + lineNum
-									+ "\tLEXEME\t" + floatVal
-									+ "\tTOKEN:\tNUMBER - FLOAT");
+									+ "\tLEXEME:\t" + floatVal
+									+ "\tTOKEN:\tT_FLOAT");
 						} else {
 							int index = splitStrTokens(nextStr);
 							String intString = nextStr.substring(0, index);
 							String floatVal = strValue + dotToken + intString;
-							System.out.println("LINE:\t" + lineNum
-									+ "\tLEXEME\t" + floatVal
-									+ "\tTOKEN:\tNUMBER - FLOAT");
 							String idString = nextStr.substring(index,
 									nextStr.length());
+							tokens.add(new Token(lineNum, floatVal, "T_FLOAT"));
+							tokens.add(new Token(lineNum, idString,
+									"T_IDENTIFIER"));
 							System.out.println("LINE:\t" + lineNum
-									+ "\tLEXEME\t" + idString
-									+ "\tTOKEN:\tIDENTIFIER");
+									+ "\tLEXEME:\t" + floatVal
+									+ "\tTOKEN:\tT_FLOAT");
+							System.out.println("LINE:\t" + lineNum
+									+ "\tLEXEME:\t" + idString
+									+ "\tTOKEN:\tT_IDENTIFIER");
 						}
 					} else {
 						st.pushBack();
-						System.out.println("LINE:\t" + lineNum + "\tLEXEME\t"
-								+ strValue + dotToken + "\tTOKEN:\tERROR");
+						String errorStr = strValue + dotToken;
+						errors.add(new Token(lineNum, errorStr, "ERROR"));
+						System.out.println("LINE:\t" + lineNum + "\tLEXEME:\t"
+								+ errorStr + "\tTOKEN:\tERROR");
 					}
 				} else {
 					st.pushBack();
-					System.out.println("LINE:\t" + st.lineno() + "\tLEXEME\t"
-							+ strValue + "\tTOKEN:\tNUMBER - INTEGER");
+					tokens.add(new Token(st.lineno(), strValue, "T_INTEGER"));
+					System.out.println("LINE:\t" + st.lineno() + "\tLEXEME:\t"
+							+ strValue + "\tTOKEN:\tT_INTEGER");
 				}
 			} catch (IOException e) {
 				st.pushBack();
@@ -388,14 +450,14 @@ public class Lexer {
 			}
 		} else {
 			int index = splitStrTokens(strValue);
-			// System.out.println(index);
 			String intString = strValue.substring(0, index);
-			System.out.println("LINE:\t" + lineNum + "\tLEXEME\t" + intString
-					+ "\tTOKEN:\tINTEGER");
 			String idString = strValue.substring(index, strValue.length());
-			System.out.println("LINE:\t" + lineNum + "\tLEXEME\t" + idString
-					+ "\tTOKEN:\tIDENTIFIER");
-			// System.out.println("tokenizeWords\t" + strValue + "\t");
+			tokens.add(new Token(lineNum, intString, "T_INTEGER"));
+			tokens.add(new Token(lineNum, idString, "T_IDENTIFIER"));
+			System.out.println("LINE:\t" + lineNum + "\tLEXEME:\t" + intString
+					+ "\tTOKEN:\tT_INTEGER");
+			System.out.println("LINE:\t" + lineNum + "\tLEXEME:\t" + idString
+					+ "\tTOKEN:\tT_IDENTIFIER");
 		}
 	}
 

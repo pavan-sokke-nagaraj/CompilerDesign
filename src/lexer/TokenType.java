@@ -24,12 +24,12 @@ public class TokenType {
 	public final static char T_OP_GT = '>';
 	public final static char T_OP_LT = '<';
 
-	public final static char T_DEL_R_OP = '(';
-	public final static char T_DEL_R_CL = ')';
-	public final static char T_DEL_S_OP = '[';
-	public final static char T_DEL_S_CL = ']';
-	public final static char T_DEL_C_OP = '{';
-	public final static char T_DEL_C_CL = '}';
+	public final static char T_DEL_R_LPAREN = '(';
+	public final static char T_DEL_R_RPAREN = ')';
+	public final static char T_DEL_S_LPAREN = '[';
+	public final static char T_DEL_S_RPAREN = ']';
+	public final static char T_DEL_C_LPAREN = '{';
+	public final static char T_DEL_C_RPAREN = '}';
 	public final static char T_DEL_SEMICOLON = ';';
 	public final static char T_DEL_COMMA = ',';
 	public final static char T_DEL_DOT = '.';
