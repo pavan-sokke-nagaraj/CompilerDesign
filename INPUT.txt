@@ -1,3 +1,6 @@
+
+if_
+if.else
 if then else for class int float get put return
 = == <> < <= > >=
 + - * / =
@@ -21,4 +24,37 @@ and or not
 	End of multiple nested comments
 */
 // expected errors special characters
-~ @ # $ % ^ & "" ' ' ? : 
+~ @ # $ % ^ & "" ' ' ? : _ \
+
+//numbers int / float /fractioin
+0
+1
+100
+100.00000
+100.00001
+.
+.0
+.010
+
+// identifiers
+abcd
+abcd1234
+abcd1234abcd
+aa11bb22
+aa11bb22cc
+a1b2c3d4e5
+
+// numbers and identifiers
+111aaa
+111aaa111
+aa22aa22
+
+aa.aa
+aa.11
+.aa
+.11
+11.
+..
+aa.11.aa.11.11.
+11.1a
+.1a

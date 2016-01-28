@@ -21,7 +21,12 @@ public class Lexer {
 	private static Vector<Token> comments;
 
 	public static void main(String[] args) {
+		Lexer lexer = new Lexer();
+		lexer.scanInputFile(inputFile, tokenFile, errorFile,commentFile);
+	}
 
+	public void scanInputFile(String inputFile, String tokenFile,
+			String errorFile, String commentFile) {
 		tokens = new Vector<Token>();
 		errors = new Vector<Token>();
 		comments = new Vector<Token>();
