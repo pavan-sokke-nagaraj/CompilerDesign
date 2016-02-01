@@ -44,8 +44,9 @@ public class Lexer {
 			st.wordChars('0', '9');
 			st.wordChars('a', 'z');
 			st.wordChars('A', 'Z');
+			st.wordChars('_', '_');
 
-			st.lowerCaseMode(true);
+			st.lowerCaseMode(false);
 			// set all characters to space except new line(10)
 			// ascii 9 - TAB issue
 			st.whitespaceChars(0, 9);
@@ -320,7 +321,7 @@ public class Lexer {
 					String nextStr = st.sval;
 
 					String intPattern = "([0-9]+)";
-					String idPattern = "([a-z]+[a-z0-9]*)";
+					String idPattern = "([a-zA-Z]+[_a-zA-Z0-9]*)";
 
 					if (Pattern.matches(intPattern, nextStr)) {
 						String fractionVal = tokenValue + nextStr;
@@ -379,7 +380,7 @@ public class Lexer {
 		int lineNum = st.lineno();
 
 		String intPattern = "([0-9]+)";
-		String idPattern = "([a-z]+[a-z0-9]*)";
+		String idPattern = "([a-zA-Z]+[_a-zA-Z0-9]*)";
 
 		if (TokenType.RESERVE_WORD.contains(strValue)) {
 			tokens.add(new Token(lineNum, strValue, "T_RESERVE_WORD"));
@@ -407,7 +408,7 @@ public class Lexer {
 				if (dotToken == '.') {
 					if (st.nextToken() == StreamTokenizer.TT_WORD) {
 						String nextStr = st.sval;
-						if (nextStr.matches("([a-z][a-z0-9]*)")) {
+						if (nextStr.matches("([a-zA-Z][_a-zA-Z0-9]*)")) {
 							st.pushBack();
 							errors.add(new Token(lineNum, strValue, "ERROR"));
 							System.out.println("LINE:\t" + lineNum
@@ -452,7 +453,18 @@ public class Lexer {
 				st.pushBack();
 				e.printStackTrace();
 			}
-		} else {
+		} else if(strValue.startsWith("_")){
+			int index = 1;
+			String _String = strValue.substring(0, index);
+			String idString = strValue.substring(index, strValue.length());
+			errors.add(new Token(lineNum, _String, "T_ERROR"));
+			tokens.add(new Token(lineNum, idString, "T_IDENTIFIER"));
+			System.out.println("LINE:\t" + lineNum + "\tLEXEME:\t" + _String
+					+ "\tTOKEN:\tT_ERROR");
+			System.out.println("LINE:\t" + lineNum + "\tLEXEME:\t" + idString
+					+ "\tTOKEN:\tT_IDENTIFIER");
+			
+		}else {
 			int index = splitStrTokens(strValue);
 			String intString = strValue.substring(0, index);
 			String idString = strValue.substring(index, strValue.length());
