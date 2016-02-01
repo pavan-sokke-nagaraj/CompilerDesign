@@ -46,7 +46,6 @@ public class Lexer {
 			st.wordChars('A', 'Z');
 
 			st.lowerCaseMode(true);
-
 			// set all characters to space except new line(10)
 			// ascii 9 - TAB issue
 			st.whitespaceChars(0, 9);
