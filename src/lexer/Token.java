@@ -1,10 +1,22 @@
 package lexer;
 
+/**
+ * @author Pavan Sokke Nagaraj <pavansn8@gmail.com> Token Class to save the
+ *         position of the token value of the token and type of token
+ *
+ */
 public class Token {
 	private String tokenType;
 	private String value;
 	private int position;
 
+	/**
+	 * @param position
+	 * @param value
+	 * @param tokenType
+	 *            Initialize found token with the token position, value and type
+	 *            of token
+	 */
 	public Token(int position, String value, String tokenType) {
 		this.position = position;
 		this.value = value;
@@ -36,9 +48,8 @@ public class Token {
 	}
 
 	public String toString() {
-		 return "\nLINE:\t" + position + "\tVALUE:\t" + value + "\t\tTOKEN:\t"
-		 + tokenType;
-//		return position + "\t" + value + "\t" + tokenType;
+		return "\nLINE:\t" + position + "\tVALUE:\t" + value + "\t\tTOKEN:\t" + tokenType;
+		// return position + "\t" + value + "\t" + tokenType;
 	}
 
 }

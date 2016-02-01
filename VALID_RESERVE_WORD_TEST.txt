@@ -30,7 +30,3 @@ and or not
 9.001 11.01 1000.00001
 
 999900.00000010001
-
-// invalid special characters 
-~ @ # $ % ^ &  ?  | " " : ' ' _ 
-

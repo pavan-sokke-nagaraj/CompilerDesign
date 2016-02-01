@@ -2,6 +2,7 @@ package lexer;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Vector;
 
 public class TokenType {
@@ -10,10 +11,17 @@ public class TokenType {
 			"if", "then", "else", "for", "class", "int", "float", "get", "put",
 			"return" });
 	public final static Vector RESERVE_WORD = new Vector(reserveWords);
+	
+	// RESERVE_WORD_MAP
+	 HashMap<String, String> RESERVE_WORD_MAP = new HashMap<String, String>();
+	 
+	 
 
 	public final static String T_OP_AND = "and";
 	public final static String T_OP_OR = "or";
 	public final static String T_OP_NOT = "not";
+	
+	
 
 	public final static char T_OP_ADD = '+';
 	public final static char T_OP_SUB = '-';

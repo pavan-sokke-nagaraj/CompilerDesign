@@ -1,0 +1,12 @@
+// invalid special characters 
+~ @ # $ % ^ &  ?  | " " : ' ' _ 
+
+// invalid decimals
+1. 2. 3. 4. 12. 123.
+1000. 
+200000.
+
+_integer
+_num
+_100
+_100ABCD.101
