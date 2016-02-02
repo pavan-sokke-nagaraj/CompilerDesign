@@ -50,6 +50,8 @@ public class Token {
 	public String toString() {
 		return "\nLINE:\t" + position + "\tVALUE:\t" + value + "\t\tTOKEN:\t" + tokenType;
 		// return position + "\t" + value + "\t" + tokenType;
+		
+		
 	}
 
 }

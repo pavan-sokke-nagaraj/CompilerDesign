@@ -19,7 +19,7 @@ public class Driver {
 	 */
 	public static void main(String[] args) {
 
-		String inputFile = "COMMENTS_TEST.txt";
+		String inputFile = "ALL_TEST.txt";
 		String tokenFile = "TOKEN.txt";
 		String errorFile = "ERROR.txt";
 		String commentFile = "COMMENT.txt";

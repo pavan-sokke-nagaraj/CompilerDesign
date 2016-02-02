@@ -89,20 +89,8 @@ public class Lexer {
 			do {
 
 				int token = st.nextToken();
-				switch (token) {
-				case StreamTokenizer.TT_WORD:
-					tokenizeWords(st);
-					break;
-				case StreamTokenizer.TT_EOF:
-					System.out.println("END OF FILE ENCOUNTERED.");
-					eof = true;
-					break;
-				case StreamTokenizer.TT_EOL:
-					break;
-				default:
-					char tokenValue = (char) token;
-					tokenizeOrdinarChars(st, tokenValue);
-				}
+				eof = tokenize(token, st, eof);
+
 			} while (!eof);
 
 		} catch (Exception ex) {
@@ -114,6 +102,25 @@ public class Lexer {
 		tokenMap.put("ERRORS", errors);
 		tokenMap.put("COMMENTS", comments);
 		return tokenMap;
+	}
+
+	private boolean tokenize(int token, StreamTokenizer st, boolean eof) {
+		switch (token) {
+		case StreamTokenizer.TT_WORD:
+			tokenizeWords(st);
+			break;
+		case StreamTokenizer.TT_EOF:
+			System.out.println("END OF FILE ENCOUNTERED.");
+			eof = true;
+			break;
+		case StreamTokenizer.TT_EOL:
+			break;
+		default:
+			char tokenValue = (char) token;
+			tokenizeOrdinarChars(st, tokenValue);
+		}
+		return eof;
+
 	}
 
 	public static void writeToFile(Vector<Token> tokens, String fileName) {
