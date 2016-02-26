@@ -15,7 +15,7 @@ public class TokenType {
 	// RESERVE_WORD_MAP
 	 HashMap<String, String> RESERVE_WORD_MAP = new HashMap<String, String>();
 	 
-	 
+	 public enum TOKENTYPE { TOKEN, ERROR, COMMENT, EOF };
 
 	public final static String T_OP_AND = "and";
 	public final static String T_OP_OR = "or";

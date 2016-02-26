@@ -1,14 +1,17 @@
 package lexer;
 
+import lexer.TokenType.TOKENTYPE;
+
 /**
  * @author Pavan Sokke Nagaraj <pavansn8@gmail.com> Token Class to save the
  *         position of the token value of the token and type of token
  *
  */
 public class Token {
-	private String tokenType;
+	private String desc;
 	private String value;
 	private int position;
+	private TOKENTYPE tokenType;
 
 	/**
 	 * @param position
@@ -17,18 +20,19 @@ public class Token {
 	 *            Initialize found token with the token position, value and type
 	 *            of token
 	 */
-	public Token(int position, String value, String tokenType) {
+	public Token(int position, String value, String desc, TOKENTYPE tokenType) {
 		this.position = position;
 		this.value = value;
+		this.desc = desc;
 		this.tokenType = tokenType;
 	}
 
-	public String getTokenType() {
-		return tokenType;
+	public String getDesc() {
+		return desc;
 	}
 
-	public void setTokenType(String tokenType) {
-		this.tokenType = tokenType;
+	public void setDesc(String tokenType) {
+		this.desc = tokenType;
 	}
 
 	public String getValue() {
@@ -47,11 +51,17 @@ public class Token {
 		this.position = position;
 	}
 
+	public TOKENTYPE getTokenType() {
+		return tokenType;
+	}
+
+	public void setTokenType(TOKENTYPE tokenType) {
+		this.tokenType = tokenType;
+	}
+
 	public String toString() {
-		return "\nLINE:\t" + position + "\tVALUE:\t" + value + "\t\tTOKEN:\t" + tokenType;
+		return "\nLINE:\t" + position + "\tVALUE:\t" + value + "\t\tTOKEN:\t" + desc;
 		// return position + "\t" + value + "\t" + tokenType;
-		
-		
 	}
 
 }
