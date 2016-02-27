@@ -1,4 +1,4 @@
-package lexer;
+package compiler.lexer;
 
 import java.util.Arrays;
 import java.util.Collection;

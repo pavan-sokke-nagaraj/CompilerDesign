@@ -1,6 +1,6 @@
-package lexer;
+package compiler.lexer;
 
-import lexer.TokenType.TOKENTYPE;
+import compiler.lexer.TokenType.TOKENTYPE;
 
 /**
  * @author Pavan Sokke Nagaraj <pavansn8@gmail.com> Token Class to save the

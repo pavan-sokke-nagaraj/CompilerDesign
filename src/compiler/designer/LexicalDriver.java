@@ -1,12 +1,12 @@
-package CompilerDesigner;
+package compiler.designer;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Vector;
 
-import lexer.Lexer;
-import lexer.Token;
-import lexer.TokenType.TOKENTYPE;
+import compiler.lexer.Lexer;
+import compiler.lexer.Token;
+import compiler.lexer.TokenType.TOKENTYPE;
 
 /**
  * @author Pavan Sokke Nagaraj <pavansn8@gmail.com> Assignment 1: Driver class
@@ -37,7 +37,7 @@ public class LexicalDriver {
 		Token nextToken;
 
 		do {
-			nextToken = lexer.getNextToken();
+			nextToken = lexer.getToken();
 			if (nextToken.getTokenType() == TOKENTYPE.TOKEN)
 				tokens.add(nextToken);
 			else if (nextToken.getTokenType() == TOKENTYPE.ERROR)

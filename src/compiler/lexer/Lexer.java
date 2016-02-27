@@ -1,4 +1,4 @@
-package lexer;
+package compiler.lexer;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
-import lexer.TokenType.TOKENTYPE;
+import compiler.lexer.TokenType.TOKENTYPE;
 
 /**
  * @author Pavan Sokke Nagaraj <pavansn8@gmail.com> Lexer class to tokenize the
@@ -27,9 +27,9 @@ public class Lexer {
 	static String errorFile = "ERROR.txt";
 	static String commentFile = "COMMENT.txt";
 
-	// private static Vector<Token> tokens;
-	// private static Vector<Token> errors;
-	// private static Vector<Token> comments;
+	 public static Vector<Token> tokens;
+	 public static Vector<Token> errors;
+	 public static Vector<Token> comments;
 
 	static HashMap<String, String> RESERVE_WORD_MAP = new HashMap<String, String>();
 
@@ -43,6 +43,10 @@ public class Lexer {
 	}
 
 	public Lexer(String inputFile) {
+		tokens = new Vector<Token>();
+		errors = new Vector<Token>();
+		comments = new Vector<Token>();
+		
 		RESERVE_WORD_MAP.put("if", "T_RESERVE_WORD_IF");
 		RESERVE_WORD_MAP.put("then", "T_RESERVE_WORD_THEN");
 		RESERVE_WORD_MAP.put("else", "T_RESERVE_WORD_ELSE");
@@ -110,8 +114,22 @@ public class Lexer {
 	// }
 	//
 	//
+	
+	public Token getNextToken() throws IOException{
+		Token token = null;
+		do {
+			token = getToken();
+			if (token.getTokenType() == TOKENTYPE.TOKEN)
+				tokens.add(token);
+			else if (token.getTokenType() == TOKENTYPE.ERROR)
+				errors.add(token);
+			else if (token.getTokenType() == TOKENTYPE.COMMENT)
+				comments.add(token);
+		} while (token.getTokenType() == TOKENTYPE.TOKEN || token.getTokenType() == TOKENTYPE.EOF);
+		return token;
+	}
 
-	public Token getNextToken() throws IOException {
+	public Token getToken() throws IOException {
 		Token nextToken = null;
 		if(!eof){
 			while (tokenList == null || tokenList.isEmpty() || tokenList.size() == 0) {
