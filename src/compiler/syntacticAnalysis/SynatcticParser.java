@@ -44,9 +44,9 @@ public class SynatcticParser {
 		if (logger.getHandlers().length == 0) {
 			FileHandler fileHandler = null;
 			try {
-				fileHandler = new FileHandler(logFile, true);
+				fileHandler = new FileHandler(logFile, false);
 				SimpleFormatter textFormatter = new SimpleFormatter();
-				fileHandler.setFormatter(textFormatter);
+//				fileHandler.setFormatter(textFormatter);
 				fileHandler.setFormatter(new FormatLog());
 				logger.addHandler(fileHandler);
 				logger.setUseParentHandlers(false);

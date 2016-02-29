@@ -4,8 +4,8 @@ float var2;
 };
 program{
 var var;
-	for( = t = 0; t<=100 ; t = t + 1)
-	{
-		
-	};
+	//for( = t = 0; t<=100 ; t = t + 1)
+	//{
+		!
+//};
 };
