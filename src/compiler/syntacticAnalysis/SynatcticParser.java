@@ -81,7 +81,7 @@ public class SynatcticParser {
 	
 	DerivationTree  prog;
 
-	// prog -> classDeclList progBody
+	// prog -> classDeclList progBody lol
 	private boolean prog() {
 		 prog = new DerivationTree("prog", "");
 		 DerivationTree classDeclList = new DerivationTree("classDeclList", "");
