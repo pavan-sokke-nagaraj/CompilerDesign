@@ -1,9 +1,11 @@
-class Foo{
+Class class Foo{
 int var1;
 float var2;
 };
 program{
-int var1;
-float var2;
-a = a + b;
+var var;
+	for( = t = 0; t<=100 ; t = t + 1)
+	{
+		
+	};
 };

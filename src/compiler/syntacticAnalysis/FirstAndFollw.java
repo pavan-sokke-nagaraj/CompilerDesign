@@ -109,9 +109,16 @@ public class FirstAndFollw {
 		if(followSet == null){
 			return matchFollow;
 		}
-		String firstValues[] = followSet.split(" ");
-		for (int i = 0; i < firstValues.length; i++) {
-			if(token.getValue().equals(firstValues[i])){
+		String followValues[] = followSet.split(" ");
+		for (int i = 0; i < followValues.length; i++) {
+			if(followValues[i].equals("id")){
+				if(token.getDesc().equals("T_IDENTIFIER"))
+					return null;
+			}else if(followValues[i].equals("num")){
+				if(token.getDesc().equals("T_INTEGER") || token.getDesc().equals("T_FLOAT"))
+					return null;
+			}
+			else if(token.getValue().equals(followValues[i])){
 				return null;
 			}
 		}

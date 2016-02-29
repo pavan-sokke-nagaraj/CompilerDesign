@@ -1,30 +1,43 @@
+INFO| T_RESERVE_WORD_CLASS -> class
+INFO| T_IDENTIFIER -> Foo
+INFO| T_DEL_C_LPAREN -> {
 INFO| type            -> int
+INFO| T_IDENTIFIER -> var1
 INFO| arraySizeList ->  EPSILON
+INFO| T_DEL_SEMICOLON -> ;
 INFO| type            -> float
+INFO| T_IDENTIFIER -> var2
 INFO| arraySizeList ->  EPSILON
+INFO| T_DEL_SEMICOLON -> ;
 INFO| varDecFunDef    -> EPSILON
 INFO| varDecFunDef1 -> arraySizeList ; varDecFunDef
 INFO| varDecFunDef -> type id varDecFunDef1
 INFO| varDecFunDef1 -> arraySizeList ; varDecFunDef
 INFO| varDecFunDef -> type id varDecFunDef1
+INFO| T_DEL_C_RPAREN -> }
+INFO| T_DEL_SEMICOLON -> ;
 INFO| classDecl        -> class id { varDecFunDef } ;
 INFO| classDeclList    -> EPSILON
 INFO| classDeclList    -> classDecl classDeclList
-INFO| type            -> int
+INFO| T_IDENTIFIER -> program
+INFO| T_DEL_C_LPAREN -> {
+INFO| T_IDENTIFIER -> var
+INFO| T_IDENTIFIER -> var
 INFO| arraySizeList ->  EPSILON
-INFO| type            -> float
-INFO| arraySizeList ->  EPSILON
-INFO| indiceList -> EPSILON
-INFO| dotIdList -> EPSILON
-INFO| type            -> id
+INFO| T_DEL_SEMICOLON -> ;
+INFO| T_RESERVE_WORD_FOR -> for
+INFO| T_DEL_R_LPAREN -> (
+INFO| type            -> id	->	t
+INFO| T_IDENTIFIER -> t
+INFO| T_OP_ASSIGN_EQUAL -> =
+INFO| type            -> id	->	t
 INFO| indiceOrParam -> EPSILON
 INFO| factor -> id indiceOrParam
 INFO| termFactor -> EPSILON
 INFO| term -> factor termFactor
 INFO| addOp -> +
-INFO| type            -> id
-INFO| indiceOrParam -> EPSILON
-INFO| factor -> id indiceOrParam
+INFO| num            -> T_INTEGER
+INFO| factor -> num
 INFO| termFactor -> EPSILON
 INFO| term -> factor termFactor
 INFO| arithExprRight -> EPSILON
@@ -32,12 +45,5 @@ INFO| arithExprRight -> addOp term arithExprRight
 INFO| arithExpr -> term arithExprRight
 INFO| subExpr -> EPSILON
 INFO| expr -> arithExpr subExpr
-INFO| statementList -> EPSILON
-INFO| bodyCode2 -> indiceList dotIdList assignOp expr ; statementList
-INFO| bodyCode -> id bodyCode2
-INFO| bodyCode -> float id arraySizeList ; bodyCode
-INFO| bodyCode -> int id arraySizeList ; bodyCode
-INFO| funcBody -> { bodyCode }
-INFO| funcDefList -> EPSILON
-INFO| progBody -> program funcBody ; funcDefList
-INFO| prog -> classDeclList progBody
+INFO| T_DEL_SEMICOLON -> ;
+WARNING| REACHED END OF FILE
