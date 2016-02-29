@@ -15,12 +15,16 @@ public class SynatcticParser {
 	Lexer lexer = new Lexer();
 	FirstAndFollw firstAndFollw = null;
 	Token token = null;
-	private Logger logger;
+	private Logger grammarLog;
+	private Logger parserLog;
+	private Logger derivationLog;
 
 	public SynatcticParser(Lexer lexer) {
 		this.lexer = lexer;
 		firstAndFollw = new FirstAndFollw();
-		setLogger();
+		grammarLog = setLogger("GrammarLog.txt");
+		parserLog = setLogger("ParserLog.txt");
+		derivationLog = setLogger("DerivationLog.txt");
 	}
 
 	class FormatLog extends Formatter {
@@ -30,17 +34,19 @@ public class SynatcticParser {
 	}
 
 	/**
+	 * @param logger
 	 * 
 	 */
-	private void setLogger() {
-		String logFile = System.getProperty("user.dir")
-				+ "\\logs\\GrammerLog.txt";
-		logger = Logger.getLogger(logFile);
+	private Logger setLogger(String logFileName) {
+		String logFile = System.getProperty("user.dir") + "\\logs\\"
+				+ logFileName;
+		Logger logger = Logger.getLogger(logFile);
 		if (logger.getHandlers().length == 0) {
 			FileHandler fileHandler = null;
 			try {
 				fileHandler = new FileHandler(logFile, true);
 				SimpleFormatter textFormatter = new SimpleFormatter();
+				fileHandler.setFormatter(textFormatter);
 				fileHandler.setFormatter(new FormatLog());
 				logger.addHandler(fileHandler);
 				logger.setUseParentHandlers(false);
@@ -51,6 +57,7 @@ public class SynatcticParser {
 			} finally {
 			}
 		}
+		return logger;
 	}
 
 	/**
@@ -62,7 +69,7 @@ public class SynatcticParser {
 		getNextToken();
 		if (token == null) {
 			System.out.println("Error in Input File");
-			logger.info("Error in Input File");
+			grammarLog.info("Error in Input File");
 			return false;
 		}
 		return startSymbol();
@@ -71,12 +78,18 @@ public class SynatcticParser {
 	private boolean startSymbol() {
 		return prog();
 	}
+	
+	DerivationTree  prog;
 
 	// prog -> classDeclList progBody
 	private boolean prog() {
+		 prog = new DerivationTree("prog", "");
+		 DerivationTree classDeclList = new DerivationTree("classDeclList", "");
+		 DerivationTree progBody = new DerivationTree("progBody", "");
+		 derivationLog.info(prog.info());
 		if (classDeclList() && progBody()) {
 			System.out.println("prog -> classDeclList progBody");
-			logger.info("prog -> classDeclList progBody");
+			grammarLog.info("prog -> classDeclList progBody");
 			return true;
 		} else
 			return false;
@@ -92,13 +105,14 @@ public class SynatcticParser {
 			if (classDecl() && classDeclList()) {
 				System.out
 						.println("classDeclList    -> classDecl classDeclList");
-				logger.info("classDeclList    -> classDecl classDeclList");
+				grammarLog
+						.info("classDeclList    -> classDecl classDeclList");
 				return true;
 			} else
 				return false;
 		} else if (checkFollowSet("classDeclList")) {
 			System.out.println("classDeclList    -> EPSILON");
-			logger.info("classDeclList    -> EPSILON");
+			grammarLog.info("classDeclList    -> EPSILON");
 			return true;
 		}
 		return false;
@@ -117,7 +131,8 @@ public class SynatcticParser {
 						&& matchTokenType("T_DEL_SEMICOLON")) {
 					System.out
 							.println("classDecl        -> class id { varDecFunDef } ;");
-					logger.info("classDecl        -> class id { varDecFunDef } ;");
+					grammarLog
+							.info("classDecl        -> class id { varDecFunDef } ;");
 					return true;
 				}
 			}
@@ -135,14 +150,14 @@ public class SynatcticParser {
 			if (matchType() && matchTokenType("T_IDENTIFIER")
 					&& varDecFunDef1()) {
 				System.out.println("varDecFunDef -> type id varDecFunDef1");
-				logger.info("varDecFunDef -> type id varDecFunDef1");
+				grammarLog.info("varDecFunDef -> type id varDecFunDef1");
 				return true;
 			} else {
 				return false;
 			}
 		} else if (checkFollowSet("varDecFunDef")) {
 			System.out.println("varDecFunDef    -> EPSILON");
-			logger.info("varDecFunDef    -> EPSILON");
+			grammarLog.info("varDecFunDef    -> EPSILON");
 			return true;
 		}
 		return false;
@@ -160,7 +175,8 @@ public class SynatcticParser {
 					&& matchTokenType("T_DEL_SEMICOLON") && funcDefList()) {
 				System.out
 						.println("varDecFunDef1 -> ( fParams ) funcBody ; funcDefList");
-				logger.info("varDecFunDef1 -> ( fParams ) funcBody ; funcDefList");
+				grammarLog
+						.info("varDecFunDef1 -> ( fParams ) funcBody ; funcDefList");
 				return true;
 			}
 		} else if (checkFirstSet("varDecFunDef1")) {
@@ -168,7 +184,8 @@ public class SynatcticParser {
 					&& varDecFunDef()) {
 				System.out
 						.println("varDecFunDef1 -> arraySizeList ; varDecFunDef");
-				logger.info("varDecFunDef1 -> arraySizeList ; varDecFunDef");
+				grammarLog
+						.info("varDecFunDef1 -> arraySizeList ; varDecFunDef");
 				return true;
 			} else
 				return false;
@@ -186,7 +203,8 @@ public class SynatcticParser {
 					&& matchTokenType("T_DEL_SEMICOLON") && funcDefList()) {
 				System.out
 						.println("progBody -> program funcBody ; funcDefList");
-				logger.info("progBody -> program funcBody ; funcDefList");
+				grammarLog
+						.info("progBody -> program funcBody ; funcDefList");
 				return true;
 			}
 		}
@@ -199,13 +217,13 @@ public class SynatcticParser {
 		if (checkFirstSet("funcDef")) {
 			if (funcDef() && funcDefList()) {
 				System.out.println("funcDefList -> funcDef funcDefList");
-				logger.info("funcDefList -> funcDef funcDefList");
+				grammarLog.info("funcDefList -> funcDef funcDefList");
 				return true;
 			} else
 				return false;
 		} else if (checkFollowSet("funcDefList")) {
 			System.out.println("funcDefList -> EPSILON");
-			logger.info("funcDefList -> EPSILON");
+			grammarLog.info("funcDefList -> EPSILON");
 			return true;
 		}
 		return false;
@@ -219,7 +237,7 @@ public class SynatcticParser {
 		if (checkFirstSet("funcHead")) {
 			if (funcHead() && funcBody() && matchTokenType("T_DEL_SEMICOLON")) {
 				System.out.println("funcDef -> funcHead funcBody ;");
-				logger.info("funcDef -> funcHead funcBody ;");
+				grammarLog.info("funcDef -> funcHead funcBody ;");
 				return true;
 			}
 		}
@@ -236,7 +254,7 @@ public class SynatcticParser {
 					&& matchTokenType("T_DEL_R_LPAREN") && fParams()
 					&& matchTokenType("T_DEL_R_RPAREN")) {
 				System.out.println("funcHead -> type id ( fParams )");
-				logger.info("funcHead -> type id ( fParams )");
+				grammarLog.info("funcHead -> type id ( fParams )");
 				return true;
 			} else
 				return false;
@@ -255,13 +273,14 @@ public class SynatcticParser {
 					&& arraySizeList() && fParamsTailList()) {
 				System.out
 						.println("fParams -> type id arraySizeList fParamsTailList");
-				logger.info("fParams -> type id arraySizeList fParamsTailList");
+				grammarLog
+						.info("fParams -> type id arraySizeList fParamsTailList");
 				return true;
 			} else
 				return false;
 		} else if (checkFollowSet("fParams")) {
 			System.out.println("funcDefList -> EPSILON");
-			logger.info("funcDefList -> EPSILON");
+			grammarLog.info("funcDefList -> EPSILON");
 			return true;
 		}
 		return false;
@@ -277,13 +296,14 @@ public class SynatcticParser {
 			if (fParamsTail() && fParamsTailList()) {
 				System.out
 						.println("fParamsTailList -> fParamsTail fParamsTailList");
-				logger.info("fParamsTailList -> fParamsTail fParamsTailList");
+				grammarLog
+						.info("fParamsTailList -> fParamsTail fParamsTailList");
 				return true;
 			} else
 				return false;
 		} else if (checkFollowSet("fParamsTailList")) {
 			System.out.println("fParamsTailList -> EPSILON");
-			logger.info("fParamsTailList -> EPSILON");
+			grammarLog.info("fParamsTailList -> EPSILON");
 			return true;
 		}
 		return false;
@@ -298,7 +318,7 @@ public class SynatcticParser {
 			if (matchTokenType("T_DEL_COMMA") && matchType()
 					&& matchTokenType("T_IDENTIFIER") && arraySizeList()) {
 				System.out.println("fParamsTail -> , type id arraySizeList");
-				logger.info("fParamsTail -> , type id arraySizeList");
+				grammarLog.info("fParamsTail -> , type id arraySizeList");
 				return true;
 			} else
 				return false;
@@ -315,7 +335,7 @@ public class SynatcticParser {
 			if (matchTokenType("T_DEL_C_LPAREN") && bodyCode()
 					&& matchTokenType("T_DEL_C_RPAREN")) {
 				System.out.println("funcBody -> { bodyCode }");
-				logger.info("funcBody -> { bodyCode }");
+				grammarLog.info("funcBody -> { bodyCode }");
 				return true;
 			} else
 				return false;
@@ -340,7 +360,8 @@ public class SynatcticParser {
 					&& bodyCode()) {
 				System.out
 						.println("bodyCode -> float id arraySizeList ; bodyCode");
-				logger.info("bodyCode -> float id arraySizeList ; bodyCode");
+				grammarLog
+						.info("bodyCode -> float id arraySizeList ; bodyCode");
 				return true;
 			} else
 				return false;
@@ -350,14 +371,15 @@ public class SynatcticParser {
 					&& bodyCode()) {
 				System.out
 						.println("bodyCode -> int id arraySizeList ; bodyCode");
-				logger.info("bodyCode -> int id arraySizeList ; bodyCode");
+				grammarLog
+						.info("bodyCode -> int id arraySizeList ; bodyCode");
 				return true;
 			} else
 				return false;
 		} else if (checkFirstSet("id")) {
 			if (matchTokenType("T_IDENTIFIER") && bodyCode2()) {
 				System.out.println("bodyCode -> id bodyCode2");
-				logger.info("bodyCode -> id bodyCode2");
+				grammarLog.info("bodyCode -> id bodyCode2");
 				return true;
 			} else
 				return false;
@@ -365,13 +387,13 @@ public class SynatcticParser {
 			if (ctrlStat() && matchTokenType("T_DEL_SEMICOLON")
 					&& statementList()) {
 				System.out.println("bodyCode -> ctrlStat ; statementList");
-				logger.info("bodyCode -> ctrlStat ; statementList");
+				grammarLog.info("bodyCode -> ctrlStat ; statementList");
 				return true;
 			} else
 				return false;
 		} else if (checkFollowSet("bodyCode")) {
 			System.out.println("bodyCode -> EPSILON");
-			logger.info("bodyCode -> EPSILON");
+			grammarLog.info("bodyCode -> EPSILON");
 			return true;
 		}
 		return false;
@@ -388,7 +410,7 @@ public class SynatcticParser {
 			if (matchTokenType("T_IDENTIFIER") && arraySizeList()
 					&& matchTokenType("T_DEL_SEMICOLON") && bodyCode()) {
 				System.out.println("bodyCode2 -> id arraySizeList ; bodyCode");
-				logger.info("bodyCode2 -> id arraySizeList ; bodyCode");
+				grammarLog.info("bodyCode2 -> id arraySizeList ; bodyCode");
 				return true;
 			} else
 				return false;
@@ -397,13 +419,14 @@ public class SynatcticParser {
 					&& matchTokenType("T_DEL_SEMICOLON") && statementList()) {
 				System.out
 						.println("bodyCode2 -> indiceList dotIdList assignOp expr ; statementList");
-				logger.info("bodyCode2 -> indiceList dotIdList assignOp expr ; statementList");
+				grammarLog
+						.info("bodyCode2 -> indiceList dotIdList assignOp expr ; statementList");
 				return true;
 			} else
 				return false;
 		} else if (checkFollowSet("bodyCode2")) {
 			System.out.println("bodyCode2 -> EPSILON");
-			logger.info("bodyCode2 -> EPSILON");
+			grammarLog.info("bodyCode2 -> EPSILON");
 			return true;
 		}
 		return false;
@@ -418,13 +441,13 @@ public class SynatcticParser {
 		if (checkFirstSet("statement")) {
 			if (statement() && statementList()) {
 				System.out.println("statementList -> statement statementList");
-				logger.info("statementList -> statement statementList");
+				grammarLog.info("statementList -> statement statementList");
 				return true;
 			} else
 				return false;
 		} else if (checkFollowSet("statementList")) {
 			System.out.println("statementList -> EPSILON");
-			logger.info("statementList -> EPSILON");
+			grammarLog.info("statementList -> EPSILON");
 			return true;
 		}
 		return false;
@@ -439,14 +462,14 @@ public class SynatcticParser {
 		if (checkFirstSet("ctrlStat")) {
 			if (ctrlStat() && matchTokenType("T_DEL_SEMICOLON")) {
 				System.out.println("statement -> ctrlStat ;");
-				logger.info("statement -> ctrlStat ;");
+				grammarLog.info("statement -> ctrlStat ;");
 				return true;
 			} else
 				return false;
 		} else if (checkFirstSet("assignStat")) {
 			if (assignStat() && matchTokenType("T_DEL_SEMICOLON")) {
 				System.out.println("statement -> assignStat ;");
-				logger.info("statement -> assignStat ;");
+				grammarLog.info("statement -> assignStat ;");
 				return true;
 			} else
 				return false;
@@ -464,20 +487,20 @@ public class SynatcticParser {
 			if (matchTokenType("T_DEL_C_LPAREN") && statementList()
 					&& matchTokenType("T_DEL_C_RPAREN")) {
 				System.out.println("statBlock -> { statementList } ");
-				logger.info("statBlock -> { statementList } ");
+				grammarLog.info("statBlock -> { statementList } ");
 				return true;
 			} else
 				return false;
 		} else if (checkFirstSet("statBlock")) {
 			if (statement()) {
 				System.out.println("statBlock -> { statementList } ");
-				logger.info("statBlock -> { statementList } ");
+				grammarLog.info("statBlock -> { statementList } ");
 				return true;
 			} else
 				return false;
 		} else if (checkFollowSet("statBlock")) {
 			System.out.println("statBlock -> EPSILON");
-			logger.info("statBlock -> EPSILON");
+			grammarLog.info("statBlock -> EPSILON");
 			return true;
 		}
 		return false;
@@ -501,30 +524,24 @@ public class SynatcticParser {
 					&& matchTokenType("T_RESERVE_WORD_ELSE") && statBlock()) {
 				System.out
 						.println("ctrlStat -> if ( expr ) then statBlock else statBlock");
-				logger.info("ctrlStat -> if ( expr ) then statBlock else statBlock");
+				grammarLog
+						.info("ctrlStat -> if ( expr ) then statBlock else statBlock");
 				return true;
 			} else
 				return false;
 		} else if (checkFirstSet("for")) {
 			if (matchTokenType("T_RESERVE_WORD_FOR")
-					&& matchTokenType("T_DEL_R_LPAREN")) {
-				if (matchType() && checkFirstSet("id")
-						&& matchTokenType("T_IDENTIFIER")) {
-					if (matchTokenType("T_OP_ASSIGN_EQUAL") && expr()) {
-						if (matchTokenType("T_DEL_SEMICOLON") && relExpr()) {
-							if (matchTokenType("T_DEL_SEMICOLON")
-									&& assignStat()) {
-								if (matchTokenType("T_DEL_R_RPAREN")
-										&& statBlock()) {
-									System.out
-											.println("ctrlStat -> for ( type id assignOp expr ; relExpr ; assignStat ) statBlock");
-									logger.info("ctrlStat -> for ( type id assignOp expr ; relExpr ; assignStat ) statBlock");
-									return true;
-								}
-							}
-						}
-					}
-				}
+					&& matchTokenType("T_DEL_R_LPAREN") && matchType()
+					&& matchTokenType("T_IDENTIFIER")
+					&& matchTokenType("T_OP_ASSIGN_EQUAL") && expr()
+					&& matchTokenType("T_DEL_SEMICOLON") && relExpr()
+					&& matchTokenType("T_DEL_SEMICOLON") && assignStat()
+					&& matchTokenType("T_DEL_R_RPAREN") && statBlock()) {
+				System.out
+						.println("ctrlStat -> for ( type id assignOp expr ; relExpr ; assignStat ) statBlock");
+				grammarLog
+						.info("ctrlStat -> for ( type id assignOp expr ; relExpr ; assignStat ) statBlock");
+				return true;
 			} else
 				return false;
 		} else if (checkFirstSet("get")) {
@@ -532,7 +549,7 @@ public class SynatcticParser {
 					&& matchTokenType("T_DEL_R_LPAREN") && variable()
 					&& matchTokenType("T_DEL_R_RPAREN")) {
 				System.out.println("ctrlStat -> get ( variable )");
-				logger.info("ctrlStat -> get ( variable )");
+				grammarLog.info("ctrlStat -> get ( variable )");
 				return true;
 			} else
 				return false;
@@ -541,7 +558,7 @@ public class SynatcticParser {
 					&& matchTokenType("T_DEL_R_LPAREN") && expr()
 					&& matchTokenType("T_DEL_R_RPAREN")) {
 				System.out.println("ctrlStat -> put ( expr )");
-				logger.info("ctrlStat -> put ( expr )");
+				grammarLog.info("ctrlStat -> put ( expr )");
 				return true;
 			} else
 				return false;
@@ -549,7 +566,7 @@ public class SynatcticParser {
 			if (matchTokenValue("return") && matchTokenType("T_DEL_R_LPAREN")
 					&& expr() && matchTokenType("T_DEL_R_RPAREN")) {
 				System.out.println("ctrlStat -> return ( expr )");
-				logger.info("ctrlStat -> return ( expr )");
+				grammarLog.info("ctrlStat -> return ( expr )");
 				return true;
 			} else
 				return false;
@@ -565,7 +582,7 @@ public class SynatcticParser {
 		if (checkFirstSet("variable")) {
 			if (variable() && matchTokenType("T_OP_ASSIGN_EQUAL") && expr()) {
 				System.out.println("assignStat -> variable assignOp expr");
-				logger.info("assignStat -> variable assignOp expr");
+				grammarLog.info("assignStat -> variable assignOp expr");
 				return true;
 			} else
 				return false;
@@ -581,7 +598,7 @@ public class SynatcticParser {
 		if (checkFirstSet("arithExpr")) {
 			if (arithExpr() && subExpr()) {
 				System.out.println("expr -> arithExpr subExpr");
-				logger.info("expr -> arithExpr subExpr");
+				grammarLog.info("expr -> arithExpr subExpr");
 				return true;
 			} else
 				return false;
@@ -597,7 +614,7 @@ public class SynatcticParser {
 		if (checkFirstSet("term")) {
 			if (term() && arithExprRight()) {
 				System.out.println("arithExpr -> term arithExprRight");
-				logger.info("arithExpr -> term arithExprRight");
+				grammarLog.info("arithExpr -> term arithExprRight");
 				return true;
 			} else
 				return false;
@@ -615,13 +632,13 @@ public class SynatcticParser {
 		if (checkFirstSet("relOp")) {
 			if (matchTokenType("relOp") && arithExpr()) {
 				System.out.println("subExpr -> relOp arithExpr");
-				logger.info("subExpr -> relOp arithExpr");
+				grammarLog.info("subExpr -> relOp arithExpr");
 				return true;
 			} else
 				return false;
 		} else if (checkFollowSet("subExpr")) {
 			System.out.println("subExpr -> EPSILON");
-			logger.info("subExpr -> EPSILON");
+			grammarLog.info("subExpr -> EPSILON");
 			return true;
 		}
 		return false;
@@ -637,13 +654,14 @@ public class SynatcticParser {
 			if (matchTokenType("addOp") && term() && arithExprRight()) {
 				System.out
 						.println("arithExprRight -> addOp term arithExprRight");
-				logger.info("arithExprRight -> addOp term arithExprRight");
+				grammarLog
+						.info("arithExprRight -> addOp term arithExprRight");
 				return true;
 			} else
 				return false;
 		} else if (checkFollowSet("arithExprRight")) {
 			System.out.println("arithExprRight -> EPSILON");
-			logger.info("arithExprRight -> EPSILON");
+			grammarLog.info("arithExprRight -> EPSILON");
 			return true;
 		}
 		return false;
@@ -657,7 +675,7 @@ public class SynatcticParser {
 		if (checkFirstSet("arithExpr")) {
 			if (arithExpr() && matchTokenType("relOp") && arithExpr()) {
 				System.out.println("relExpr -> arithExpr relOp arithExpr");
-				logger.info("relExpr -> arithExpr relOp arithExpr");
+				grammarLog.info("relExpr -> arithExpr relOp arithExpr");
 				return true;
 			} else
 				return false;
@@ -673,7 +691,7 @@ public class SynatcticParser {
 		if (checkFirstSet("factor")) {
 			if (factor() && termFactor()) {
 				System.out.println("term -> factor termFactor");
-				logger.info("term -> factor termFactor");
+				grammarLog.info("term -> factor termFactor");
 				return true;
 			} else
 				return false;
@@ -690,13 +708,13 @@ public class SynatcticParser {
 		if (checkFirstSet("multOp")) {
 			if (matchTokenType("multOp") && factor() && termFactor()) {
 				System.out.println("termFactor -> multOp factor termFactor");
-				logger.info("termFactor -> multOp factor termFactor");
+				grammarLog.info("termFactor -> multOp factor termFactor");
 				return true;
 			} else
 				return false;
 		} else if (checkFollowSet("termFactor")) {
 			System.out.println("termFactor -> EPSILON");
-			logger.info("termFactor -> EPSILON");
+			grammarLog.info("termFactor -> EPSILON");
 			return true;
 		}
 		return false;
@@ -715,35 +733,35 @@ public class SynatcticParser {
 			if (matchTokenType("T_DEL_R_LPAREN") && arithExpr()
 					&& matchTokenType("T_DEL_R_RPAREN")) {
 				System.out.println("factor -> ( arithExpr )");
-				logger.info("factor -> ( arithExpr )");
+				grammarLog.info("factor -> ( arithExpr )");
 				return true;
 			} else
 				return false;
 		} else if (checkFirstSet("not")) {
 			if (matchTokenType("T_LOGICAL_NOT") && factor()) {
 				System.out.println("factor -> not factor");
-				logger.info("factor -> not factor");
+				grammarLog.info("factor -> not factor");
 				return true;
 			} else
 				return false;
 		} else if (checkFirstSet("num")) {
 			if (matchNum()) {
 				System.out.println("factor -> num");
-				logger.info("factor -> num");
+				grammarLog.info("factor -> num");
 				return true;
 			} else
 				return false;
 		} else if (checkFirstSet("sign")) {
 			if (matchSign() && factor()) {
 				System.out.println("factor -> sign factor");
-				logger.info("factor -> sign factor");
+				grammarLog.info("factor -> sign factor");
 				return true;
 			} else
 				return false;
 		} else if (checkFirstSet("id")) {
 			if (matchType() && indiceOrParam()) {
 				System.out.println("factor -> id indiceOrParam");
-				logger.info("factor -> id indiceOrParam");
+				grammarLog.info("factor -> id indiceOrParam");
 				return true;
 			} else
 				return false;
@@ -761,20 +779,20 @@ public class SynatcticParser {
 			if (matchTokenType("T_DEL_R_LPAREN") && aParams()
 					&& matchTokenType("T_DEL_R_RPAREN")) {
 				System.out.println("indiceOrParam -> ( aParams )");
-				logger.info("indiceOrParam -> ( aParams )");
+				grammarLog.info("indiceOrParam -> ( aParams )");
 				return true;
 			} else
 				return false;
 		} else if (checkFirstSet("indiceOrParam")) {
 			if (indiceList() && idFactor()) {
 				System.out.println("indiceOrParam -> indiceList idFactor");
-				logger.info("indiceOrParam -> indiceList idFactor");
+				grammarLog.info("indiceOrParam -> indiceList idFactor");
 				return true;
 			} else
 				return false;
 		} else if (checkFollowSet("indiceOrParam")) {
 			System.out.println("indiceOrParam -> EPSILON");
-			logger.info("indiceOrParam -> EPSILON");
+			grammarLog.info("indiceOrParam -> EPSILON");
 			return true;
 		}
 		return false;
@@ -790,13 +808,13 @@ public class SynatcticParser {
 			if (matchTokenType("T_DEL_DOT") && matchTokenType("T_IDENTIFIER")
 					&& indiceOrParam()) {
 				System.out.println("idFactor -> . id indiceOrParam");
-				logger.info("idFactor -> . id indiceOrParam");
+				grammarLog.info("idFactor -> . id indiceOrParam");
 				return true;
 			} else
 				return false;
 		} else if (checkFollowSet("idFactor")) {
 			System.out.println("idFactor -> EPSILON");
-			logger.info("idFactor -> EPSILON");
+			grammarLog.info("idFactor -> EPSILON");
 			return true;
 		}
 		return false;
@@ -811,13 +829,13 @@ public class SynatcticParser {
 		if (checkFirstSet("indice")) {
 			if (indice() && indiceList()) {
 				System.out.println("indiceList -> indice indiceList");
-				logger.info("indiceList -> indice indiceList");
+				grammarLog.info("indiceList -> indice indiceList");
 				return true;
 			} else
 				return false;
 		} else if (checkFollowSet("indiceList")) {
 			System.out.println("indiceList -> EPSILON");
-			logger.info("indiceList -> EPSILON");
+			grammarLog.info("indiceList -> EPSILON");
 			return true;
 		}
 		return false;
@@ -833,13 +851,13 @@ public class SynatcticParser {
 			if (matchTokenType("T_DEL_DOT") && matchTokenType("T_IDENTIFIER")
 					&& indiceList()) {
 				System.out.println("dotIdList -> . id indiceList");
-				logger.info("dotIdList -> . id indiceList");
+				grammarLog.info("dotIdList -> . id indiceList");
 				return true;
 			} else
 				return false;
 		} else if (checkFollowSet("dotIdList")) {
 			System.out.println("dotIdList -> EPSILON");
-			logger.info("dotIdList -> EPSILON");
+			grammarLog.info("dotIdList -> EPSILON");
 			return true;
 		}
 		return false;
@@ -853,7 +871,7 @@ public class SynatcticParser {
 		if (checkFirstSet("id")) {
 			if (matchTokenType("T_IDENTIFIER") && indiceList() && dotIdNest()) {
 				System.out.println("variable -> id indiceList dotIdNest");
-				logger.info("variable -> id indiceList dotIdNest");
+				grammarLog.info("variable -> id indiceList dotIdNest");
 				return true;
 			} else
 				return false;
@@ -871,13 +889,13 @@ public class SynatcticParser {
 			if (matchTokenType("T_DEL_DOT") && matchTokenType("T_IDENTIFIER")
 					&& indiceList() && dotIdNest()) {
 				System.out.println("dotIdNest -> . id indiceList dotIdNest");
-				logger.info("dotIdNest -> . id indiceList dotIdNest");
+				grammarLog.info("dotIdNest -> . id indiceList dotIdNest");
 				return true;
 			} else
 				return false;
 		} else if (checkFollowSet("dotIdNest")) {
 			System.out.println("dotIdNest -> EPSILON");
-			logger.info("dotIdNest -> EPSILON");
+			grammarLog.info("dotIdNest -> EPSILON");
 			return true;
 		}
 		return false;
@@ -892,7 +910,7 @@ public class SynatcticParser {
 			if (matchTokenType("T_DEL_S_LPAREN") && arithExpr()
 					&& matchTokenType("T_DEL_S_RPAREN")) {
 				System.out.println("indice -> [ arithExpr ]");
-				logger.info("indice -> [ arithExpr ]");
+				grammarLog.info("indice -> [ arithExpr ]");
 				return true;
 			} else
 				return false;
@@ -909,13 +927,13 @@ public class SynatcticParser {
 		if (checkFirstSet("expr")) {
 			if (expr() && aParamsTailList()) {
 				System.out.println("aParams -> expr aParamsTailList");
-				logger.info("aParams -> expr aParamsTailList");
+				grammarLog.info("aParams -> expr aParamsTailList");
 				return true;
 			} else
 				return false;
 		} else if (checkFollowSet("aParams")) {
 			System.out.println("aParams -> EPSILON");
-			logger.info("aParams -> EPSILON");
+			grammarLog.info("aParams -> EPSILON");
 			return true;
 		}
 		return false;
@@ -931,13 +949,14 @@ public class SynatcticParser {
 			if (aParamsTail() && aParamsTailList()) {
 				System.out
 						.println("aParamsTailList -> aParamsTail aParamsTailList");
-				logger.info("aParamsTailList -> aParamsTail aParamsTailList");
+				grammarLog
+						.info("aParamsTailList -> aParamsTail aParamsTailList");
 				return true;
 			} else
 				return false;
 		} else if (checkFollowSet("aParamsTailList")) {
 			System.out.println("aParamsTailList -> EPSILON");
-			logger.info("aParamsTailList -> EPSILON");
+			grammarLog.info("aParamsTailList -> EPSILON");
 			return true;
 		}
 		return false;
@@ -951,7 +970,7 @@ public class SynatcticParser {
 		if (checkFirstSet(",")) {
 			if (matchTokenType("T_DEL_COMMA") && expr()) {
 				System.out.println("aParamsTail -> , expr");
-				logger.info("aParamsTail -> , expr");
+				grammarLog.info("aParamsTail -> , expr");
 				return true;
 			} else
 				return false;
@@ -968,13 +987,13 @@ public class SynatcticParser {
 		if (checkFirstSet("arraySize")) {
 			if (arraySize() && arraySizeList()) {
 				System.out.println("arraySizeList -> arraySize arraySizeList");
-				logger.info("arraySizeList -> arraySize arraySizeList");
+				grammarLog.info("arraySizeList -> arraySize arraySizeList");
 				return true;
 			} else
 				return false;
 		} else if (checkFollowSet("arraySizeList")) {
 			System.out.println("arraySizeList ->  EPSILON");
-			logger.info("arraySizeList ->  EPSILON");
+			grammarLog.info("arraySizeList ->  EPSILON");
 			return true;
 		}
 		return false;
@@ -989,7 +1008,7 @@ public class SynatcticParser {
 			if (matchTokenType("T_DEL_S_LPAREN") && matchTokenType("T_INTEGER")
 					&& matchTokenType("T_DEL_S_RPAREN")) {
 				System.out.println("arraySizeList -> arraySize arraySizeList");
-				logger.info("arraySizeList -> arraySize arraySizeList");
+				grammarLog.info("arraySizeList -> arraySize arraySizeList");
 				return true;
 			} else
 				return false;
@@ -1003,7 +1022,7 @@ public class SynatcticParser {
 		if (tokenType.equals("relOp")
 				&& token.getDesc().toString().startsWith("T_OP_REL_")) {
 			System.out.println("relOp" + " -> " + token.getValue());
-			logger.info("relOp" + " -> " + token.getValue());
+			grammarLog.info("relOp" + " -> " + token.getValue());
 			getNextToken();
 			return true;
 		} else if (tokenType.equals("addOp")
@@ -1011,7 +1030,7 @@ public class SynatcticParser {
 						|| token.getValue().equals("-") || token.getValue()
 						.equals("or"))) {
 			System.out.println("addOp" + " -> " + token.getValue());
-			logger.info("addOp" + " -> " + token.getValue());
+			grammarLog.info("addOp" + " -> " + token.getValue());
 			getNextToken();
 			return true;
 		} else if (tokenType.equals("multOp")
@@ -1019,21 +1038,96 @@ public class SynatcticParser {
 						|| token.getValue().equals("/") || token.getValue()
 						.equals("and"))) {
 			System.out.println("multOp" + " -> " + token.getValue());
-			logger.info("multOp" + " -> " + token.getValue());
+			grammarLog.info("multOp" + " -> " + token.getValue());
 			getNextToken();
 			return true;
 		} else if (tokenType.equals(token.getDesc())) {
-			// System.out.println(token.getDesc() + " -> " + token.getValue());
-			// logger.info(token.getDesc() + " -> " + token.getValue());
+			System.out.println(token.getDesc() + " -> " + token.getValue());
+			grammarLog.info(token.getDesc() + " -> " + token.getValue());
 			getNextToken();
 			return true;
 		} else {
-			return false;
+			System.out.println("ERROR: IN LINE NUMBER:\t" + token.getPosition()
+					+ ":\tExpected One of these token Type:\t" + tokenType);
+			parserLog.warning("ERROR: IN LINE NUMBER:\t"
+					+ token.getPosition()
+					+ ":\tExpected One of these token Type:\t" + tokenType);
+			while (!token.getValue().equals("$")) {
+				if (tokenType.equals("relOp")
+						&& token.getDesc().toString().startsWith("T_OP_REL_")) {
+					System.out.println("relOp" + " -> " + token.getValue());
+					grammarLog.info("relOp" + " -> " + token.getValue());
+					System.out.println("RESUME PARSING FROM TOKEN:\t"
+							+ token.getValue() + "\tAT LINE NUMBER:\t"
+							+ token.getPosition());
+					parserLog.info("RESUME PARSING FROM  TOKEN:\t"
+							+ token.getValue() + "\tAT LINE NUMBER:\t"
+							+ token.getPosition());
+					getNextToken();
+					return true;
+				} else if (tokenType.equals("addOp")
+						&& (token.getValue().equals("+")
+								|| token.getValue().equals("-") || token
+								.getValue().equals("or"))) {
+					System.out.println("addOp" + " -> " + token.getValue());
+					grammarLog.info("addOp" + " -> " + token.getValue());
+					System.out.println("RESUME PARSING FROM TOKEN:\t"
+							+ token.getValue() + "\tAT LINE NUMBER:\t"
+							+ token.getPosition());
+					parserLog.info("RESUME PARSING FROM  TOKEN:\t"
+							+ token.getValue() + "\tAT LINE NUMBER:\t"
+							+ token.getPosition());
+					getNextToken();
+					return true;
+				} else if (tokenType.equals("multOp")
+						&& (token.getValue().equals("*")
+								|| token.getValue().equals("/") || token
+								.getValue().equals("and"))) {
+					System.out.println("multOp" + " -> " + token.getValue());
+					grammarLog.info("multOp" + " -> " + token.getValue());
+					System.out.println("RESUME PARSING FROM TOKEN:\t"
+							+ token.getValue() + "\tAT LINE NUMBER:\t"
+							+ token.getPosition());
+					parserLog.info("RESUME PARSING FROM  TOKEN:\t"
+							+ token.getValue() + "\tAT LINE NUMBER:\t"
+							+ token.getPosition());
+					getNextToken();
+					return true;
+				} else if (tokenType.equals(token.getDesc())) {
+					System.out.println(token.getDesc() + " -> "
+							+ token.getValue());
+					grammarLog.info(token.getDesc() + " -> "
+							+ token.getValue());
+					System.out.println("RESUME PARSING FROM TOKEN:\t"
+							+ token.getValue() + "\tAT LINE NUMBER:\t"
+							+ token.getPosition());
+					parserLog.info("RESUME PARSING FROM  TOKEN:\t"
+							+ token.getValue() + "\tAT LINE NUMBER:\t"
+							+ token.getPosition());
+					getNextToken();
+					return true;
+				} else {
+					System.out.println("SKIPPING TOKEN:\t" + token.getValue()
+							+ "\tAT LINE NUMBER:\t" + token.getPosition());
+					parserLog.warning("SKIPPING TOKEN:\t"
+							+ token.getValue() + "\tAT LINE NUMBER:\t"
+							+ token.getPosition());
+				}
+				getNextToken();
+			}
 		}
+		if (token.getValue().equals("$")) {
+			System.out.println("REACHED END OF FILE");
+			grammarLog.warning("REACHED END OF FILE");
+			parserLog.warning("REACHED END OF FILE");
+		}
+		return false;
 	}
 
 	private boolean matchTokenValue(String tokenType) {
 		if (tokenType.equals(token.getValue())) {
+			System.out.println(token.getDesc() + " -> " + token.getValue());
+			grammarLog.info(token.getDesc() + " -> " + token.getValue());
 			getNextToken();
 			return true;
 		} else {
@@ -1070,32 +1164,140 @@ public class SynatcticParser {
 
 	// type -> float | id | int
 	private boolean matchType() {
-		if (matchTokenType("T_RESERVE_WORD_INT")) {
+		if (token.getDesc().equals("T_RESERVE_WORD_INT")) {
 			System.out.println("type            -> int");
-			logger.info("type            -> int");
+			grammarLog.info("type            -> int");
+			getNextToken();
 			return true;
-		} else if (matchTokenType("T_RESERVE_WORD_FLOAT")) {
+		} else if (token.getDesc().equals("T_RESERVE_WORD_FLOAT")) {
 			System.out.println("type            -> float");
-			logger.info("type            -> float");
+			grammarLog.info("type            -> float");
+			getNextToken();
 			return true;
-		} else if (matchTokenType("T_IDENTIFIER")) {
-			System.out.println("type            -> id");
-			logger.info("type            -> id");
+		} else if (token.getDesc().equals("T_IDENTIFIER")) {
+			System.out.println("type            -> id" + "\t->\t"
+					+ token.getValue());
+			grammarLog.info("type            -> id" + "\t->\t"
+					+ token.getValue());
+			getNextToken();
 			return true;
+		} else {
+			System.out.println("ERROR: IN LINE NUMBER:\t" + token.getPosition()
+					+ ":\tExpected One of these token Type:\t"
+					+ "float | id | int");
+			parserLog.warning("ERROR: IN LINE NUMBER:\t"
+					+ token.getPosition()
+					+ ":\tExpected One of these token Type:\t"
+					+ "float | id | int");
+			while (!token.getValue().equals("$")) {
+				if (token.getDesc().equals("T_RESERVE_WORD_INT")) {
+					System.out.println("type            -> int");
+					grammarLog.info("type            -> int");
+					System.out.println("RESUME PARSING FROM TOKEN:\t"
+							+ token.getValue() + "\tAT LINE NUMBER:\t"
+							+ token.getPosition());
+					parserLog.info("RESUME PARSING FROM  TOKEN:\t"
+							+ token.getValue() + "\tAT LINE NUMBER:\t"
+							+ token.getPosition());
+					getNextToken();
+					return true;
+				} else if (token.getDesc().equals("T_RESERVE_WORD_FLOAT")) {
+					System.out.println("type            -> float");
+					grammarLog.info("type            -> float");
+					System.out.println("RESUME PARSING FROM TOKEN:\t"
+							+ token.getValue() + "\tAT LINE NUMBER:\t"
+							+ token.getPosition());
+					parserLog.info("RESUME PARSING FROM  TOKEN:\t"
+							+ token.getValue() + "\tAT LINE NUMBER:\t"
+							+ token.getPosition());
+					getNextToken();
+					return true;
+				} else if (token.getDesc().equals("T_IDENTIFIER")) {
+					System.out.println("type            -> id" + "\t->\t"
+							+ token.getValue());
+					grammarLog.info("type            -> id" + "\t->\t"
+							+ token.getValue());
+					System.out.println("RESUME PARSING FROM TOKEN:\t"
+							+ token.getValue() + "\tAT LINE NUMBER:\t"
+							+ token.getPosition());
+					parserLog.info("RESUME PARSING FROM  TOKEN:\t"
+							+ token.getValue() + "\tAT LINE NUMBER:\t"
+							+ token.getPosition());
+					getNextToken();
+					return true;
+				} else {
+					System.out.println("SKIPPING TOKEN:\t" + token.getValue()
+							+ "\tAT LINE NUMBER:\t" + token.getPosition());
+					parserLog.warning("SKIPPING TOKEN:\t"
+							+ token.getValue() + "\tAT LINE NUMBER:\t"
+							+ token.getPosition());
+					getNextToken();
+				}
+			}
+		}
+		if (token.getValue().equals("$")) {
+			System.out.println("REACHED END OF FILE");
+			grammarLog.warning("REACHED END OF FILE");
+			parserLog.warning("REACHED END OF FILE");
 		}
 		return false;
 	}
 
 	// num -> float | int
 	private boolean matchNum() {
-		if (matchTokenType("T_INTEGER")) {
+		if (token.getDesc().equals("T_INTEGER")) {
 			System.out.println("num            -> T_INTEGER");
-			logger.info("num            -> T_INTEGER");
+			grammarLog.info("num            -> T_INTEGER");
+			getNextToken();
 			return true;
-		} else if (matchTokenType("T_FLOAT")) {
+		} else if (token.getDesc().equals("T_FLOAT")) {
 			System.out.println("num            -> T_FLOAT");
-			logger.info("num            -> T_FLOAT");
+			grammarLog.info("num            -> T_FLOAT");
+			getNextToken();
 			return true;
+		} else {
+			System.out.println("ERROR: IN LINE NUMBER:\t" + token.getPosition()
+					+ ":\tExpected One of these token Type:\t" + "float | int");
+			parserLog.warning("ERROR: IN LINE NUMBER:\t"
+					+ token.getPosition()
+					+ ":\tExpected One of these token Type:\t" + "float | int");
+			while (!token.getValue().equals("$")) {
+				if (token.getDesc().equals("T_INTEGER")) {
+					System.out.println("num            -> T_INTEGER");
+					grammarLog.info("num            -> T_INTEGER");
+					System.out.println("RESUME PARSING FROM TOKEN:\t"
+							+ token.getValue() + "\tAT LINE NUMBER:\t"
+							+ token.getPosition());
+					parserLog.info("RESUME PARSING FROM  TOKEN:\t"
+							+ token.getValue() + "\tAT LINE NUMBER:\t"
+							+ token.getPosition());
+					getNextToken();
+					return true;
+				} else if (token.getDesc().equals("T_FLOAT")) {
+					System.out.println("num            -> T_FLOAT");
+					grammarLog.info("num            -> T_FLOAT");
+					System.out.println("RESUME PARSING FROM TOKEN:\t"
+							+ token.getValue() + "\tAT LINE NUMBER:\t"
+							+ token.getPosition());
+					parserLog.info("RESUME PARSING FROM  TOKEN:\t"
+							+ token.getValue() + "\tAT LINE NUMBER:\t"
+							+ token.getPosition());
+					getNextToken();
+					return true;
+				} else {
+					System.out.println("SKIPPING TOKEN:\t" + token.getValue()
+							+ "\tAT LINE NUMBER:\t" + token.getPosition());
+					parserLog.warning("SKIPPING TOKEN:\t"
+							+ token.getValue() + "\tAT LINE NUMBER:\t"
+							+ token.getPosition());
+					getNextToken();
+				}
+			}
+		}
+		if (token.getValue().equals("$")) {
+			System.out.println("REACHED END OF FILE");
+			grammarLog.warning("REACHED END OF FILE");
+			parserLog.warning("REACHED END OF FILE");
 		}
 		return false;
 	}
@@ -1103,18 +1305,18 @@ public class SynatcticParser {
 	// sign -> +
 	// sign -> -
 	private boolean matchSign() {
-		if (matchTokenValue("+")) {
+		if (token.getDesc().equals("+")) {
 			System.out.println("sign -> +");
-			logger.info("sign -> +");
+			grammarLog.info("sign -> +");
 			return true;
-		} else if (matchTokenValue("-")) {
+		} else if (token.getDesc().equals("-")) {
 			System.out.println("sign -> -");
-			logger.info("sign -> -");
+			grammarLog.info("sign -> -");
 			return true;
 		}
 		return false;
 	}
-	
+
 	private boolean skipErrors(String firstG, String followG) {
 		if (checkFirstSet(firstG) || checkFollowSet(followG))
 			return true;
@@ -1129,12 +1331,35 @@ public class SynatcticParser {
 		if (followSet != null) {
 			ffSet += " " + followSet;
 		}
-		System.out.print("IN LINE NUMBER:\t" + token.getPosition()
-				+ "\tExpected One of these tokens:\t" + ffSet);
-		logger.warning("IN LINE NUMBER:\t" + token.getPosition()
-				+ "\tExpected One of these tokens:\t" + ffSet);
-		getNextToken();
-		return true;
+		String ffArraySet[] = ffSet.split(" ");
+		System.out.println("ERROR: IN LINE NUMBER:\t" + token.getPosition()
+				+ ":\tExpected One of these tokens:\t" + ffSet);
+		parserLog.warning("ERROR: IN LINE NUMBER:\t" + token.getPosition()
+				+ ":\tExpected One of these tokens:\t" + ffSet);
+		while (!token.getValue().equals("$")) {
+			if (checkFirstSet(firstG) || checkFollowSet(followG)) {
+				System.out.println("RESUME PARSING FROM TOKEN:\t"
+						+ token.getValue() + "\tAT LINE NUMBER:\t"
+						+ token.getPosition());
+				parserLog.info("RESUME PARSING FROM  TOKEN:\t"
+						+ token.getValue() + "\tAT LINE NUMBER:\t"
+						+ token.getPosition());
+				return true;
+			} else {
+				System.out.println("SKIPPING TOKEN:\t" + token.getValue()
+						+ "\tAT LINE NUMBER:\t" + token.getPosition());
+				parserLog.warning("SKIPPING TOKEN:\t" + token.getValue()
+						+ "\tAT LINE NUMBER:\t" + token.getPosition());
+				getNextToken();
+			}
+		}
+		if (token.getValue().equals("$")) {
+			System.out.println("REACHED END OF FILE");
+			grammarLog.warning("REACHED END OF FILE");
+			parserLog.warning("REACHED END OF FILE");
+		}
+
+		return false;
 	}
 
 	private void getNextToken() {
