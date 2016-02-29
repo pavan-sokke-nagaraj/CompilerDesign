@@ -117,4 +117,12 @@ public class FirstAndFollw {
 		}
 		return followSet;
 	}
+	
+	public String getFirstSet(String firstG){
+		return firstMap.get(firstG);
+	}
+	
+	public String getFollowSet(String firstG){
+		return followMap.get(firstG);
+	}
 }

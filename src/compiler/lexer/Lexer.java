@@ -118,6 +118,7 @@ public class Lexer {
 	public Token getNextToken() throws IOException {
 		Token token = null;
 		boolean isValidToken = false;
+		boolean isEOF = false;
 		do {
 			token = getToken();
 			if (token.getTokenType() == TOKENTYPE.TOKEN) {
@@ -130,6 +131,7 @@ public class Lexer {
 			else if (token.getTokenType() == TOKENTYPE.EOF) {
 				tokens.add(token);
 				isValidToken = true;
+				isEOF = true;
 			}
 		} while (!isValidToken);
 		return token;
