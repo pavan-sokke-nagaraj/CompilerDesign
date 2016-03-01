@@ -1126,9 +1126,9 @@ public class SynatcticParser {
 			System.out.println(token.getDesc() + " -> " + token.getValue());
 			grammarLog.info(token.getDesc() + " -> " + token.getValue());
 			getNextToken();
-//			if (token.getDesc().equals("T_IDENTIFIER")){
-//				printGrammar("id", token.getValue());
-//			}
+			if (token.getDesc().equals("T_IDENTIFIER")){
+				printGrammar("id", token.getValue());
+			}
 			return true;
 		} else {
 			System.out.println("ERROR: IN LINE NUMBER:\t" + token.getPosition()

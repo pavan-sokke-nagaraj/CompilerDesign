@@ -27,7 +27,7 @@ public class SyntacticDriver {
 		String inputDir = System.getProperty("user.dir") + "\\Input\\";
 		String outputDir = System.getProperty("user.dir") + "\\Output\\";
 
-		String inputFile = inputDir + "SYNTAX_TEST.txt";
+		String inputFile = inputDir + "SYNTAX_TEST2_ERR.txt";
 		String tokenFile = outputDir + "TOKEN.txt";
 		String errorFile = outputDir + "ERROR.txt";
 		String commentFile = outputDir + "COMMENT.txt";

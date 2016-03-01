@@ -1,0 +1,13 @@
+Class class Foo{
+int var1;
+float var2;
+};
+program{
+for( = t = 0; t<=100 ; t = t + 1)
+{
+_integer
+_num = 12
+_100 = 10
+_100ABCD.101 = 10
+};
+};
