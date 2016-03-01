@@ -1,2 +1,0 @@
-[
-LINE:	9	VALUE:	!		TOKEN:	ERROR]

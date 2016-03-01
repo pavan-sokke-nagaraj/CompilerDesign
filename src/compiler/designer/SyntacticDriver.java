@@ -23,11 +23,14 @@ public class SyntacticDriver {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
+		
+		String inputDir = System.getProperty("user.dir") + "\\Input\\";
+		String outputDir = System.getProperty("user.dir") + "\\Output\\";
 
-		String inputFile = "SYN_TEST.txt";
-		String tokenFile = "TOKEN.txt";
-		String errorFile = "ERROR.txt";
-		String commentFile = "COMMENT.txt";
+		String inputFile = inputDir + "SYNTAX_TEST.txt";
+		String tokenFile = outputDir + "TOKEN.txt";
+		String errorFile = outputDir + "ERROR.txt";
+		String commentFile = outputDir + "COMMENT.txt";
 
 		Lexer lexer = new Lexer(inputFile);
 
