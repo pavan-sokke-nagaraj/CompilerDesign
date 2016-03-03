@@ -1015,7 +1015,7 @@ public class SynatcticParser {
 			return false;
 		}
 		if (checkFirstSet("arraySize")) {
-			printGrammar("array_Size", " [ int ] ");
+			printGrammar("array_Size", " [ T_INTEGER ] ");
 			if (matchTokenType("T_DEL_S_LPAREN") && matchTokenType("T_INTEGER")
 					&& matchTokenType("T_DEL_S_RPAREN")) {
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
@@ -1058,10 +1058,14 @@ public class SynatcticParser {
 		} else if (tokenType.equals(token.getDesc())) {
 			PrintUtil.info(grammarLog, LOGTYPE.SYNTAX, token.getDesc() + " -> "
 					+ token.getValue());
-			getNextToken();
 			if (token.getDesc().equals("T_IDENTIFIER")) {
 				printGrammar("id", token.getValue());
+			} else if (token.getDesc().equals("T_INTEGER")) {
+				printGrammar("T_INTEGER", token.getValue());
+			} else if (token.getDesc().equals("T_FLOAT")) {
+				printGrammar("T_FLOAT", token.getValue());
 			}
+			getNextToken();
 			return true;
 		} else {
 			PrintUtil.error(parserLog, LOGTYPE.SYNTAX,
@@ -1254,7 +1258,8 @@ public class SynatcticParser {
 			}
 		}
 		if (token.getValue().equals("$")) {
-			PrintUtil.warning(grammarLog, LOGTYPE.SYNTAX, "REACHED END OF FILE");
+			PrintUtil
+					.warning(grammarLog, LOGTYPE.SYNTAX, "REACHED END OF FILE");
 			PrintUtil.warning(parserLog, LOGTYPE.SYNTAX, "REACHED END OF FILE");
 		}
 		return false;
@@ -1263,7 +1268,7 @@ public class SynatcticParser {
 	// num -> float | int
 	private boolean matchNum() {
 		if (token.getDesc().equals("T_INTEGER")) {
-						PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
+			PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 					"num            -> T_INTEGER");
 			printGrammar("num", token.getValue());
 			getNextToken();
@@ -1354,7 +1359,7 @@ public class SynatcticParser {
 			ffSet += " " + followSet;
 		}
 		String ffArraySet[] = ffSet.split(" ");
-	PrintUtil.error(parserLog, LOGTYPE.SYNTAX, "ERROR: IN LINE NUMBER:\t"
+		PrintUtil.error(parserLog, LOGTYPE.SYNTAX, "ERROR: IN LINE NUMBER:\t"
 				+ token.getPosition() + ":\tExpected One of these tokens:\t"
 				+ ffSet);
 		while (!token.getValue().equals("$")) {
