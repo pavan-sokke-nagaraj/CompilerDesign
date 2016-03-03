@@ -60,8 +60,7 @@ public class Token {
 	}
 
 	public String toString() {
-		return "\nLINE:\t" + position + "\tVALUE:\t" + value + "\t\tTOKEN:\t" + desc;
-		// return position + "\t" + value + "\t" + tokenType;
+		return "LINE:\t" + position + "\tVALUE:\t" + value + "\t\tTOKEN:\t" + desc;
 	}
 
 }

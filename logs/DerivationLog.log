@@ -1,0 +1,26 @@
+[INFO][SYNTAX]prog
+[INFO][SYNTAX]classDeclList progBody
+[INFO][SYNTAX]ClassDecl classDeclList progBody
+[INFO][SYNTAX]class id { varDecFunDef } ; classDeclList progBody
+[INFO][SYNTAX]class Foo { varDecFunDef } ; classDeclList progBody
+[INFO][SYNTAX]class Foo { type id var_DecFunDef1 } ; classDeclList progBody
+[INFO][SYNTAX]class Foo { int id var_DecFunDef1 } ; classDeclList progBody
+[INFO][SYNTAX]class Foo { int id arraySizeList ; varDecFunDef  } ; classDeclList progBody
+[INFO][SYNTAX]class Foo { int id  ; varDecFunDef  } ; classDeclList progBody
+[INFO][SYNTAX]class Foo { int id  ; type id var_DecFunDef1  } ; classDeclList progBody
+[INFO][SYNTAX]class Foo { int id  ; float id var_DecFunDef1  } ; classDeclList progBody
+[INFO][SYNTAX]class Foo { int id  ; float id arraySizeList ; varDecFunDef   } ; classDeclList progBody
+[INFO][SYNTAX]class Foo { int id  ; float id  ; varDecFunDef   } ; classDeclList progBody
+[INFO][SYNTAX]class Foo { int id  ; float id  ;    } ; classDeclList progBody
+[INFO][SYNTAX]class Foo { int program  ; float id  ;    } ; classDeclList progBody
+[INFO][SYNTAX]class Foo { int program  ; float id  ;    } ;  progBody
+[INFO][SYNTAX]class Foo { int program  ; float id  ;    } ;  program funcBody ; funcDefList
+[INFO][SYNTAX]class Foo { int program  ; float id  ;    } ;  program { bodyCode } ; funcDefList
+[INFO][SYNTAX]class Foo { int program  ; float id  ;    } ;  program { int id arraySizeList ; bodyCode } ; funcDefList
+[INFO][SYNTAX]class Foo { int program  ; float id  ;    } ;  program { int id arraySizeList ; bodyCode } ; funcDefList
+[INFO][SYNTAX]class Foo { int program  ; float id  ;    } ;  program { int id  ; bodyCode } ; funcDefList
+[INFO][SYNTAX]class Foo { int program  ; float id  ;    } ;  program { int id  ; float id arraySizeList ; bodyCode } ; funcDefList
+[INFO][SYNTAX]class Foo { int program  ; float id  ;    } ;  program { int id  ; float id arraySizeList ; bodyCode } ; funcDefList
+[INFO][SYNTAX]class Foo { int program  ; float id  ;    } ;  program { int id  ; float id  ; bodyCode } ; funcDefList
+[INFO][SYNTAX]class Foo { int program  ; float id  ;    } ;  program { int id  ; float id  ;  } ; funcDefList
+[INFO][SYNTAX]class Foo { int program  ; float id  ;    } ;  program { int id  ; float id  ;  } ; 

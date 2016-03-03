@@ -23,28 +23,17 @@ public class SyntacticDriver {
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
-		
-		String inputDir = System.getProperty("user.dir") + "\\Input\\";
-		String outputDir = System.getProperty("user.dir") + "\\Output\\";
 
-		String inputFile = inputDir + "SYNTAX_TEST2_ERR.txt";
-		String tokenFile = outputDir + "TOKEN.txt";
-		String errorFile = outputDir + "ERROR.txt";
-		String commentFile = outputDir + "COMMENT.txt";
+		String inputDir = System.getProperty("user.dir") + "\\Input\\";
+
+		String inputFile = inputDir + "TEST.txt";
 
 		Lexer lexer = new Lexer(inputFile);
 
-		// Token token = null;
-		// do {
-		// token = lexer.getNextToken();
-		// } while (token.getValue() != "EOF");
 
 		SynatcticParser sParser = new SynatcticParser(lexer);
 		sParser.parse();
 
-		lexer.writeToFile(lexer.tokens, tokenFile);
-		lexer.writeToFile(lexer.errors, errorFile);
-		lexer.writeToFile(lexer.comments, commentFile);
 	}
 
 }

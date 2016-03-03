@@ -1,0 +1,40 @@
+[INFO][SYNTAX]T_RESERVE_WORD_CLASS -> class
+[INFO][SYNTAX]T_IDENTIFIER -> Foo
+[INFO][SYNTAX]T_DEL_C_LPAREN -> {
+[INFO][SYNTAX]type            -> int
+[INFO][SYNTAX]T_IDENTIFIER -> var1
+[INFO][SYNTAX]arraySizeList ->  EPSILON
+[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
+[INFO][SYNTAX]type            -> float
+[INFO][SYNTAX]T_IDENTIFIER -> var2
+[INFO][SYNTAX]arraySizeList ->  EPSILON
+[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
+[INFO][SYNTAX]varDecFunDef    -> EPSILON
+[INFO][SYNTAX]varDecFunDef1 -> arraySizeList ; varDecFunDef
+[INFO][SYNTAX]varDecFunDef -> type id varDecFunDef1
+[INFO][SYNTAX]varDecFunDef1 -> arraySizeList ; varDecFunDef
+[INFO][SYNTAX]varDecFunDef -> type id varDecFunDef1
+[INFO][SYNTAX]T_DEL_C_RPAREN -> }
+[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
+[INFO][SYNTAX]classDecl        -> class id { varDecFunDef } ;
+[INFO][SYNTAX]classDeclList    -> EPSILON
+[INFO][SYNTAX]classDeclList    -> classDecl classDeclList
+[INFO][SYNTAX]T_IDENTIFIER -> program
+[INFO][SYNTAX]T_DEL_C_LPAREN -> {
+[INFO][SYNTAX]type            -> int
+[INFO][SYNTAX]T_IDENTIFIER -> var1
+[INFO][SYNTAX]arraySizeList ->  EPSILON
+[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
+[INFO][SYNTAX]type            -> float
+[INFO][SYNTAX]T_IDENTIFIER -> var2
+[INFO][SYNTAX]arraySizeList ->  EPSILON
+[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
+[INFO][SYNTAX]bodyCode -> EPSILON
+[INFO][SYNTAX]bodyCode -> float id arraySizeList ; bodyCode
+[INFO][SYNTAX]bodyCode -> int id arraySizeList ; bodyCode
+[INFO][SYNTAX]T_DEL_C_RPAREN -> }
+[INFO][SYNTAX]funcBody -> { bodyCode }
+[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
+[INFO][SYNTAX]funcDefList -> EPSILON
+[INFO][SYNTAX]progBody -> program funcBody ; funcDefList
+[INFO][SYNTAX]prog -> classDeclList progBody
