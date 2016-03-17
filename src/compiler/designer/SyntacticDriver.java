@@ -26,7 +26,7 @@ public class SyntacticDriver {
 
 		String inputDir = System.getProperty("user.dir") + "\\Input\\";
 
-		String inputFile = inputDir + "TEST.txt";
+		String inputFile = inputDir + "SYNTAX_TEST.txt";
 
 		Lexer lexer = new Lexer(inputFile);
 

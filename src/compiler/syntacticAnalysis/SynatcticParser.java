@@ -1072,68 +1072,6 @@ public class SynatcticParser {
 					"ERROR: IN LINE NUMBER:\t" + token.getPosition()
 							+ ":\tExpected One of these token Type:\t"
 							+ tokenType);
-			while (!token.getValue().equals("$")) {
-				if (tokenType.equals("relOp")
-						&& token.getDesc().toString().startsWith("T_OP_REL_")) {
-					PrintUtil.info(grammarLog, LOGTYPE.SYNTAX, "relOp" + " -> "
-							+ token.getValue());
-					PrintUtil.error(
-							parserLog,
-							LOGTYPE.SYNTAX,
-							"RESUME PARSING FROM  TOKEN:\t" + token.getValue()
-									+ "\tAT LINE NUMBER:\t"
-									+ token.getPosition());
-					getNextToken();
-					return true;
-				} else if (tokenType.equals("addOp")
-						&& (token.getValue().equals("+")
-								|| token.getValue().equals("-") || token
-								.getValue().equals("or"))) {
-					PrintUtil.info(grammarLog, LOGTYPE.SYNTAX, "addOp" + " -> "
-							+ token.getValue());
-					PrintUtil.error(
-							parserLog,
-							LOGTYPE.SYNTAX,
-							"RESUME PARSING FROM  TOKEN:\t" + token.getValue()
-									+ "\tAT LINE NUMBER:\t"
-									+ token.getPosition());
-					getNextToken();
-					return true;
-				} else if (tokenType.equals("multOp")
-						&& (token.getValue().equals("*")
-								|| token.getValue().equals("/") || token
-								.getValue().equals("and"))) {
-					PrintUtil.info(grammarLog, LOGTYPE.SYNTAX, "multOp"
-							+ " -> " + token.getValue());
-					PrintUtil.error(
-							parserLog,
-							LOGTYPE.SYNTAX,
-							"RESUME PARSING FROM  TOKEN:\t" + token.getValue()
-									+ "\tAT LINE NUMBER:\t"
-									+ token.getPosition());
-					getNextToken();
-					return true;
-				} else if (tokenType.equals(token.getDesc())) {
-					PrintUtil.info(grammarLog, LOGTYPE.SYNTAX, token.getDesc()
-							+ " -> " + token.getValue());
-					PrintUtil.error(
-							parserLog,
-							LOGTYPE.SYNTAX,
-							"RESUME PARSING FROM  TOKEN:\t" + token.getValue()
-									+ "\tAT LINE NUMBER:\t"
-									+ token.getPosition());
-					getNextToken();
-					return true;
-				} else {
-					PrintUtil.error(
-							parserLog,
-							LOGTYPE.SYNTAX,
-							"SKIPPING TOKEN:\t" + token.getValue()
-									+ "\tAT LINE NUMBER:\t"
-									+ token.getPosition());
-				}
-				getNextToken();
-			}
 		}
 		if (token.getValue().equals("$")) {
 			PrintUtil.warning(parserLog, LOGTYPE.SYNTAX, "REACHED END OF FILE");
@@ -1206,63 +1144,20 @@ public class SynatcticParser {
 					"ERROR: IN LINE NUMBER:\t" + token.getPosition()
 							+ ":\tExpected One of these token Type:\t"
 							+ "float | id | int");
-			while (!token.getValue().equals("$")) {
-				if (token.getDesc().equals("T_RESERVE_WORD_INT")) {
-					PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
-							"type            -> int");
-					printGrammar("type", token.getValue());
-					PrintUtil.warning(
-							parserLog,
-							LOGTYPE.SYNTAX,
-							"RESUME PARSING FROM  TOKEN:\t" + token.getValue()
-									+ "\tAT LINE NUMBER:\t"
-									+ token.getPosition());
-					getNextToken();
-					return true;
-				} else if (token.getDesc().equals("T_RESERVE_WORD_FLOAT")) {
-					PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
-							"type            -> float");
-					printGrammar("type", token.getValue());
-					PrintUtil.warning(
-							parserLog,
-							LOGTYPE.SYNTAX,
-							"RESUME PARSING FROM  TOKEN:\t" + token.getValue()
-									+ "\tAT LINE NUMBER:\t"
-									+ token.getPosition());
-					getNextToken();
-					return true;
-				} else if (token.getDesc().equals("T_IDENTIFIER")) {
-					PrintUtil.info(
-							grammarLog,
-							LOGTYPE.SYNTAX,
-							"type            -> id" + "\t->\t"
-									+ token.getValue());
-					printGrammar("type", token.getValue());
-					PrintUtil.warning(
-							parserLog,
-							LOGTYPE.SYNTAX,
-							"RESUME PARSING FROM  TOKEN:\t" + token.getValue()
-									+ "\tAT LINE NUMBER:\t"
-									+ token.getPosition());
-					getNextToken();
-					return true;
-				} else {
-					PrintUtil.error(
-							parserLog,
-							LOGTYPE.SYNTAX,
-							"SKIPPING TOKEN:\t" + token.getValue()
-									+ "\tAT LINE NUMBER:\t"
-									+ token.getPosition());
-					getNextToken();
-				}
+			if (token.getValue().equals("$")) {
+				PrintUtil.warning(grammarLog, LOGTYPE.SYNTAX,
+						"REACHED END OF FILE");
+				PrintUtil.warning(parserLog, LOGTYPE.SYNTAX,
+						"REACHED END OF FILE");
+				return false;
 			}
+			PrintUtil.error(parserLog, LOGTYPE.SYNTAX,
+					"SKIPPING TOKEN:\t" + token.getValue()
+							+ "\tAT LINE NUMBER:\t" + token.getPosition());
+			getNextToken();
 		}
-		if (token.getValue().equals("$")) {
-			PrintUtil
-					.warning(grammarLog, LOGTYPE.SYNTAX, "REACHED END OF FILE");
-			PrintUtil.warning(parserLog, LOGTYPE.SYNTAX, "REACHED END OF FILE");
-		}
-		return false;
+
+		return true;
 	}
 
 	// num -> float | int
@@ -1284,41 +1179,6 @@ public class SynatcticParser {
 					"ERROR: IN LINE NUMBER:\t" + token.getPosition()
 							+ ":\tExpected One of these token Type:\t"
 							+ "float | int");
-			while (!token.getValue().equals("$")) {
-				if (token.getDesc().equals("T_INTEGER")) {
-					PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
-							"num            -> T_INTEGER");
-					printGrammar("num", token.getValue());
-					PrintUtil.info(
-							parserLog,
-							LOGTYPE.SYNTAX,
-							"RESUME PARSING FROM  TOKEN:\t" + token.getValue()
-									+ "\tAT LINE NUMBER:\t"
-									+ token.getPosition());
-					getNextToken();
-					return true;
-				} else if (token.getDesc().equals("T_FLOAT")) {
-					PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
-							"num            -> T_FLOAT");
-					printGrammar("num", token.getValue());
-					PrintUtil.info(
-							parserLog,
-							LOGTYPE.SYNTAX,
-							"RESUME PARSING FROM  TOKEN:\t" + token.getValue()
-									+ "\tAT LINE NUMBER:\t"
-									+ token.getPosition());
-					getNextToken();
-					return true;
-				} else {
-					PrintUtil.warning(
-							parserLog,
-							LOGTYPE.SYNTAX,
-							"SKIPPING TOKEN:\t" + token.getValue()
-									+ "\tAT LINE NUMBER:\t"
-									+ token.getPosition());
-					getNextToken();
-				}
-			}
 		}
 		if (token.getValue().equals("$")) {
 			grammarLog.warning("REACHED END OF FILE");

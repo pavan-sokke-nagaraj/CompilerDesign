@@ -10,8 +10,8 @@ class Foo{
 		int c[10];
 		float d[20];
 		Utility utility;
-		get(value); // get (id)
-		get(id.id);
+		get(value); // get (val)
+		get(val.val);
 		 maxValue = 10;
 		 maxValue = minValue;	
 		 maxValue = minValue[100];	
@@ -43,15 +43,15 @@ class Foo{
 		 a=+a;
 		 a=+a[a.a[10].a.a[10]];
 		 if(a > arr[aa]) then {
-			a = arr[idx];
+			a = arr[valx];
 		}else{
 		};
-		for( int idx1 = 1; idx2 <= 99; idx3 = ( idx ) + 1);
-		for( int idx1 = 1; idx2 <= 99; idx3 = ( idx ) + 1)
+		for( int valx1 = 1; valx2 <= 99; valx3 = ( valx ) + 1);
+		for( int valx1 = 1; valx2 <= 99; valx3 = ( valx ) + 1)
 		{
 			a[1]= b[1];
-			if(array[idx] < maxValue) then {
-				maxValue = array[idx];
+			if(array[valx] < maxValue) then {
+				maxValue = array[valx];
 			}else{
 			};
 			return (minValue);
@@ -67,14 +67,14 @@ program{
 	int findMax;
 	Utility utility;
 	if(a > arr[aa]) then {
-			a = arr[idx];
+			a = arr[valx];
 	}else{
-		for( int idx1 = 1; idx2 <= 99; idx3 = ( idx ) + 1);
-		for( int idx1 = 1; idx2 <= 99; idx3 = ( idx ) + 1)
+		for( int valx1 = 1; valx2 <= 99; valx3 = ( valx ) + 1);
+		for( int valx1 = 1; valx2 <= 99; valx3 = ( valx ) + 1)
 		{
 			a[1]= b[1];
-			if(array[idx] < maxValue) then {
-				maxValue = array[idx];
+			if(array[valx] < maxValue) then {
+				maxValue = array[valx];
 			}else{
 			};
 			return (minValue);
@@ -94,17 +94,17 @@ float radomselect()
 	value = 100 * (2 + 3.0 / 7.0006);
 	value = 1.05 + ((2.04 * 2.47) - 3.0) + 7.0006 ;
 	return (value);
-	for( int idx1 = 1; idx2 <= 99; idx3 = ( idx ) + 1)
+	for( int valx1 = 1; valx2 <= 99; valx3 = ( valx ) + 1)
 		{
 			a[1]= b[1];
-			if(array[idx] < maxValue) then {
-				maxValue = array[idx];
+			if(array[valx] < maxValue) then {
+				maxValue = array[valx];
 			}else{
-				for( int idx1 = 1; idx2 <= 99; idx3 = ( idx ) + 1)
+				for( int valx1 = 1; valx2 <= 99; valx3 = ( valx ) + 1)
 					{
 						a[1]= b[1];
-						if(array[idx] < max) then {
-							max = array[idx];
+						if(array[valx] < max) then {
+							max = array[valx];
 						}else{
 						};
 						return (min);

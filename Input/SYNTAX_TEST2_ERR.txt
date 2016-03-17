@@ -3,6 +3,7 @@ int var1;
 float var2;
 };
 program{
+a.a =a.a;
 for( = t = 0; t<=100 ; t = t + 1)
 {
 _integer
