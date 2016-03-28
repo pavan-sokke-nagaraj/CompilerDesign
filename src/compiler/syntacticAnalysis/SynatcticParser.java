@@ -5,14 +5,24 @@ import java.util.logging.Logger;
 
 import compiler.lexer.Lexer;
 import compiler.lexer.Token;
+import compiler.semantics.SemanticAnalysis;
+import compiler.semantics.Symbol;
+import compiler.semantics.Symbol.SYMBOLTYPE;
+import compiler.semantics.SymbolTable;
 import compiler.utils.PrintUtil;
 import compiler.utils.PrintUtil.LOGTYPE;
 
 public class SynatcticParser {
 
 	Lexer lexer = new Lexer();
+	// Syntax Analysis
 	FirstAndFollw firstAndFollw = null;
 	Token token = null;
+	Token prevToken = new Token();
+	// Semantics
+	private Symbol symbol = null;
+	public SemanticAnalysis semantics = new SemanticAnalysis();
+	// logging
 	private Logger grammarLog;
 	private Logger parserLog;
 	private Logger derivationLog;
@@ -28,9 +38,14 @@ public class SynatcticParser {
 	public SynatcticParser(Lexer lexer) {
 		this.lexer = lexer;
 		firstAndFollw = new FirstAndFollw();
-		grammarLog = PrintUtil.setLogger("GrammarLog.log");
-		parserLog = PrintUtil.setLogger("ParserLog.log");
-		derivationLog = PrintUtil.setLogger("DerivationLog.log");
+		grammarLog = PrintUtil.setLogger("GRAMMAR.log");
+		parserLog = PrintUtil.setLogger("PARSER.log");
+		derivationLog = PrintUtil.setLogger("DERIVATION.log");
+	}
+
+	public boolean parse(SymbolTable firstTable) {
+		semantics.firstTable = (SymbolTable) firstTable.clone();
+		return parse();
 	}
 
 	/**
@@ -56,6 +71,7 @@ public class SynatcticParser {
 	// prog -> classDeclList progBody lol
 	private boolean prog() {
 		printGrammar("prog", "classDeclList progBody");
+		semantics.progDecl();
 		if (classDeclList() && progBody()) {
 			PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 					"prog -> classDeclList progBody");
@@ -94,13 +110,14 @@ public class SynatcticParser {
 		}
 		if (checkFirstSet("class")) {
 			printGrammar("ClassDecl", "class id { varDecFunDef } ;");
-			if (matchTokenType("T_RESERVE_WORD_CLASS")
-					&& matchTokenType("T_IDENTIFIER")
-					&& matchTokenType("T_DEL_C_LPAREN")) {
+			if (matchTokenType("T_RESERVE_WORD_CLASS", SYMBOLTYPE.UNKNOWN)
+					&& matchTokenType("T_IDENTIFIER", SYMBOLTYPE.UNKNOWN)
+					&& matchTokenType("T_DEL_C_LPAREN", SYMBOLTYPE.CLASS)) {
 				if (varDecFunDef() && matchTokenType("T_DEL_C_RPAREN")
 						&& matchTokenType("T_DEL_SEMICOLON")) {
 					PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 							"classDecl        -> class id { varDecFunDef } ;");
+					semantics.QuitPresentTable();
 					return true;
 				}
 			}
@@ -116,7 +133,8 @@ public class SynatcticParser {
 		}
 		if (checkFirstSet("type")) {
 			printGrammar("varDecFunDef", "type id var_DecFunDef1");
-			if (matchType() && matchTokenType("T_IDENTIFIER")
+			if (matchType()
+					&& matchTokenType("T_IDENTIFIER", SYMBOLTYPE.UNKNOWN)
 					&& varDecFunDef1()) {
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 						"varDecFunDef -> type id varDecFunDef1");
@@ -141,9 +159,11 @@ public class SynatcticParser {
 		}
 		if (checkFirstSet("(")) {
 			printGrammar("var_DecFunDef1", "( fParams ) funcBody ; funcDefList");
-			if (matchTokenType("T_DEL_R_LPAREN") && fParams()
-					&& matchTokenType("T_DEL_R_RPAREN") && funcBody()
-					&& matchTokenType("T_DEL_SEMICOLON") && funcDefList()) {
+			if (matchTokenType("T_DEL_R_LPAREN", SYMBOLTYPE.FUNCTION)
+					&& fParams() && matchTokenType("T_DEL_R_RPAREN")
+					&& funcBody()
+					&& matchTokenType("T_DEL_SEMICOLON", SYMBOLTYPE.QUITTABLE)
+					&& funcDefList()) {
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 						"varDecFunDef1 -> ( fParams ) funcBody ; funcDefList");
 				return true;
@@ -169,7 +189,8 @@ public class SynatcticParser {
 		if (checkFirstSet("program")) {
 			printGrammar("progBody", "program funcBody ; funcDefList");
 			if (matchTokenValue("program") && funcBody()
-					&& matchTokenType("T_DEL_SEMICOLON") && funcDefList()) {
+					&& matchTokenType("T_DEL_SEMICOLON", SYMBOLTYPE.QUITTABLE)
+					&& funcDefList()) {
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 						"progBody -> program funcBody ; funcDefList");
 				return true;
@@ -205,7 +226,8 @@ public class SynatcticParser {
 		}
 		if (checkFirstSet("funcHead")) {
 			printGrammar("func_Def", "funcHead funcBody ;");
-			if (funcHead() && funcBody() && matchTokenType("T_DEL_SEMICOLON")) {
+			if (funcHead() && funcBody()
+					&& matchTokenType("T_DEL_SEMICOLON", SYMBOLTYPE.QUITTABLE)) {
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 						"funcDef -> funcHead funcBody ;");
 				return true;
@@ -221,9 +243,10 @@ public class SynatcticParser {
 		}
 		if (checkFirstSet("type")) {
 			printGrammar("funcHead", "type id ( fParams )");
-			if (matchType() && matchTokenType("T_IDENTIFIER")
-					&& matchTokenType("T_DEL_R_LPAREN") && fParams()
-					&& matchTokenType("T_DEL_R_RPAREN")) {
+			if (matchType()
+					&& matchTokenType("T_IDENTIFIER", SYMBOLTYPE.UNKNOWN)
+					&& matchTokenType("T_DEL_R_LPAREN", SYMBOLTYPE.FUNCTION)
+					&& fParams() && matchTokenType("T_DEL_R_RPAREN")) {
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 						"funcHead -> type id ( fParams )");
 				return true;
@@ -241,7 +264,8 @@ public class SynatcticParser {
 		}
 		if (checkFirstSet("type")) {
 			printGrammar("fParams", "type id arraySizeList f_Params_TailList");
-			if (matchType() && matchTokenType("T_IDENTIFIER")
+			if (matchType()
+					&& matchTokenType("T_IDENTIFIER", SYMBOLTYPE.PARAMETER)
 					&& arraySizeList() && fParamsTailList()) {
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 						"fParams -> type id arraySizeList fParamsTailList");
@@ -288,7 +312,8 @@ public class SynatcticParser {
 		if (checkFirstSet(",")) {
 			printGrammar("f_Param_Tail", ", type id arraySizeList");
 			if (matchTokenType("T_DEL_COMMA") && matchType()
-					&& matchTokenType("T_IDENTIFIER") && arraySizeList()) {
+					&& matchTokenType("T_IDENTIFIER", SYMBOLTYPE.PARAMETER)
+					&& arraySizeList()) {
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 						"fParamsTail -> , type id arraySizeList");
 				return true;
@@ -329,7 +354,8 @@ public class SynatcticParser {
 		}
 		if (checkFirstSet("float")) {
 			printGrammar("bodyCode", "float id arraySizeList ; bodyCode");
-			if (matchType() && matchTokenType("T_IDENTIFIER")
+			if (matchType()
+					&& matchTokenType("T_IDENTIFIER", SYMBOLTYPE.UNKNOWN)
 					&& arraySizeList() && matchTokenType("T_DEL_SEMICOLON")
 					&& bodyCode()) {
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
@@ -339,7 +365,8 @@ public class SynatcticParser {
 				return false;
 		} else if (checkFirstSet("int")) {
 			printGrammar("bodyCode", "int id arraySizeList ; bodyCode");
-			if (matchType() && matchTokenType("T_IDENTIFIER")
+			if (matchType()
+					&& matchTokenType("T_IDENTIFIER", SYMBOLTYPE.UNKNOWN)
 					&& arraySizeList() && matchTokenType("T_DEL_SEMICOLON")
 					&& bodyCode()) {
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
@@ -349,7 +376,8 @@ public class SynatcticParser {
 				return false;
 		} else if (checkFirstSet("id")) {
 			printGrammar("bodyCode", "id body_Code2");
-			if (matchTokenType("T_IDENTIFIER") && bodyCode2()) {
+			if (matchTokenType("T_IDENTIFIER", SYMBOLTYPE.UNKNOWN)
+					&& bodyCode2()) {
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 						"bodyCode -> id bodyCode2");
 				return true;
@@ -381,14 +409,16 @@ public class SynatcticParser {
 		}
 		if (checkFirstSet("id")) {
 			printGrammar("body_Code2", "id arraySizeList ; bodyCode");
-			if (matchTokenType("T_IDENTIFIER") && arraySizeList()
-					&& matchTokenType("T_DEL_SEMICOLON") && bodyCode()) {
+			if (matchTokenType("T_IDENTIFIER", SYMBOLTYPE.UNKNOWN)
+					&& arraySizeList() && matchTokenType("T_DEL_SEMICOLON")
+					&& bodyCode()) {
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 						"bodyCode2 -> id arraySizeList ; bodyCode");
 				return true;
 			} else
 				return false;
 		} else if (checkFirstSet("bodyCode2")) {
+			semantics.isVarDeclared(symbol);
 			printGrammar("body_Code2", "i_ndiceList dotList = expr ; S_LIST");
 			if (indiceList() && dotIdList() && matchTokenValue("=") && expr()
 					&& matchTokenType("T_DEL_SEMICOLON") && statementList()) {
@@ -516,7 +546,7 @@ public class SynatcticParser {
 					"for ( type id = expr ; relExpr ; assignStat ) statBlock");
 			if (matchTokenType("T_RESERVE_WORD_FOR")
 					&& matchTokenType("T_DEL_R_LPAREN") && matchType()
-					&& matchTokenType("T_IDENTIFIER")
+					&& matchTokenType("T_IDENTIFIER", SYMBOLTYPE.FORLOOPVAR)
 					&& matchTokenType("T_OP_ASSIGN_EQUAL") && expr()
 					&& matchTokenType("T_DEL_SEMICOLON") && relExpr()
 					&& matchTokenType("T_DEL_SEMICOLON") && assignStat()
@@ -756,7 +786,8 @@ public class SynatcticParser {
 				return false;
 		} else if (checkFirstSet("id")) {
 			printGrammar("factor", "id IorP");
-			if (matchTokenType("T_IDENTIFIER") && indiceOrParam()) {
+			if (matchTokenType("T_IDENTIFIER", SYMBOLTYPE.ISVARDECLARED)
+					&& indiceOrParam()) {
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 						"factor -> id indiceOrParam");
 				return true;
@@ -806,7 +837,8 @@ public class SynatcticParser {
 		}
 		if (checkFirstSet(".")) {
 			printGrammar("I_F", ". id IorP");
-			if (matchTokenType("T_DEL_DOT") && matchTokenType("T_IDENTIFIER")
+			if (matchTokenType("T_DEL_DOT")
+					&& matchTokenType("T_IDENTIFIER", SYMBOLTYPE.ISCLASSORFUNC)
 					&& indiceOrParam()) {
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 						"idFactor -> . id indiceOrParam");
@@ -851,7 +883,8 @@ public class SynatcticParser {
 		}
 		if (checkFirstSet(".")) {
 			printGrammar("dotList", ". id i_ndiceList");
-			if (matchTokenType("T_DEL_DOT") && matchTokenType("T_IDENTIFIER")
+			if (matchTokenType("T_DEL_DOT")
+					&& matchTokenType("T_IDENTIFIER", SYMBOLTYPE.ISCLASSORFUNC)
 					&& indiceList()) {
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 						"dotIdList -> . id indiceList");
@@ -873,7 +906,8 @@ public class SynatcticParser {
 		}
 		if (checkFirstSet("id")) {
 			printGrammar("variable", "id i_ndiceList dotNest");
-			if (matchTokenType("T_IDENTIFIER") && indiceList() && dotIdNest()) {
+			if (matchTokenType("T_IDENTIFIER", SYMBOLTYPE.ISVARDECLARED)
+					&& indiceList() && dotIdNest()) {
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 						"variable -> id indiceList dotIdNest");
 				return true;
@@ -891,7 +925,8 @@ public class SynatcticParser {
 		}
 		if (checkFirstSet(".")) {
 			printGrammar("dotNest", ". id i_ndiceList dotNest");
-			if (matchTokenType("T_DEL_DOT") && matchTokenType("T_IDENTIFIER")
+			if (matchTokenType("T_DEL_DOT")
+					&& matchTokenType("T_IDENTIFIER", SYMBOLTYPE.ISCLASSORFUNC)
 					&& indiceList() && dotIdNest()) {
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 						"dotIdNest -> . id indiceList dotIdNest");
@@ -1004,6 +1039,7 @@ public class SynatcticParser {
 			printGrammar("arraySizeList", "");
 			PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 					"arraySizeList ->  EPSILON");
+			semantics.variableDecl(symbol);
 			return true;
 		}
 		return false;
@@ -1016,7 +1052,8 @@ public class SynatcticParser {
 		}
 		if (checkFirstSet("arraySize")) {
 			printGrammar("array_Size", " [ T_INTEGER ] ");
-			if (matchTokenType("T_DEL_S_LPAREN") && matchTokenType("T_INTEGER")
+			if (matchTokenType("T_DEL_S_LPAREN")
+					&& matchTokenType("T_INTEGER", SYMBOLTYPE.ARRAYSIZE)
 					&& matchTokenType("T_DEL_S_RPAREN")) {
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 						"arraySizeList -> arraySize arraySizeList");
@@ -1081,10 +1118,109 @@ public class SynatcticParser {
 		return false;
 	}
 
+	// relOp -> < | <= | <> | == | > | >=
+	// addOp -> + | - | or
+	private boolean matchTokenType(String tokenType, SYMBOLTYPE symbolType) {
+		if (tokenType.equals("relOp")
+				&& token.getDesc().toString().startsWith("T_OP_REL_")) {
+			printGrammar("relOp", token.getValue());
+			PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
+					"relOp" + " -> " + token.getValue());
+			getNextToken();
+			return true;
+		} else if (tokenType.equals("addOp")
+				&& (token.getValue().equals("+")
+						|| token.getValue().equals("-") || token.getValue()
+						.equals("or"))) {
+			PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
+					"addOp" + " -> " + token.getValue());
+			printGrammar("addOp", token.getValue());
+			getNextToken();
+			return true;
+		} else if (tokenType.equals("multOp")
+				&& (token.getValue().equals("*")
+						|| token.getValue().equals("/") || token.getValue()
+						.equals("and"))) {
+			PrintUtil.info(grammarLog, LOGTYPE.SYNTAX, "multOp" + " -> "
+					+ token.getValue());
+			printGrammar("multOp", token.getValue());
+			getNextToken();
+			return true;
+		} else if (tokenType.equals(token.getDesc())) {
+			PrintUtil.info(grammarLog, LOGTYPE.SYNTAX, token.getDesc() + " -> "
+					+ token.getValue());
+			Symbol tempSymb = new Symbol();
+			if (token.getDesc().equals("T_IDENTIFIER")) {
+				printGrammar("id", token.getValue());
+				if (symbolType == SYMBOLTYPE.ISCLASSORFUNC) {
+					tempSymb.setToken(copyToken(token));
+				} else {
+					symbol = new Symbol();
+					symbol.setDataType(copyToken(prevToken));
+					symbol.setToken(copyToken(token));
+					symbol.symbolType = symbolType;
+				}
+				// System.out.println("NEW SYMBOL: ID\t"
+				// + symbol.getToken().getValue() + "\tDATA TYPE:\t"
+				// + symbol.getDataType().getValue());
+			} else if (token.getDesc().equals("T_INTEGER")) {
+				printGrammar("T_INTEGER", token.getValue());
+				if (symbolType == SYMBOLTYPE.ARRAYSIZE) {
+					symbol.setArray(true);
+					symbol.setArrLength(symbol.getArrLength() + 1);
+					int arrValue = Integer.parseInt(token.getValue());
+					symbol.getArrSize().add(arrValue);
+				}
+			} else if (token.getDesc().equals("T_FLOAT")) {
+				printGrammar("T_FLOAT", token.getValue());
+			}
+
+			if (symbolType == SYMBOLTYPE.CLASS) {
+				semantics.classDecl(symbol);
+			} else if (symbolType == SYMBOLTYPE.FUNCTION) {
+				semantics.functionDecl(symbol);
+			} else if (symbolType == SYMBOLTYPE.QUITTABLE) {
+				semantics.QuitPresentTable();
+			} else if (symbolType == SYMBOLTYPE.ISVARDECLARED) {
+				semantics.isVarDeclared(symbol);
+			} else if (symbolType == SYMBOLTYPE.ISCLASSORFUNC) {
+				// tempSymb.setToken(copyToken(token));
+				semantics.isClassType(symbol, tempSymb);
+			} else if (symbolType == SYMBOLTYPE.FORLOOPVAR) {
+				semantics.variableDecl(symbol);
+			}
+			getNextToken();
+			return true;
+		} else {
+			PrintUtil.error(parserLog, LOGTYPE.SYNTAX,
+					"ERROR: IN LINE NUMBER:\t" + token.getPosition()
+							+ ":\tExpected One of these token Type:\t"
+							+ tokenType);
+		}
+		if (token.getValue().equals("$")) {
+			PrintUtil.warning(parserLog, LOGTYPE.SYNTAX, "REACHED END OF FILE");
+			PrintUtil
+					.warning(grammarLog, LOGTYPE.SYNTAX, "REACHED END OF FILE");
+		}
+		return false;
+	}
+
+	private Token copyToken(Token token) {
+		Token cpyToken = new Token(token.getPosition(), token.getValue(),
+				token.getDesc(), token.getTokenType());
+		return cpyToken;
+	}
+
 	private boolean matchTokenValue(String tokenType) {
 		if (tokenType.equals(token.getValue())) {
 			PrintUtil.info(grammarLog, LOGTYPE.SYNTAX, token.getDesc() + " -> "
 					+ token.getValue());
+			if (token.getValue().equals("program")) {
+				symbol = new Symbol();
+				symbol.setDataType(copyToken(prevToken));
+				symbol.setToken(copyToken(token));
+				semantics.programDecl(symbol);
+			}
 			getNextToken();
 			return true;
 		} else {
@@ -1137,6 +1273,9 @@ public class SynatcticParser {
 			PrintUtil.info(grammarLog, LOGTYPE.SYNTAX, "type            -> id"
 					+ "\t->\t" + token.getValue());
 			printGrammar("type", token.getValue());
+			// if (!semantics.isDataTypeDefined(token)) {
+			// System.out.println("UNDEFINED DATA TYPE:\t" + token.getValue());
+			// }
 			getNextToken();
 			return true;
 		} else {
@@ -1244,11 +1383,11 @@ public class SynatcticParser {
 	}
 
 	private void getNextToken() {
+		prevToken = token;
 		try {
 			token = lexer.getNextToken();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
 }

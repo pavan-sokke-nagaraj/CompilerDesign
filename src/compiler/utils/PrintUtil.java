@@ -19,6 +19,8 @@ public class PrintUtil {
 		LEXER, SYNTAX, SEMATICS
 	};
 
+	public static boolean isLog = false;
+
 	/**
 	 * @param logger
 	 * 
@@ -60,26 +62,34 @@ public class PrintUtil {
 	}
 
 	public static void print(Logger logger, LOGTYPE logType, String msg) {
-		msg = getLogMsg(msg, logType);
-		logger.info(msg);
+		if (isLog) {
+			msg = getLogMsg(msg, logType);
+			logger.info(msg);
+		}
 	}
 
 	public static void info(Logger logger, LOGTYPE logType, String msg) {
-		msg = getLogMsg(msg, logType);
-		System.out.println(msg);
-		logger.info(msg);
+		if (isLog) {
+			msg = getLogMsg(msg, logType);
+			System.out.println(msg);
+			logger.info(msg);
+		}
 	}
 
 	public static void error(Logger logger, LOGTYPE logType, String msg) {
-		msg = getLogMsg(msg, logType);
-		System.out.println(msg);
-		logger.severe(msg);
+		if (isLog) {
+			msg = getLogMsg(msg, logType);
+			System.out.println(msg);
+			logger.severe(msg);
+		}
 	}
 
 	public static void warning(Logger logger, LOGTYPE logType, String msg) {
-		msg = getLogMsg(msg, logType);
-		System.out.println(msg);
-		logger.warning(msg);
+		if (isLog) {
+			msg = getLogMsg(msg, logType);
+			// System.out.println(msg);
+			logger.warning(msg);
+		}
 	}
 
 }

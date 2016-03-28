@@ -27,6 +27,9 @@ public class Token {
 		this.tokenType = tokenType;
 	}
 
+	public Token() {
+	}
+
 	public String getDesc() {
 		return desc;
 	}
