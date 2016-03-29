@@ -15,9 +15,11 @@ public class SemanticAnalysis {
 	// work on the 2nd order parsing
 	public SymbolTable firstTable = null; // used for the 2nd level parsing
 	private Logger semanticLog;
+	private Logger stLog;
 
 	public SemanticAnalysis() {
 		semanticLog = PrintUtil.setLogger("SEMANTIC.log");
+		stLog = PrintUtil.setLogger("SymbolTables.html");
 	}
 
 	// Start of Global Table
@@ -237,8 +239,12 @@ public class SemanticAnalysis {
 	public void printSymbolTable() {
 		String msg = "SYMBOL TABLE:\tGLOBAL\n";
 		PrintUtil.info(semanticLog, LOGTYPE.SEMATICS, msg);
+		PrintUtil.print(stLog, LOGTYPE.HTML, PrintUtil.htmlStart);
+		PrintUtil.print(stLog, LOGTYPE.HTML, PrintUtil.h2O + "GLOBAL"
+				+ PrintUtil.h2C);
 		// System.out.println(output);
 		printSymbolTable(mainTable, "GLOBAL");
+		PrintUtil.print(stLog, LOGTYPE.HTML, PrintUtil.htmlEnd);
 	}
 
 	// Function to print the current symbol table and it's children table and
@@ -248,23 +254,32 @@ public class SemanticAnalysis {
 			String msg = "|___Name___|____ Type ____|____ Kind ____|____Structure____|"
 					+ "___Array Dimension ___|___ NO OF PARAMS ___|_____ADDRESS____|";
 			PrintUtil.info(semanticLog, LOGTYPE.SEMATICS, msg);
+			PrintUtil.print(stLog, LOGTYPE.HTML, PrintUtil.tableO);
 			for (int i = 0; i < symbolTable.getSymbolList().size(); i++) {
 				Symbol symbol = symbolTable.getSymbolList().get(i);
+				PrintUtil.print(stLog, LOGTYPE.HTML, PrintUtil.trO);
 				printSymbols(symbol);
+				PrintUtil.print(stLog, LOGTYPE.HTML, PrintUtil.trC);
 			}
-
+			PrintUtil.print(stLog, LOGTYPE.HTML, PrintUtil.tableC);
 			for (int i = 0; i < symbolTable.getSymbolList().size(); i++) {
 				Symbol symbol = symbolTable.getSymbolList().get(i);
 				if (symbol.getChildTable() != null) {
 					String msg1 = "\n\nSYMBOL TABLE:\t" + tableName + " :: "
 							+ symbol.getToken().getValue() + "\n";
 					PrintUtil.info(semanticLog, LOGTYPE.SEMATICS, msg1);
+					PrintUtil.print(stLog, LOGTYPE.HTML, PrintUtil.h2O
+							+ tableName + " :: " + symbol.getToken().getValue()
+							+ PrintUtil.h2C);
 					printSymbolTable(symbol.getChildTable(), tableName + " :: "
 							+ symbol.getToken().getValue() + " :: ");
 				}
 			}
 		}
 	}
+
+	public static String tdO = "<td>";
+	public static String tdC = "</\td>";
 
 	// Function to print the symbol and all it's details
 	private void printSymbols(Symbol symbol) {
@@ -292,18 +307,29 @@ public class SemanticAnalysis {
 		}
 		String print = "   " + name + "   \t" + kind + "\t" + type + "\t\t"
 				+ symbol.structure;
+		String h2Print = tdO + name + tdC + tdO + kind + tdC + tdO + type + tdC
+				+ tdO + symbol.structure + tdC;
 		if (symbol.isArray()) {
 			print += "\t" + symbol.getArrLength() + "\t";
+			h2Print += tdO + symbol.getArrLength() + tdC;
 		} else {
 			print += "\t\tN/A\t";
+			h2Print += tdO + "N/A" + tdC;
 		}
 		if (symbol.getNoOfParams() > 0) {
 			print += "" + symbol.getNoOfParams() + "\t";
+			h2Print += tdO + symbol.getNoOfParams() + tdC;
 		} else {
 			print += "\t\tN/A\t";
+			h2Print += tdO + "N/A" + tdC;
 		}
-		print += "\t" + symbol.getAddress() +"\t";
+		print += "\t" + symbol.getAddress() + "\t";
+		h2Print += tdO + symbol.getAddress() + tdC;
+		h2Print += tdO + symbol.isDuplicate() + tdC;
+		h2Print += tdO + symbol.isArray() + tdC;
+		h2Print += tdO + symbol.isDataTypeDefined() + tdC;
 		PrintUtil.info(semanticLog, LOGTYPE.SEMATICS, print);
+		PrintUtil.print(stLog, LOGTYPE.HTML, h2Print);
 	}
 
 	// Function call to check if the variable is declared or not
