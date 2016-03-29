@@ -1,0 +1,51 @@
+[INFO][SEMANTICS]SYMBOL TABLE:	GLOBAL
+
+[INFO][SEMANTICS]|___Name___|____ Type ____|____ Kind ____|____Structure____|___Array Dimension ___|___ NO OF PARAMS ___|
+[INFO][SEMANTICS]   Utility   	CLASS	class		null		N/A			N/A	
+[INFO][SEMANTICS]   program   	PROGRAM	program		null		N/A			N/A	
+[INFO][SEMANTICS]   randomize   	FUNCTION	float::NILL		null		N/A			N/A	
+[INFO][SEMANTICS]
+
+SYMBOL TABLE:	GLOBAL :: Utility
+
+[INFO][SEMANTICS]|___Name___|____ Type ____|____ Kind ____|____Structure____|___Array Dimension ___|___ NO OF PARAMS ___|
+[INFO][SEMANTICS]   var1   	VARIABLE	int[4][5][7][8][9][1][0]		ARRAY	7			N/A	
+[INFO][SEMANTICS]   var2   	VARIABLE	float		SIMPLE		N/A			N/A	
+[INFO][SEMANTICS]   findMax   	FUNCTION	int::int[100]		null		N/A	1	
+[INFO][SEMANTICS]   findMin   	FUNCTION	int::int[100]		null		N/A	1	
+[INFO][SEMANTICS]
+
+SYMBOL TABLE:	GLOBAL :: Utility ::  :: findMax
+
+[INFO][SEMANTICS]|___Name___|____ Type ____|____ Kind ____|____Structure____|___Array Dimension ___|___ NO OF PARAMS ___|
+[INFO][SEMANTICS]   array   	PARAMETER	int[100]		ARRAY	1			N/A	
+[INFO][SEMANTICS]   maxValue   	VARIABLE	int		SIMPLE		N/A			N/A	
+[INFO][SEMANTICS]   varx   	VARIABLE	int		SIMPLE		N/A			N/A	
+[INFO][SEMANTICS]   varx1   	VARIABLE	int		SIMPLE		N/A			N/A	
+[INFO][SEMANTICS]
+
+SYMBOL TABLE:	GLOBAL :: Utility ::  :: findMin
+
+[INFO][SEMANTICS]|___Name___|____ Type ____|____ Kind ____|____Structure____|___Array Dimension ___|___ NO OF PARAMS ___|
+[INFO][SEMANTICS]   array   	PARAMETER	int[100]		ARRAY	1			N/A	
+[INFO][SEMANTICS]   minValue   	VARIABLE	int		SIMPLE		N/A			N/A	
+[INFO][SEMANTICS]   varx   	VARIABLE	int		SIMPLE		N/A			N/A	
+[INFO][SEMANTICS]   varx1   	VARIABLE	int		SIMPLE		N/A			N/A	
+[INFO][SEMANTICS]
+
+SYMBOL TABLE:	GLOBAL :: program
+
+[INFO][SEMANTICS]|___Name___|____ Type ____|____ Kind ____|____Structure____|___Array Dimension ___|___ NO OF PARAMS ___|
+[INFO][SEMANTICS]   sample   	VARIABLE	int[100]		ARRAY	1			N/A	
+[INFO][SEMANTICS]   varx   	VARIABLE	int		SIMPLE		N/A			N/A	
+[INFO][SEMANTICS]   maxValue   	VARIABLE	int		SIMPLE		N/A			N/A	
+[INFO][SEMANTICS]   minValue   	VARIABLE	int		SIMPLE		N/A			N/A	
+[INFO][SEMANTICS]   utility   	VARIABLE	Utility		CLASS		N/A			N/A	
+[INFO][SEMANTICS]   arrayUtility   	VARIABLE	Utility[2][3][6][7]		CLASSARRAY	4			N/A	
+[INFO][SEMANTICS]   t   	VARIABLE	int		SIMPLE		N/A			N/A	
+[INFO][SEMANTICS]
+
+SYMBOL TABLE:	GLOBAL :: randomize
+
+[INFO][SEMANTICS]|___Name___|____ Type ____|____ Kind ____|____Structure____|___Array Dimension ___|___ NO OF PARAMS ___|
+[INFO][SEMANTICS]   value   	VARIABLE	float		SIMPLE		N/A			N/A	

@@ -20,19 +20,16 @@ public class SemanticAnalysis {
 		semanticLog = PrintUtil.setLogger("SEMANTIC.log");
 	}
 
+	// Start of Global Table
 	public void progDecl() {
 		mainTable = createTable(null);
 		currTable = mainTable;
 	}
 
+	// Insert Class to Symbol Table
 	public void classDecl(Symbol symbol) {
 		symbol.symbolType = SYMBOLTYPE.CLASS;
 		symbol.setSelfTable(currTable);
-		String address = symbol.getSelfTable().getPrefixLink() + "_CLASS_"
-				+ symbol.getToken().getValue() + "_POSITION_"
-				+ symbol.getToken().getPosition();
-		symbol.setAddress(address);
-		// System.out.println("NEW CLASS:\t" + address);
 		if (isClassRedfined(symbol)) {
 			symbol.setDuplicate(true);
 			String msg = "CLASS NAME REDEFINED:\t"
@@ -45,6 +42,7 @@ public class SemanticAnalysis {
 		currTable = symbol.getChildTable();
 	}
 
+	// Function call to check if the class is redefined or not
 	private boolean isClassRedfined(Symbol symbol) {
 		for (int i = 0; i < symbol.getSelfTable().getSymbolList().size(); i++) {
 			Symbol tableSymbol = symbol.getSelfTable().getSymbolList().get(i);
@@ -57,6 +55,7 @@ public class SemanticAnalysis {
 		return false;
 	}
 
+	// Insert Variable to Symbol Table
 	public void variableDecl(Symbol symbol) {
 		// System.out.println("VARIABLE DECLERATION");
 		if (symbol.symbolType != SYMBOLTYPE.PARAMETER) {
@@ -74,11 +73,6 @@ public class SemanticAnalysis {
 			currTable.getParent().getParams().add(param);
 		}
 		symbol.setSelfTable(currTable);
-		String address = symbol.getSelfTable().getPrefixLink() + "_VARIABLE_"
-				+ symbol.getToken().getValue() + "_POSITION_"
-				+ symbol.getToken().getPosition();
-		symbol.setAddress(address);
-		// System.out.println("NEW VARIABLE:\t" + address);
 		if (isVarRedfined(symbol)) {
 			symbol.setDuplicate(true);
 			// System.out.println("--------->>>>>  VARIABLE RE--DEFINED");
@@ -110,11 +104,12 @@ public class SemanticAnalysis {
 		currTable.getSymbolList().add(symbol);
 	}
 
+	// Function call to check if the variable name is valid or not
 	private boolean isValidVarName(Symbol symbol) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
+	// Function call to check if the data type is defined or not
 	public boolean isDataTypeDefined(Symbol symbol) {
 		if (symbol.getDataType().getValue().equals("int")
 				|| symbol.getDataType().getValue().equals("float")) {
@@ -139,6 +134,7 @@ public class SemanticAnalysis {
 		return false;
 	}
 
+	// Function call to check if the variable is redefined or not
 	private boolean isVarRedfined(Symbol symbol) {
 		for (int i = 0; i < symbol.getSelfTable().getSymbolList().size(); i++) {
 			Symbol tableSymbol = symbol.getSelfTable().getSymbolList().get(i);
@@ -153,32 +149,23 @@ public class SemanticAnalysis {
 		return false;
 	}
 
+	// Function call to create a new entry of symbol table and link it to the
+	// parent table
 	private SymbolTable createTable(Symbol symbol) {
 		SymbolTable symbolTable = new SymbolTable();
 		symbolTable.setParent(symbol);
-		if (symbol == null) {
-			symbolTable.setPrefixLink("GLOBAL");
-		} else {
-			String prefix = symbol.getSelfTable().getPrefixLink() + "_"
-					+ symbol.getToken().getValue();
-			symbolTable.setPrefixLink(prefix);
-		}
 		return symbolTable;
 	}
 
+	// Quit the current Symbol Table
 	public void QuitPresentTable() {
 		currTable = currTable.getParent().getSelfTable();
-		// System.out.println(currTable.getPrefixLink());
 	}
 
+	// Insert function to Symbol Table
 	public void functionDecl(Symbol symbol) {
 		symbol.symbolType = SYMBOLTYPE.FUNCTION;
 		symbol.setSelfTable(currTable);
-		String address = symbol.getSelfTable().getPrefixLink() + "_FUNCTION_"
-				+ symbol.getToken().getValue() + "_POSITION_"
-				+ symbol.getToken().getPosition();
-		symbol.setAddress(address);
-		// System.out.println("NEW FUNCTION:\t" + address);
 		symbol.setChildTable(createTable(symbol));
 		if (!isDataTypeDefined(symbol)) {
 			symbol.setDataTypeDefined(false);
@@ -198,6 +185,7 @@ public class SemanticAnalysis {
 		currTable = symbol.getChildTable();
 	}
 
+	// Function call to check if the function name is redefined or not
 	private boolean isFuncNameReDefined(Symbol symbol) {
 		for (int i = 0; i < symbol.getSelfTable().getSymbolList().size(); i++) {
 			Symbol tableSymbol = symbol.getSelfTable().getSymbolList().get(i);
@@ -211,31 +199,30 @@ public class SemanticAnalysis {
 		return false;
 	}
 
+	// Insert Program to Symbol Table
 	public void programDecl(Symbol symbol) {
 		symbol.symbolType = SYMBOLTYPE.PROGRAM;
 		symbol.getDataType().setValue("program");
 		symbol.setSelfTable(currTable);
-		String address = symbol.getSelfTable().getPrefixLink() + "_PROGRAM_"
-				+ symbol.getToken().getValue() + "_POSITION_"
-				+ symbol.getToken().getPosition();
-		symbol.setAddress(address);
-		// System.out.println("PROGRAM:\t" + address);
 		symbol.setChildTable(createTable(symbol));
 		currTable.getSymbolList().add(symbol);
 		currTable = symbol.getChildTable();
 	}
 
+	// Function to print all the symbol tables
 	public void printSymbolTable() {
 		String msg = "SYMBOL TABLE:\tGLOBAL\n";
 		PrintUtil.info(semanticLog, LOGTYPE.SEMATICS, msg);
-//		System.out.println(output);
+		// System.out.println(output);
 		printSymbolTable(mainTable, "GLOBAL");
 	}
 
+	// Function to print the current symbol table and it's children table and
+	// all the symbols
 	public void printSymbolTable(SymbolTable symbolTable, String tableName) {
 		if (symbolTable != null) {
 			String msg = "|___Name___|____ Type ____|____ Kind ____|____Structure____|"
-							+ "___Array Dimension ___|___ NO OF PARAMS ___|*** Link ***|";
+					+ "___Array Dimension ___|___ NO OF PARAMS ___|";
 			PrintUtil.info(semanticLog, LOGTYPE.SEMATICS, msg);
 			for (int i = 0; i < symbolTable.getSymbolList().size(); i++) {
 				Symbol symbol = symbolTable.getSymbolList().get(i);
@@ -245,8 +232,8 @@ public class SemanticAnalysis {
 			for (int i = 0; i < symbolTable.getSymbolList().size(); i++) {
 				Symbol symbol = symbolTable.getSymbolList().get(i);
 				if (symbol.getChildTable() != null) {
-					String msg1 = "\n\nSYMBOL TABLE:\t" + tableName
-							+ " :: " + symbol.getToken().getValue() + "\n";
+					String msg1 = "\n\nSYMBOL TABLE:\t" + tableName + " :: "
+							+ symbol.getToken().getValue() + "\n";
 					PrintUtil.info(semanticLog, LOGTYPE.SEMATICS, msg1);
 					printSymbolTable(symbol.getChildTable(), tableName + " :: "
 							+ symbol.getToken().getValue() + " :: ");
@@ -255,6 +242,7 @@ public class SemanticAnalysis {
 		}
 	}
 
+	// Function to print the symbol and all it's details
 	private void printSymbols(Symbol symbol) {
 		String name = symbol.getToken().getValue();
 		SYMBOLTYPE kind = symbol.symbolType;
@@ -291,9 +279,9 @@ public class SemanticAnalysis {
 			print += "\t\tN/A\t";
 		}
 		PrintUtil.info(semanticLog, LOGTYPE.SEMATICS, print);
-		// System.out.println(print);
 	}
 
+	// Function call to check if the variable is declared or not
 	public boolean isVarDeclared(Symbol symbol) {
 		for (int i = 0; i < currTable.getSymbolList().size(); i++) {
 			Symbol tableSymbol = currTable.getSymbolList().get(i);
@@ -313,7 +301,6 @@ public class SemanticAnalysis {
 				return true;
 			}
 		}
-
 		if (currTable.getParent() != null) {
 			for (int i = 0; i < currTable.getParent().getSelfTable()
 					.getSymbolList().size(); i++) {
@@ -333,7 +320,6 @@ public class SemanticAnalysis {
 				}
 			}
 		}
-
 		String msg = "IDENTIFIER UNDECLARED:\t" + symbol.getToken().getValue()
 				+ "  at Line Number:\t" + symbol.getToken().getPosition();
 		PrintUtil.error(semanticLog, LOGTYPE.SEMATICS, msg);
@@ -342,7 +328,6 @@ public class SemanticAnalysis {
 
 	private void copySymbol(Symbol symbol, Symbol tableSymbol) {
 		symbol.setDataType(copyToken(tableSymbol.getDataType()));
-		symbol.setAddress(tableSymbol.getAddress());
 		symbol.structure = tableSymbol.structure;
 		symbol.symbolType = tableSymbol.symbolType;
 		symbol.setArray(tableSymbol.isArray());
@@ -358,6 +343,7 @@ public class SemanticAnalysis {
 		return cpyToken;
 	}
 
+	// Function call to check if the the type is of class or not
 	public boolean isClassType(Symbol symbol, Symbol tempSymb) {
 		if (firstTable != null) {
 			for (int i = 0; i < firstTable.getSymbolList().size(); i++) {
@@ -379,14 +365,17 @@ public class SemanticAnalysis {
 					String msg = "\""
 							+ tempSymb.getToken().getValue()
 							+ "\" IS NOT A DECLARED MEMBER FUNCTION/VARIABLE OF \""
-							+ tableSymbol.getToken().getValue() + "\"";
+							+ tableSymbol.getToken().getValue() + "\""
+							+ "  at Line Number:\t"
+							+ tempSymb.getToken().getPosition();
 					PrintUtil.error(semanticLog, LOGTYPE.SEMATICS, msg);
 					return false;
 				}
 			}
 			String msg = "TOKEN FOR THE LEFT SIDE OF  \"."
 					+ tempSymb.getToken().getValue()
-					+ "\" SHOULD BE OF A TYPE CLASS";
+					+ "\" SHOULD BE OF A TYPE CLASS" + "  at Line Number:\t"
+					+ tempSymb.getToken().getPosition();
 			PrintUtil.error(semanticLog, LOGTYPE.SEMATICS, msg);
 			return false;
 		}

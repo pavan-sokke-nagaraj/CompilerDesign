@@ -8,10 +8,10 @@ import compiler.lexer.TokenType.TOKENTYPE;
  *
  */
 public class Token {
-	private String desc;
-	private String value;
-	private int position;
-	private TOKENTYPE tokenType;
+	private String desc; // short description of the recognized token
+	private String value;// value of the token
+	private int position;// line number of the token
+	private TOKENTYPE tokenType;// type of token
 
 	/**
 	 * @param position
@@ -63,7 +63,8 @@ public class Token {
 	}
 
 	public String toString() {
-		return "LINE:\t" + position + "\tVALUE:\t" + value + "\t\tTOKEN:\t" + desc;
+		return "LINE:\t" + position + "\tVALUE:\t" + value + "\t\tTOKEN:\t"
+				+ desc;
 	}
 
 }

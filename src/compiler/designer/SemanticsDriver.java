@@ -28,11 +28,12 @@ public class SemanticsDriver {
 
 		Lexer lexer = new Lexer(inputFile);
 
-
+		// 1st order parsing
 		SynatcticParser sParser = new SynatcticParser(lexer);
 		sParser.parse();
 		SymbolTable firstTable = sParser.semantics.mainTable.clone();
 		PrintUtil.isLog = true;
+		// 2nd order parsing
 		lexer = new Lexer(inputFile);
 		sParser = new SynatcticParser(lexer);
 		sParser.parse(firstTable);

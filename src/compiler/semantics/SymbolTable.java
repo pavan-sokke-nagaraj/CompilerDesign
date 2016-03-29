@@ -4,9 +4,10 @@ import java.util.ArrayList;
 
 public class SymbolTable implements Cloneable {
 
+	// holds the Parent symbol of the current symbol data type
 	private Symbol parent = null;
+	// list of symbols recognized are set into this symbolList
 	private ArrayList<Symbol> symbolList = new ArrayList<Symbol>();
-	private String prefixLink;
 
 	public Symbol getParent() {
 		return parent;
@@ -22,14 +23,6 @@ public class SymbolTable implements Cloneable {
 
 	public void setSymbolList(ArrayList<Symbol> symbolList) {
 		this.symbolList = symbolList;
-	}
-
-	public String getPrefixLink() {
-		return prefixLink;
-	}
-
-	public void setPrefixLink(String prefixLink) {
-		this.prefixLink = prefixLink;
 	}
 
 	public SymbolTable clone() {

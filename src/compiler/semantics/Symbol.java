@@ -5,12 +5,16 @@ import java.util.ArrayList;
 import compiler.lexer.Token;
 
 public class Symbol {
-	public enum SYMBOLTYPE {
-		UNKNOWN, CLASS, PROGRAM, VARIABLE, PARAMETER, ARRAYSIZE, FUNCTION, QUITTABLE, ISVARDECLARED, ISCLASSORFUNC, FORLOOPVAR
-	};
 
+	// each recognized symbol is set as a given structure - simple, array, class
+	// or an array of class
 	public enum STRUCTURE {
 		SIMPLE, ARRAY, CLASS, CLASSARRAY
+	};
+
+	// each recognized symbol is set to a symbol type
+	public enum SYMBOLTYPE {
+		UNKNOWN, CLASS, PROGRAM, VARIABLE, PARAMETER, ARRAYSIZE, FUNCTION, QUITTABLE, ISVARDECLARED, ISCLASSORFUNC, FORLOOPVAR
 	};
 
 	public SYMBOLTYPE symbolType;
@@ -18,21 +22,19 @@ public class Symbol {
 	private Token dataType; // Symbol type: int/float/id/value
 	private Token token; // associated token
 
+	// address to which symbol tale it is listed in
+	private SymbolTable selfTable = null;
+	// address to its present symbol table
+	private SymbolTable childTable = null;
+
+	private boolean isDataTypeDefined = true;
+	private boolean isDuplicate = false;
+	private boolean isValidVarName = false;
+
 	// if the Symbol contains array size
 	private boolean isArray; // set isArray flag to true
 	private int arrLength; // set the array length
 	private ArrayList<Integer> arrSize = new ArrayList<Integer>();
-
-	// create a address for the current Symbol
-	private String address; // address to link to the SymbolTable
-	private SymbolTable selfTable = null; // address to which symbol tale it is
-											// listed in
-	// class or function
-	private SymbolTable childTable = null; // address to its present symbol
-											// table
-	private boolean isDataTypeDefined = true;
-	private boolean isDuplicate = false;
-	private boolean isValidVarName = false;
 
 	private int noOfParams;
 	private ArrayList<String> params = new ArrayList<String>();
@@ -91,14 +93,6 @@ public class Symbol {
 
 	public void setArrSize(ArrayList<Integer> arrSize) {
 		this.arrSize = arrSize;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String link) {
-		this.address = link;
 	}
 
 	public boolean isDuplicate() {

@@ -87,7 +87,7 @@ public class PrintUtil {
 	public static void warning(Logger logger, LOGTYPE logType, String msg) {
 		if (isLog) {
 			msg = getLogMsg(msg, logType);
-			// System.out.println(msg);
+			System.out.println(msg);
 			logger.warning(msg);
 		}
 	}
