@@ -30,6 +30,10 @@ public class SemanticAnalysis {
 	public void classDecl(Symbol symbol) {
 		symbol.symbolType = SYMBOLTYPE.CLASS;
 		symbol.setSelfTable(currTable);
+		String address = symbol.getSelfTable().getAddrLink() + "_CLASS_"
+				+ symbol.getToken().getValue() + "_POSITION_"
+				+ symbol.getToken().getPosition();
+		symbol.setAddress(address);
 		if (isClassRedfined(symbol)) {
 			symbol.setDuplicate(true);
 			String msg = "CLASS NAME REDEFINED:\t"
@@ -73,6 +77,10 @@ public class SemanticAnalysis {
 			currTable.getParent().getParams().add(param);
 		}
 		symbol.setSelfTable(currTable);
+		String address = symbol.getSelfTable().getAddrLink() + "_VARIABLE_"
+				+ symbol.getToken().getValue() + "_POSITION_"
+				+ symbol.getToken().getPosition();
+		symbol.setAddress(address);
 		if (isVarRedfined(symbol)) {
 			symbol.setDuplicate(true);
 			// System.out.println("--------->>>>>  VARIABLE RE--DEFINED");
@@ -154,12 +162,20 @@ public class SemanticAnalysis {
 	private SymbolTable createTable(Symbol symbol) {
 		SymbolTable symbolTable = new SymbolTable();
 		symbolTable.setParent(symbol);
+		if (symbol == null) {
+			symbolTable.setAddrLink("GLOBAL");
+		} else {
+			String prefix = symbol.getSelfTable().getAddrLink() + "_"
+					+ symbol.getToken().getValue();
+			symbolTable.setAddrLink(prefix);
+		}
 		return symbolTable;
 	}
 
 	// Quit the current Symbol Table
 	public void QuitPresentTable() {
 		currTable = currTable.getParent().getSelfTable();
+		// System.out.println(currTable.getAddrLink());
 	}
 
 	// Insert function to Symbol Table
@@ -167,6 +183,10 @@ public class SemanticAnalysis {
 		symbol.symbolType = SYMBOLTYPE.FUNCTION;
 		symbol.setSelfTable(currTable);
 		symbol.setChildTable(createTable(symbol));
+		String address = symbol.getSelfTable().getAddrLink() + "_FUNCTION_"
+				+ symbol.getToken().getValue() + "_POSITION_"
+				+ symbol.getToken().getPosition();
+		symbol.setAddress(address);
 		if (!isDataTypeDefined(symbol)) {
 			symbol.setDataTypeDefined(false);
 			String msg = "DATA TYPE UNDEFINED:\t"
@@ -205,6 +225,10 @@ public class SemanticAnalysis {
 		symbol.getDataType().setValue("program");
 		symbol.setSelfTable(currTable);
 		symbol.setChildTable(createTable(symbol));
+		String address = symbol.getSelfTable().getAddrLink() + "_PROGRAM_"
+				+ symbol.getToken().getValue() + "_POSITION_"
+				+ symbol.getToken().getPosition();
+		symbol.setAddress(address);
 		currTable.getSymbolList().add(symbol);
 		currTable = symbol.getChildTable();
 	}
@@ -222,7 +246,7 @@ public class SemanticAnalysis {
 	public void printSymbolTable(SymbolTable symbolTable, String tableName) {
 		if (symbolTable != null) {
 			String msg = "|___Name___|____ Type ____|____ Kind ____|____Structure____|"
-					+ "___Array Dimension ___|___ NO OF PARAMS ___|";
+					+ "___Array Dimension ___|___ NO OF PARAMS ___|_____ADDRESS____|";
 			PrintUtil.info(semanticLog, LOGTYPE.SEMATICS, msg);
 			for (int i = 0; i < symbolTable.getSymbolList().size(); i++) {
 				Symbol symbol = symbolTable.getSymbolList().get(i);
@@ -278,6 +302,7 @@ public class SemanticAnalysis {
 		} else {
 			print += "\t\tN/A\t";
 		}
+		print += "\t" + symbol.getAddress() +"\t";
 		PrintUtil.info(semanticLog, LOGTYPE.SEMATICS, print);
 	}
 

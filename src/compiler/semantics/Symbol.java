@@ -38,6 +38,8 @@ public class Symbol {
 
 	private int noOfParams;
 	private ArrayList<String> params = new ArrayList<String>();
+	// Address generated for the current Symbol
+	private String address;
 
 	public Token getDataType() {
 		return dataType;
@@ -135,4 +137,11 @@ public class Symbol {
 		this.isValidVarName = isValidVarName;
 	}
 
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
 }

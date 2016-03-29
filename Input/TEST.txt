@@ -1,70 +1,126 @@
-// example valvar program 
-
-class Utility {
-
-	int var1[4][5][7][8][9][1][0];
+class Foo1{
+	int a;
+	int a;
+	Foo1 foo1;
+	int max(int x, int x){
+		int x;
+	};
+	int max(int x, int x){
+		int x;
+	};
+	int max(){
+		int a;
+	};
+};
+class Foo1{
+	int a;
+};
+class Foo2{
+	int a;
+};
+class Foo3{
+	int a;
+	Foo1 foo1;
+	Foo2 foo13;
+	int max(){
+		int a;
+	};
+	int max(){
+		int a;
+	};
+};
+class Foo{
+	int var1;
 	float var2;
-	
-	int findMax(int array[100]) {
-		int maxValue;
-		int varx;
-		maxValue = array[100];
-		
-		for( int varx1 = 99; varx1 > 0; varx1 = varx - 1 ) {
-			if(array[varx1] > maxValue) then {
-				maxValue = array[varx1];
-			}
-			else {};
-		};
-		
-		return (maxValue);
-	};
-	
-	int findMin(int array[100]) {
-		int minValue;
-		int varx;
-		minValue = array[100];
-		for( int varx1 = 1; varx1 <= 99; varx1 =  varx + 1) {
-			if(array[varx1] < minValue) then {
-				minValue = array[varx1];
-			}
-			else{};
-		};
-		return (minValue);
-	};
-	
-};
-
-program {
-	
-	int sample[100];
-	int varx;
-	int maxValue;
-	int minValue;
-	
+	int var3[10];
+	float var4[2][3][4][6][7];
 	Utility utility;
-	Utility arrayUtility[2][3][6][7];
-
-	for(int t = 0; t<=100 ; t = t + 1) {
-		get(sample[t]);
-		sample[t] = (sample[t] * 10);
+	Utility utility[12];
+	int FindMax(int f1[1][2], float f2, int a[1], float b[2][2], Foo foo, Foo foo[1] ){
+		int var1;
+		int a;
+		float b;
+		int c[10];
+		float d[20];
+		Utility utility;
+		get(value); // get (var)
+		get(var.var);
+		 maxValue = 10;
+		 maxValue = minValue;	
+		 maxValue = minValue[100];	
+		 a.a = a;
+		 a[10] = a;
+		 a[10][20] = a;
+		 a.a[10] = a;
+		 a.a =a.a;
+		 a[10].a[11] = a[10].a[11] ; 
+		 a[10][12].a[11] = a[10].a[11][11] ; 
+		 left = not right;
+		 a = - a ;
+		 a = -a[a[a.a]];
+		 a=+a;
+		 a=+a[a.a[10].a.a[10]];
+		 if(a > maxValue[aa]) then {
+			maxValue = array[varx];
+		}else{
+		};
+		for( int varx1 = 1; varx2 <= 99; varx3 = ( varx ) + 1);
+		for( int varx1 = 1; varx2 <= 99; varx3 = ( varx ) + 1)
+		{
+			a[1]= b[1];
+			if(array[varx] < maxValue) then {
+				maxValue = array[varx];
+			}else{
+			};
+			return (minValue);
+		};
 	};
-
-	maxValue = utility.findMax(sample);
-	minValue = utility.findMin(sample);
-	
-	utility. var1[4][1][0][0][0][0][0] = 10;
-	
-	arrayUtility[1][1][1][1].var1[4][1][0][0][0][0][0] = 2;
-	
-	put(maxValue);
-	put(minValue);
+	float rand()
+	{
+		float value;
+		value = 100 * (2 + 3.0 / 7.0006);
+		value = 1.05 + ((2.04 * 2.47) - 3.0) + 7.0006 ;
+		return (value);
+	};
 };
 
-float randomize() {
-
+program{
+	int var1;
+	float var2;
+	int var3[10];
+	float var4[2][3][4][6][7];
+	int findMax;
+	Utility utility;
+};
+float rand()
+{
 	float value;
 	value = 100 * (2 + 3.0 / 7.0006);
 	value = 1.05 + ((2.04 * 2.47) - 3.0) + 7.0006 ;
 	return (value);
-}; 
+};
+float lolRand()
+{
+	float value;
+	value = 100 * (2 + 3.0 / 7.0006);
+	value = 1.05 + ((2.04 * 2.47) - 3.0) + 7.0006 ;
+	return (value);
+	for( int varx1 = 1; varx2 <= 99; varx3 = ( varx ) + 1)
+		{
+			a[1]= b[1];
+			if(array[varx] < maxValue) then {
+				maxValue = array[varx];
+			}else{
+				for( int varx1 = 1; varx2 <= 99; varx3 = ( varx ) + 1)
+					{
+						a[1]= b[1];
+						if(array[varx] < maxValue) then {
+							maxValue = array[varx];
+						}else{
+						};
+						return (minValue);
+					};
+			};
+			return (minValue);
+		};
+};

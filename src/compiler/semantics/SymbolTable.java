@@ -8,6 +8,8 @@ public class SymbolTable implements Cloneable {
 	private Symbol parent = null;
 	// list of symbols recognized are set into this symbolList
 	private ArrayList<Symbol> symbolList = new ArrayList<Symbol>();
+	// address link to save and update for the Symbols
+	private String addrLink;
 
 	public Symbol getParent() {
 		return parent;
@@ -23,6 +25,14 @@ public class SymbolTable implements Cloneable {
 
 	public void setSymbolList(ArrayList<Symbol> symbolList) {
 		this.symbolList = symbolList;
+	}
+
+	public String getAddrLink() {
+		return addrLink;
+	}
+
+	public void setAddrLink(String addrLink) {
+		this.addrLink = addrLink;
 	}
 
 	public SymbolTable clone() {
