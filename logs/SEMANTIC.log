@@ -1,0 +1,47 @@
+[SEVERE][SEMANTICS]IDENTIFIER UNDECLARED:	rand  at Line Number:	20
+[INFO][SEMANTICS]SYMBOL TABLE:	GLOBAL
+
+[INFO][SEMANTICS]|___Name___|____ Type ____|____ Kind ____|____Structure____|___Array Dimension ___|___ NO OF PARAMS ___|_____ADDRESS____|
+[INFO][SEMANTICS]   Foo1   	CLASS	class		null		N/A			N/A		GLOBAL_CLASS_Foo1_POSITION_1	
+[INFO][SEMANTICS]   Foo   	CLASS	class		null		N/A			N/A		GLOBAL_CLASS_Foo_POSITION_7	
+[INFO][SEMANTICS]   program   	PROGRAM	program		null		N/A			N/A		GLOBAL_PROGRAM_program_POSITION_14	
+[INFO][SEMANTICS]   rand   	FUNCTION	int::NILL		null		N/A			N/A		GLOBAL_FUNCTION_rand_POSITION_22	
+[INFO][SEMANTICS]
+
+SYMBOL TABLE:	GLOBAL :: Foo1
+
+[INFO][SEMANTICS]|___Name___|____ Type ____|____ Kind ____|____Structure____|___Array Dimension ___|___ NO OF PARAMS ___|_____ADDRESS____|
+[INFO][SEMANTICS]   a   	VARIABLE	int		SIMPLE		N/A			N/A		GLOBAL_Foo1_VARIABLE_a_POSITION_2	
+[INFO][SEMANTICS]   min   	FUNCTION	int::NILL		null		N/A			N/A		GLOBAL_Foo1_FUNCTION_min_POSITION_3	
+[INFO][SEMANTICS]
+
+SYMBOL TABLE:	GLOBAL :: Foo1 ::  :: min
+
+[INFO][SEMANTICS]|___Name___|____ Type ____|____ Kind ____|____Structure____|___Array Dimension ___|___ NO OF PARAMS ___|_____ADDRESS____|
+[INFO][SEMANTICS]
+
+SYMBOL TABLE:	GLOBAL :: Foo
+
+[INFO][SEMANTICS]|___Name___|____ Type ____|____ Kind ____|____Structure____|___Array Dimension ___|___ NO OF PARAMS ___|_____ADDRESS____|
+[INFO][SEMANTICS]   a   	VARIABLE	int		SIMPLE		N/A			N/A		GLOBAL_Foo_VARIABLE_a_POSITION_8	
+[INFO][SEMANTICS]   f1   	VARIABLE	Foo1		CLASS		N/A			N/A		GLOBAL_Foo_VARIABLE_f1_POSITION_9	
+[INFO][SEMANTICS]   min   	FUNCTION	int::NILL		null		N/A			N/A		GLOBAL_Foo_FUNCTION_min_POSITION_10	
+[INFO][SEMANTICS]
+
+SYMBOL TABLE:	GLOBAL :: Foo ::  :: min
+
+[INFO][SEMANTICS]|___Name___|____ Type ____|____ Kind ____|____Structure____|___Array Dimension ___|___ NO OF PARAMS ___|_____ADDRESS____|
+[INFO][SEMANTICS]
+
+SYMBOL TABLE:	GLOBAL :: program
+
+[INFO][SEMANTICS]|___Name___|____ Type ____|____ Kind ____|____Structure____|___Array Dimension ___|___ NO OF PARAMS ___|_____ADDRESS____|
+[INFO][SEMANTICS]   a   	VARIABLE	int		SIMPLE		N/A			N/A		GLOBAL_program_VARIABLE_a_POSITION_15	
+[INFO][SEMANTICS]   b   	VARIABLE	int		SIMPLE		N/A			N/A		GLOBAL_program_VARIABLE_b_POSITION_16	
+[INFO][SEMANTICS]   foo   	VARIABLE	Foo		CLASS		N/A			N/A		GLOBAL_program_VARIABLE_foo_POSITION_17	
+[INFO][SEMANTICS]
+
+SYMBOL TABLE:	GLOBAL :: rand
+
+[INFO][SEMANTICS]|___Name___|____ Type ____|____ Kind ____|____Structure____|___Array Dimension ___|___ NO OF PARAMS ___|_____ADDRESS____|
+[INFO][SEMANTICS]   c   	VARIABLE	int		SIMPLE		N/A			N/A		GLOBAL_rand_VARIABLE_c_POSITION_23	
