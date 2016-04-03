@@ -1,27 +1,5 @@
 class Foo1{
-	int a;
-	int c[10][10];
-	int minS(){
-	};
-	int minS(){
-	};
-	int minA(int a){
-		a = a;
-	};
-	int minA(int a){
-		a = a;
-	};
-	float minA(int a){
-		a = a;
-	};
-	int min(int a, int b){
-		a = a;
-	};
 };
 program{
-};
-int minS(Foo1 foo){
-};
-int minA(int a){
-	a = a;
+	c = minA(a, b);
 };

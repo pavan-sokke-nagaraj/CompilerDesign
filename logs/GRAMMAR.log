@@ -1,192 +1,7 @@
 [INFO][SYNTAX]T_RESERVE_WORD_CLASS -> class
 [INFO][SYNTAX]T_IDENTIFIER -> Foo1
 [INFO][SYNTAX]T_DEL_C_LPAREN -> {
-[INFO][SYNTAX]type            -> int
-[INFO][SYNTAX]T_IDENTIFIER -> a
-[INFO][SYNTAX]arraySizeList ->  EPSILON
-[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
-[INFO][SYNTAX]type            -> int
-[INFO][SYNTAX]T_IDENTIFIER -> c
-[INFO][SYNTAX]T_DEL_S_LPAREN -> [
-[INFO][SYNTAX]T_INTEGER -> 10
-[INFO][SYNTAX]T_DEL_S_RPAREN -> ]
-[INFO][SYNTAX]arraySizeList -> arraySize arraySizeList
-[INFO][SYNTAX]T_DEL_S_LPAREN -> [
-[INFO][SYNTAX]T_INTEGER -> 10
-[INFO][SYNTAX]T_DEL_S_RPAREN -> ]
-[INFO][SYNTAX]arraySizeList -> arraySize arraySizeList
-[INFO][SYNTAX]arraySizeList ->  EPSILON
-[INFO][SYNTAX]arraySizeList -> arraySize arraySizeList
-[INFO][SYNTAX]arraySizeList -> arraySize arraySizeList
-[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
-[INFO][SYNTAX]type            -> int
-[INFO][SYNTAX]T_IDENTIFIER -> minS
-[INFO][SYNTAX]T_DEL_R_LPAREN -> (
-[INFO][SYNTAX]fParams -> EPSILON
-[INFO][SYNTAX]T_DEL_R_RPAREN -> )
-[INFO][SYNTAX]T_DEL_C_LPAREN -> {
-[INFO][SYNTAX]bodyCode -> EPSILON
-[INFO][SYNTAX]T_DEL_C_RPAREN -> }
-[INFO][SYNTAX]funcBody -> { bodyCode }
-[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
-[INFO][SYNTAX]type            -> int
-[INFO][SYNTAX]T_IDENTIFIER -> minS
-[INFO][SYNTAX]T_DEL_R_LPAREN -> (
-[INFO][SYNTAX]fParams -> EPSILON
-[INFO][SYNTAX]T_DEL_R_RPAREN -> )
-[INFO][SYNTAX]funcHead -> type id ( fParams )
-[INFO][SYNTAX]T_DEL_C_LPAREN -> {
-[INFO][SYNTAX]bodyCode -> EPSILON
-[INFO][SYNTAX]T_DEL_C_RPAREN -> }
-[INFO][SYNTAX]funcBody -> { bodyCode }
-[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
-[INFO][SYNTAX]funcDef -> funcHead funcBody ;
-[INFO][SYNTAX]type            -> int
-[INFO][SYNTAX]T_IDENTIFIER -> minA
-[INFO][SYNTAX]T_DEL_R_LPAREN -> (
-[INFO][SYNTAX]type            -> int
-[INFO][SYNTAX]T_IDENTIFIER -> a
-[INFO][SYNTAX]arraySizeList ->  EPSILON
-[INFO][SYNTAX]fParamsTailList -> EPSILON
-[INFO][SYNTAX]fParams -> type id arraySizeList fParamsTailList
-[INFO][SYNTAX]T_DEL_R_RPAREN -> )
-[INFO][SYNTAX]funcHead -> type id ( fParams )
-[INFO][SYNTAX]T_DEL_C_LPAREN -> {
-[INFO][SYNTAX]T_IDENTIFIER -> a
-[INFO][SYNTAX]indiceList -> EPSILON
-[INFO][SYNTAX]dotIdList -> EPSILON
-[INFO][SYNTAX]T_OP_ASSIGN_EQUAL -> =
-[INFO][SYNTAX]T_IDENTIFIER -> a
-[INFO][SYNTAX]indiceOrParam -> EPSILON
-[INFO][SYNTAX]factor -> id indiceOrParam
-[INFO][SYNTAX]termFactor -> EPSILON
-[INFO][SYNTAX]term -> factor termFactor
-[INFO][SYNTAX]arithExprRight -> EPSILON
-[INFO][SYNTAX]arithExpr -> term arithExprRight
-[INFO][SYNTAX]subExpr -> EPSILON
-[INFO][SYNTAX]expr -> arithExpr subExpr
-[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
-[INFO][SYNTAX]statementList -> EPSILON
-[INFO][SYNTAX]bodyCode2 -> indiceList dotIdList assignOp expr ; statementList
-[INFO][SYNTAX]bodyCode -> id bodyCode2
-[INFO][SYNTAX]T_DEL_C_RPAREN -> }
-[INFO][SYNTAX]funcBody -> { bodyCode }
-[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
-[INFO][SYNTAX]funcDef -> funcHead funcBody ;
-[INFO][SYNTAX]type            -> int
-[INFO][SYNTAX]T_IDENTIFIER -> minA
-[INFO][SYNTAX]T_DEL_R_LPAREN -> (
-[INFO][SYNTAX]type            -> int
-[INFO][SYNTAX]T_IDENTIFIER -> a
-[INFO][SYNTAX]arraySizeList ->  EPSILON
-[INFO][SYNTAX]fParamsTailList -> EPSILON
-[INFO][SYNTAX]fParams -> type id arraySizeList fParamsTailList
-[INFO][SYNTAX]T_DEL_R_RPAREN -> )
-[INFO][SYNTAX]funcHead -> type id ( fParams )
-[INFO][SYNTAX]T_DEL_C_LPAREN -> {
-[INFO][SYNTAX]T_IDENTIFIER -> a
-[INFO][SYNTAX]indiceList -> EPSILON
-[INFO][SYNTAX]dotIdList -> EPSILON
-[INFO][SYNTAX]T_OP_ASSIGN_EQUAL -> =
-[INFO][SYNTAX]T_IDENTIFIER -> a
-[INFO][SYNTAX]indiceOrParam -> EPSILON
-[INFO][SYNTAX]factor -> id indiceOrParam
-[INFO][SYNTAX]termFactor -> EPSILON
-[INFO][SYNTAX]term -> factor termFactor
-[INFO][SYNTAX]arithExprRight -> EPSILON
-[INFO][SYNTAX]arithExpr -> term arithExprRight
-[INFO][SYNTAX]subExpr -> EPSILON
-[INFO][SYNTAX]expr -> arithExpr subExpr
-[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
-[INFO][SYNTAX]statementList -> EPSILON
-[INFO][SYNTAX]bodyCode2 -> indiceList dotIdList assignOp expr ; statementList
-[INFO][SYNTAX]bodyCode -> id bodyCode2
-[INFO][SYNTAX]T_DEL_C_RPAREN -> }
-[INFO][SYNTAX]funcBody -> { bodyCode }
-[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
-[INFO][SYNTAX]funcDef -> funcHead funcBody ;
-[INFO][SYNTAX]type            -> float
-[INFO][SYNTAX]T_IDENTIFIER -> minA
-[INFO][SYNTAX]T_DEL_R_LPAREN -> (
-[INFO][SYNTAX]type            -> int
-[INFO][SYNTAX]T_IDENTIFIER -> a
-[INFO][SYNTAX]arraySizeList ->  EPSILON
-[INFO][SYNTAX]fParamsTailList -> EPSILON
-[INFO][SYNTAX]fParams -> type id arraySizeList fParamsTailList
-[INFO][SYNTAX]T_DEL_R_RPAREN -> )
-[INFO][SYNTAX]funcHead -> type id ( fParams )
-[INFO][SYNTAX]T_DEL_C_LPAREN -> {
-[INFO][SYNTAX]T_IDENTIFIER -> a
-[INFO][SYNTAX]indiceList -> EPSILON
-[INFO][SYNTAX]dotIdList -> EPSILON
-[INFO][SYNTAX]T_OP_ASSIGN_EQUAL -> =
-[INFO][SYNTAX]T_IDENTIFIER -> a
-[INFO][SYNTAX]indiceOrParam -> EPSILON
-[INFO][SYNTAX]factor -> id indiceOrParam
-[INFO][SYNTAX]termFactor -> EPSILON
-[INFO][SYNTAX]term -> factor termFactor
-[INFO][SYNTAX]arithExprRight -> EPSILON
-[INFO][SYNTAX]arithExpr -> term arithExprRight
-[INFO][SYNTAX]subExpr -> EPSILON
-[INFO][SYNTAX]expr -> arithExpr subExpr
-[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
-[INFO][SYNTAX]statementList -> EPSILON
-[INFO][SYNTAX]bodyCode2 -> indiceList dotIdList assignOp expr ; statementList
-[INFO][SYNTAX]bodyCode -> id bodyCode2
-[INFO][SYNTAX]T_DEL_C_RPAREN -> }
-[INFO][SYNTAX]funcBody -> { bodyCode }
-[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
-[INFO][SYNTAX]funcDef -> funcHead funcBody ;
-[INFO][SYNTAX]type            -> int
-[INFO][SYNTAX]T_IDENTIFIER -> min
-[INFO][SYNTAX]T_DEL_R_LPAREN -> (
-[INFO][SYNTAX]type            -> int
-[INFO][SYNTAX]T_IDENTIFIER -> a
-[INFO][SYNTAX]arraySizeList ->  EPSILON
-[INFO][SYNTAX]T_DEL_COMMA -> ,
-[INFO][SYNTAX]type            -> int
-[INFO][SYNTAX]T_IDENTIFIER -> b
-[INFO][SYNTAX]arraySizeList ->  EPSILON
-[INFO][SYNTAX]fParamsTail -> , type id arraySizeList
-[INFO][SYNTAX]fParamsTailList -> EPSILON
-[INFO][SYNTAX]fParamsTailList -> fParamsTail fParamsTailList
-[INFO][SYNTAX]fParams -> type id arraySizeList fParamsTailList
-[INFO][SYNTAX]T_DEL_R_RPAREN -> )
-[INFO][SYNTAX]funcHead -> type id ( fParams )
-[INFO][SYNTAX]T_DEL_C_LPAREN -> {
-[INFO][SYNTAX]T_IDENTIFIER -> a
-[INFO][SYNTAX]indiceList -> EPSILON
-[INFO][SYNTAX]dotIdList -> EPSILON
-[INFO][SYNTAX]T_OP_ASSIGN_EQUAL -> =
-[INFO][SYNTAX]T_IDENTIFIER -> a
-[INFO][SYNTAX]indiceOrParam -> EPSILON
-[INFO][SYNTAX]factor -> id indiceOrParam
-[INFO][SYNTAX]termFactor -> EPSILON
-[INFO][SYNTAX]term -> factor termFactor
-[INFO][SYNTAX]arithExprRight -> EPSILON
-[INFO][SYNTAX]arithExpr -> term arithExprRight
-[INFO][SYNTAX]subExpr -> EPSILON
-[INFO][SYNTAX]expr -> arithExpr subExpr
-[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
-[INFO][SYNTAX]statementList -> EPSILON
-[INFO][SYNTAX]bodyCode2 -> indiceList dotIdList assignOp expr ; statementList
-[INFO][SYNTAX]bodyCode -> id bodyCode2
-[INFO][SYNTAX]T_DEL_C_RPAREN -> }
-[INFO][SYNTAX]funcBody -> { bodyCode }
-[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
-[INFO][SYNTAX]funcDef -> funcHead funcBody ;
-[INFO][SYNTAX]funcDefList -> EPSILON
-[INFO][SYNTAX]funcDefList -> funcDef funcDefList
-[INFO][SYNTAX]funcDefList -> funcDef funcDefList
-[INFO][SYNTAX]funcDefList -> funcDef funcDefList
-[INFO][SYNTAX]funcDefList -> funcDef funcDefList
-[INFO][SYNTAX]funcDefList -> funcDef funcDefList
-[INFO][SYNTAX]varDecFunDef1 -> ( fParams ) funcBody ; funcDefList
-[INFO][SYNTAX]varDecFunDef -> type id varDecFunDef1
-[INFO][SYNTAX]varDecFunDef1 -> arraySizeList ; varDecFunDef
-[INFO][SYNTAX]varDecFunDef -> type id varDecFunDef1
-[INFO][SYNTAX]varDecFunDef1 -> arraySizeList ; varDecFunDef
-[INFO][SYNTAX]varDecFunDef -> type id varDecFunDef1
+[INFO][SYNTAX]varDecFunDef    -> EPSILON
 [INFO][SYNTAX]T_DEL_C_RPAREN -> }
 [INFO][SYNTAX]T_DEL_SEMICOLON -> ;
 [INFO][SYNTAX]classDecl        -> class id { varDecFunDef } ;
@@ -194,43 +9,37 @@
 [INFO][SYNTAX]classDeclList    -> classDecl classDeclList
 [INFO][SYNTAX]T_IDENTIFIER -> program
 [INFO][SYNTAX]T_DEL_C_LPAREN -> {
-[INFO][SYNTAX]bodyCode -> EPSILON
-[INFO][SYNTAX]T_DEL_C_RPAREN -> }
-[INFO][SYNTAX]funcBody -> { bodyCode }
-[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
-[INFO][SYNTAX]type            -> int
-[INFO][SYNTAX]T_IDENTIFIER -> minS
-[INFO][SYNTAX]T_DEL_R_LPAREN -> (
-[INFO][SYNTAX]type            -> id	->	Foo1
-[INFO][SYNTAX]T_IDENTIFIER -> foo
-[INFO][SYNTAX]arraySizeList ->  EPSILON
-[INFO][SYNTAX]fParamsTailList -> EPSILON
-[INFO][SYNTAX]fParams -> type id arraySizeList fParamsTailList
-[INFO][SYNTAX]T_DEL_R_RPAREN -> )
-[INFO][SYNTAX]funcHead -> type id ( fParams )
-[INFO][SYNTAX]T_DEL_C_LPAREN -> {
-[INFO][SYNTAX]bodyCode -> EPSILON
-[INFO][SYNTAX]T_DEL_C_RPAREN -> }
-[INFO][SYNTAX]funcBody -> { bodyCode }
-[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
-[INFO][SYNTAX]funcDef -> funcHead funcBody ;
-[INFO][SYNTAX]type            -> int
-[INFO][SYNTAX]T_IDENTIFIER -> minA
-[INFO][SYNTAX]T_DEL_R_LPAREN -> (
-[INFO][SYNTAX]type            -> int
-[INFO][SYNTAX]T_IDENTIFIER -> a
-[INFO][SYNTAX]arraySizeList ->  EPSILON
-[INFO][SYNTAX]fParamsTailList -> EPSILON
-[INFO][SYNTAX]fParams -> type id arraySizeList fParamsTailList
-[INFO][SYNTAX]T_DEL_R_RPAREN -> )
-[INFO][SYNTAX]funcHead -> type id ( fParams )
-[INFO][SYNTAX]T_DEL_C_LPAREN -> {
-[INFO][SYNTAX]T_IDENTIFIER -> a
+[INFO][SYNTAX]T_IDENTIFIER -> c
 [INFO][SYNTAX]indiceList -> EPSILON
 [INFO][SYNTAX]dotIdList -> EPSILON
 [INFO][SYNTAX]T_OP_ASSIGN_EQUAL -> =
+[INFO][SYNTAX]T_IDENTIFIER -> minA
+[INFO][SYNTAX]T_DEL_R_LPAREN -> (
 [INFO][SYNTAX]T_IDENTIFIER -> a
 [INFO][SYNTAX]indiceOrParam -> EPSILON
+[INFO][SYNTAX]factor -> id indiceOrParam
+[INFO][SYNTAX]termFactor -> EPSILON
+[INFO][SYNTAX]term -> factor termFactor
+[INFO][SYNTAX]arithExprRight -> EPSILON
+[INFO][SYNTAX]arithExpr -> term arithExprRight
+[INFO][SYNTAX]subExpr -> EPSILON
+[INFO][SYNTAX]expr -> arithExpr subExpr
+[INFO][SYNTAX]T_DEL_COMMA -> ,
+[INFO][SYNTAX]T_IDENTIFIER -> b
+[INFO][SYNTAX]indiceOrParam -> EPSILON
+[INFO][SYNTAX]factor -> id indiceOrParam
+[INFO][SYNTAX]termFactor -> EPSILON
+[INFO][SYNTAX]term -> factor termFactor
+[INFO][SYNTAX]arithExprRight -> EPSILON
+[INFO][SYNTAX]arithExpr -> term arithExprRight
+[INFO][SYNTAX]subExpr -> EPSILON
+[INFO][SYNTAX]expr -> arithExpr subExpr
+[INFO][SYNTAX]aParamsTail -> , expr
+[INFO][SYNTAX]aParamsTailList -> EPSILON
+[INFO][SYNTAX]aParamsTailList -> aParamsTail aParamsTailList
+[INFO][SYNTAX]aParams -> expr aParamsTailList
+[INFO][SYNTAX]T_DEL_R_RPAREN -> )
+[INFO][SYNTAX]indiceOrParam -> ( aParams )
 [INFO][SYNTAX]factor -> id indiceOrParam
 [INFO][SYNTAX]termFactor -> EPSILON
 [INFO][SYNTAX]term -> factor termFactor
@@ -245,9 +54,6 @@
 [INFO][SYNTAX]T_DEL_C_RPAREN -> }
 [INFO][SYNTAX]funcBody -> { bodyCode }
 [INFO][SYNTAX]T_DEL_SEMICOLON -> ;
-[INFO][SYNTAX]funcDef -> funcHead funcBody ;
 [INFO][SYNTAX]funcDefList -> EPSILON
-[INFO][SYNTAX]funcDefList -> funcDef funcDefList
-[INFO][SYNTAX]funcDefList -> funcDef funcDefList
 [INFO][SYNTAX]progBody -> program funcBody ; funcDefList
 [INFO][SYNTAX]prog -> classDeclList progBody

@@ -1,0 +1,25 @@
+class Foo1{
+	int a;
+	int min(){
+		return (a);
+	};
+};
+class Foo{
+	int a;
+	Foo1 f1;
+	int min(){
+		return (a);
+	};
+};
+program{
+	int a;
+	int b;
+	Foo foo;
+	b = foo.min();
+	b = foo.f1.min();
+	a = rand();
+};
+int rand(){
+	int c;
+	return(c);
+};

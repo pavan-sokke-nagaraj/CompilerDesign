@@ -246,8 +246,8 @@ public class SemanticAnalysis {
 		if (symbol.symbolType == SYMBOLTYPE.PARAMETER) {
 			Symbol function = symbol.getSelfTable().getParent();
 			SymbolTable funcTable = function.getSelfTable();
-			System.out.println(function.getToken().getValue() + "  "
-					+ function.getToken().getPosition());
+			// System.out.println(function.getToken().getValue() + "  "
+			// + function.getToken().getPosition());
 			for (int i = 0; i < funcTable.getSymbolList().size(); i++) {
 				Symbol tableSymbol = funcTable.getSymbolList().get(i);
 				if (tableSymbol.symbolType == SYMBOLTYPE.FUNCTION
@@ -271,8 +271,8 @@ public class SemanticAnalysis {
 			}
 		} else if (symbol.symbolType == SYMBOLTYPE.FUNCTION) {
 			SymbolTable funcTable = symbol.getSelfTable();
-			System.out.println(symbol.getToken().getValue() + "  "
-					+ symbol.getToken().getPosition());
+			// System.out.println(symbol.getToken().getValue() + "  "
+			// + symbol.getToken().getPosition());
 			for (int i = 0; i < funcTable.getSymbolList().size(); i++) {
 				Symbol tableSymbol = funcTable.getSymbolList().get(i);
 				if (tableSymbol.getToken().getValue()
@@ -286,7 +286,7 @@ public class SemanticAnalysis {
 			System.out
 					.println("CALL 911... SHOW ME THE CODE.. COMPILER HAS GONE MAD");
 		}
-		System.out.println(funcCount);
+		// System.out.println(funcCount);
 		if (funcCount != 1) {
 			String token = "";
 			int position = -1;
@@ -300,7 +300,7 @@ public class SemanticAnalysis {
 				token = symbol.getToken().getValue();
 				position = symbol.getToken().getPosition();
 			}
-			System.out.println(funcCount);
+			// System.out.println(funcCount);
 			String msg = "FUNCTION REDEFINED:\t" + token
 					+ "  at Line Number:\t" + position;
 			PrintUtil.error(semanticLog, LOGTYPE.SEMATICS, msg);
