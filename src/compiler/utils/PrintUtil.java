@@ -85,7 +85,7 @@ public class PrintUtil {
 	public static void info(Logger logger, LOGTYPE logType, String msg) {
 		if (isLog) {
 			msg = getLogMsg(msg, logType);
-			System.out.println(msg);
+//			System.out.println(msg);
 			logger.info(msg);
 		}
 	}
@@ -113,7 +113,7 @@ public class PrintUtil {
 	public static String h2C = "</h2>";
 
 	public static String tableO = "<table border = \"1\"><tr><th>NAME</th><th>TYPE</th><th>KIND</th><th>STRUCTURE</th><th>ARRAY DIMENSIONS</th><th>NO OF PARAMS</th><th>ADDRESS</th>"
-			+ "<th>IS DUPLICATE</th><th>IS ARRAY</th><th>IS DATA TYPE VALID</th></tr>";
+			+ "<th>IS DUPLICATE</th><th>IS ARRAY</th><th>IS DATA TYPE VALID</th><th>LINK</th></tr>";
 	public static String tableC = "</table>";
 
 	public static String trO = "<tr>";

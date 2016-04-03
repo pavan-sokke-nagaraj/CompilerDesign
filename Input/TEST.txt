@@ -1,25 +1,27 @@
 class Foo1{
 	int a;
-	int min(){
-		return (a);
+	int c[10][10];
+	int minS(){
 	};
-};
-class Foo{
-	int a;
-	Foo1 f1;
-	int min(){
-		return (a);
+	int minS(){
+	};
+	int minA(int a){
+		a = a;
+	};
+	int minA(int a){
+		a = a;
+	};
+	float minA(int a){
+		a = a;
+	};
+	int min(int a, int b){
+		a = a;
 	};
 };
 program{
-	int a;
-	int b;
-	Foo foo;
-	b = foo.min();
-	b = foo.f1.min();
-	a = rand();
 };
-int rand(){
-	int c;
-	return(c);
+int minS(Foo1 foo){
+};
+int minA(int a){
+	a = a;
 };

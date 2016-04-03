@@ -1,5 +1,7 @@
 package compiler.semantics;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Logger;
 
 import compiler.lexer.Token;
@@ -36,6 +38,7 @@ public class SemanticAnalysis {
 				+ symbol.getToken().getValue() + "_POSITION_"
 				+ symbol.getToken().getPosition();
 		symbol.setAddress(address);
+		symbol.setLink("");
 		if (isClassRedfined(symbol)) {
 			symbol.setDuplicate(true);
 			String msg = "CLASS NAME REDEFINED:\t"
@@ -97,6 +100,8 @@ public class SemanticAnalysis {
 					+ symbol.getDataType().getValue() + "  at Line Number:\t"
 					+ symbol.getToken().getPosition();
 			PrintUtil.error(semanticLog, LOGTYPE.SEMATICS, msg);
+		} else {
+			symbol.setLink(link);
 		}
 		if (isValidVarName(symbol)) {
 		}
@@ -119,10 +124,14 @@ public class SemanticAnalysis {
 		return false;
 	}
 
+	private static String link = "";
+
 	// Function call to check if the data type is defined or not
 	public boolean isDataTypeDefined(Symbol symbol) {
+		// System.out.println(symbol.getToken().getValue());
 		if (symbol.getDataType().getValue().equals("int")
 				|| symbol.getDataType().getValue().equals("float")) {
+			link = "";
 			return true;
 		}
 		for (int i = 0; i < mainTable.getSymbolList().size(); i++) {
@@ -135,9 +144,30 @@ public class SemanticAnalysis {
 						.getValue()
 						.equals(symbol.getSelfTable().getParent().getToken()
 								.getValue())) {
-
 				} else {
+					if (tableSymbol.getAddress() != null)
+						link = tableSymbol.getAddress();
 					return true;
+				}
+			}
+		}
+		// check for the function types defined after the program body during
+		// the 2nd round of parsing
+		if (firstTable != null) {
+			for (int i = 0; i < firstTable.getSymbolList().size(); i++) {
+				Symbol tableSymbol = firstTable.getSymbolList().get(i);
+				if (tableSymbol.symbolType == SYMBOLTYPE.CLASS
+						&& tableSymbol.getToken().getValue()
+								.equals(symbol.getDataType().getValue())) {
+					if (symbol
+							.getDataType()
+							.getValue()
+							.equals(symbol.getSelfTable().getParent()
+									.getToken().getValue())) {
+
+					} else {
+						return true;
+					}
 				}
 			}
 		}
@@ -182,6 +212,7 @@ public class SemanticAnalysis {
 
 	// Insert function to Symbol Table
 	public void functionDecl(Symbol symbol) {
+		// System.out.println(symbol.getToken().getValue());
 		symbol.symbolType = SYMBOLTYPE.FUNCTION;
 		symbol.setSelfTable(currTable);
 		symbol.setChildTable(createTable(symbol));
@@ -195,30 +226,86 @@ public class SemanticAnalysis {
 					+ symbol.getDataType().getValue() + "  at Line Number:\t"
 					+ symbol.getToken().getPosition();
 			PrintUtil.error(semanticLog, LOGTYPE.SEMATICS, msg);
+		} else {
+			symbol.setLink(link);
 		}
-		if (isFuncNameReDefined(symbol)) {
-			symbol.setDataTypeDefined(false);
-			String msg = "FUNCTION NAME REDEFINED:\t"
-					+ symbol.getToken().getValue() + "  at Line Number:\t"
-					+ symbol.getToken().getPosition();
-			PrintUtil.error(semanticLog, LOGTYPE.SEMATICS, msg);
-		}
+		// if (isFunctionReDefined(symbol)) {
+		// symbol.setDataTypeDefined(false);
+		// String msg = "FUNCTION NAME REDEFINED:\t"
+		// + symbol.getToken().getValue() + "  at Line Number:\t"
+		// + symbol.getToken().getPosition();
+		// PrintUtil.error(semanticLog, LOGTYPE.SEMATICS, msg);
+		// }
 		currTable.getSymbolList().add(symbol);
 		currTable = symbol.getChildTable();
 	}
 
-	// Function call to check if the function name is redefined or not
-	private boolean isFuncNameReDefined(Symbol symbol) {
-		for (int i = 0; i < symbol.getSelfTable().getSymbolList().size(); i++) {
-			Symbol tableSymbol = symbol.getSelfTable().getSymbolList().get(i);
-			if (tableSymbol.symbolType == SYMBOLTYPE.FUNCTION) {
-				if (tableSymbol.getToken().getValue()
-						.equals(symbol.getToken().getValue())) {
-					return true;
+	public boolean isFunctionReDefined(Symbol symbol) {
+		boolean isRedefined = false;
+		int funcCount = 0;
+		if (symbol.symbolType == SYMBOLTYPE.PARAMETER) {
+			Symbol function = symbol.getSelfTable().getParent();
+			SymbolTable funcTable = function.getSelfTable();
+			System.out.println(function.getToken().getValue() + "  "
+					+ function.getToken().getPosition());
+			for (int i = 0; i < funcTable.getSymbolList().size(); i++) {
+				Symbol tableSymbol = funcTable.getSymbolList().get(i);
+				if (tableSymbol.symbolType == SYMBOLTYPE.FUNCTION
+						&& tableSymbol.getToken().getValue()
+								.equals(function.getToken().getValue())
+						&& tableSymbol.getDataType().getValue()
+								.equals(function.getDataType().getValue())) {
+					if (tableSymbol.getNoOfParams() == function.getNoOfParams()) {
+						ArrayList<String> paramsF1 = function.getParams();
+						ArrayList<String> paramsF2 = tableSymbol.getParams();
+						int pCount = function.getNoOfParams();
+						for (int j = 0; j < pCount; j++) {
+							if (paramsF1.get(j).equals(paramsF2.get(j))) {
+								if (j == pCount - 1) {
+									funcCount++;
+								}
+							}
+						}
+					}
 				}
 			}
+		} else if (symbol.symbolType == SYMBOLTYPE.FUNCTION) {
+			SymbolTable funcTable = symbol.getSelfTable();
+			System.out.println(symbol.getToken().getValue() + "  "
+					+ symbol.getToken().getPosition());
+			for (int i = 0; i < funcTable.getSymbolList().size(); i++) {
+				Symbol tableSymbol = funcTable.getSymbolList().get(i);
+				if (tableSymbol.getToken().getValue()
+						.equals(symbol.getToken().getValue())
+						&& tableSymbol.getDataType().getValue()
+								.equals(symbol.getDataType().getValue())) {
+					funcCount++;
+				}
+			}
+		} else {
+			System.out
+					.println("CALL 911... SHOW ME THE CODE.. COMPILER HAS GONE MAD");
 		}
-		return false;
+		System.out.println(funcCount);
+		if (funcCount != 1) {
+			String token = "";
+			int position = -1;
+			if (symbol.symbolType == SYMBOLTYPE.PARAMETER) {
+				symbol.getSelfTable().getParent().setDuplicate(true);
+				token = symbol.getSelfTable().getParent().getToken().getValue();
+				position = symbol.getSelfTable().getParent().getToken()
+						.getPosition();
+			} else if (symbol.symbolType == SYMBOLTYPE.FUNCTION) {
+				symbol.setDuplicate(true);
+				token = symbol.getToken().getValue();
+				position = symbol.getToken().getPosition();
+			}
+			System.out.println(funcCount);
+			String msg = "FUNCTION REDEFINED:\t" + token
+					+ "  at Line Number:\t" + position;
+			PrintUtil.error(semanticLog, LOGTYPE.SEMATICS, msg);
+		}
+		return isRedefined;
 	}
 
 	// Insert Program to Symbol Table
@@ -231,6 +318,7 @@ public class SemanticAnalysis {
 				+ symbol.getToken().getValue() + "_POSITION_"
 				+ symbol.getToken().getPosition();
 		symbol.setAddress(address);
+		symbol.setLink("");
 		currTable.getSymbolList().add(symbol);
 		currTable = symbol.getChildTable();
 	}
@@ -328,6 +416,7 @@ public class SemanticAnalysis {
 		h2Print += tdO + symbol.isDuplicate() + tdC;
 		h2Print += tdO + symbol.isArray() + tdC;
 		h2Print += tdO + symbol.isDataTypeDefined() + tdC;
+		h2Print += tdO + symbol.getLink() + tdC;
 		PrintUtil.info(semanticLog, LOGTYPE.SEMATICS, print);
 		PrintUtil.print(stLog, LOGTYPE.HTML, h2Print);
 	}
@@ -357,6 +446,25 @@ public class SemanticAnalysis {
 					.getSymbolList().size(); i++) {
 				Symbol tableSymbol = currTable.getParent().getSelfTable()
 						.getSymbolList().get(i);
+				if (tableSymbol.symbolType == SYMBOLTYPE.VARIABLE
+						&& tableSymbol.getToken().getValue()
+								.equals(symbol.getToken().getValue())) {
+					copySymbol(symbol, tableSymbol);
+					return true;
+				}
+				if (tableSymbol.symbolType == SYMBOLTYPE.FUNCTION
+						&& tableSymbol.getToken().getValue()
+								.equals(symbol.getToken().getValue())) {
+					copySymbol(symbol, tableSymbol);
+					return true;
+				}
+			}
+		}
+		// check for the function types defined after the program body during
+		// the 2nd round of parsing
+		if (firstTable != null) {
+			for (int i = 0; i < firstTable.getSymbolList().size(); i++) {
+				Symbol tableSymbol = firstTable.getSymbolList().get(i);
 				if (tableSymbol.symbolType == SYMBOLTYPE.VARIABLE
 						&& tableSymbol.getToken().getValue()
 								.equals(symbol.getToken().getValue())) {

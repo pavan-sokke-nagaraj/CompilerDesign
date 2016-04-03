@@ -160,13 +160,18 @@ public class SynatcticParser {
 		if (checkFirstSet("(")) {
 			printGrammar("var_DecFunDef1", "( fParams ) funcBody ; funcDefList");
 			if (matchTokenType("T_DEL_R_LPAREN", SYMBOLTYPE.FUNCTION)
-					&& fParams() && matchTokenType("T_DEL_R_RPAREN")
-					&& funcBody()
-					&& matchTokenType("T_DEL_SEMICOLON", SYMBOLTYPE.QUITTABLE)
-					&& funcDefList()) {
-				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
-						"varDecFunDef1 -> ( fParams ) funcBody ; funcDefList");
-				return true;
+					&& fParams() && matchTokenType("T_DEL_R_RPAREN")) {
+				// A -4 Semantic rules - function overloading checking
+				// System.out.println(symbol.getToken().getValue());
+				semantics.isFunctionReDefined(symbol);
+				if (funcBody()
+						&& matchTokenType("T_DEL_SEMICOLON",
+								SYMBOLTYPE.QUITTABLE) && funcDefList()) {
+					PrintUtil
+							.info(grammarLog, LOGTYPE.SYNTAX,
+									"varDecFunDef1 -> ( fParams ) funcBody ; funcDefList");
+					return true;
+				}
 			}
 		} else if (checkFirstSet("varDecFunDef1")) {
 			printGrammar("var_DecFunDef1", "arraySizeList ; varDecFunDef ");
@@ -247,6 +252,9 @@ public class SynatcticParser {
 					&& matchTokenType("T_IDENTIFIER", SYMBOLTYPE.UNKNOWN)
 					&& matchTokenType("T_DEL_R_LPAREN", SYMBOLTYPE.FUNCTION)
 					&& fParams() && matchTokenType("T_DEL_R_RPAREN")) {
+				// A -4 Semantic rules - function overloading checking
+				// System.out.println(symbol.getToken().getValue());
+				semantics.isFunctionReDefined(symbol);
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 						"funcHead -> type id ( fParams )");
 				return true;
@@ -267,6 +275,9 @@ public class SynatcticParser {
 			if (matchType()
 					&& matchTokenType("T_IDENTIFIER", SYMBOLTYPE.PARAMETER)
 					&& arraySizeList() && fParamsTailList()) {
+				// A -4 Semantic rules - function overloading checking
+				// System.out.println(symbol.getToken().getValue());
+				// semantics.isFunctionReDefined(symbol);
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 						"fParams -> type id arraySizeList fParamsTailList");
 				return true;
@@ -274,8 +285,7 @@ public class SynatcticParser {
 				return false;
 		} else if (checkFollowSet("fParams")) {
 			printGrammar("fParams", "");
-			PrintUtil
-					.info(grammarLog, LOGTYPE.SYNTAX, "funcDefList -> EPSILON");
+			PrintUtil.info(grammarLog, LOGTYPE.SYNTAX, "fParams -> EPSILON");
 			return true;
 		}
 		return false;

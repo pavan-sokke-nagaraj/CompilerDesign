@@ -40,6 +40,7 @@ public class Symbol {
 	private ArrayList<String> params = new ArrayList<String>();
 	// Address generated for the current Symbol
 	private String address;
+	private String link;
 
 	public Token getDataType() {
 		return dataType;
@@ -144,4 +145,13 @@ public class Symbol {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
+
 }
