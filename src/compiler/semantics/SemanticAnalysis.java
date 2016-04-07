@@ -1,7 +1,6 @@
 package compiler.semantics;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.logging.Logger;
 
 import compiler.lexer.Token;
@@ -16,7 +15,7 @@ public class SemanticAnalysis {
 	public SymbolTable currTable = null; // present table with symbolsparsing
 	// work on the 2nd order parsing
 	public SymbolTable firstTable = null; // used for the 2nd level parsing
-	private Logger semanticLog;
+	public Logger semanticLog;
 	private Logger stLog;
 
 	public SemanticAnalysis() {
@@ -115,6 +114,36 @@ public class SemanticAnalysis {
 			symbol.structure = STRUCTURE.ARRAY;
 		} else {
 			symbol.structure = STRUCTURE.SIMPLE;
+		}
+
+		// allocate memory
+		if (symbol.getDataType().getValue().equals("int")
+				|| symbol.getDataType().getValue().equals("float")) {
+			symbol.setMemory(4);
+		} else {
+			boolean isMemSet = false;
+			for (int i = 0; i < mainTable.getSymbolList().size(); i++) {
+				Symbol tmpSymbol = mainTable.getSymbolList().get(i);
+				if (tmpSymbol.symbolType == SYMBOLTYPE.CLASS
+						&& tmpSymbol.getToken().getValue()
+								.equals(symbol.getToken().getValue())) {
+					symbol.setMemory(tmpSymbol.getMemory());
+					isMemSet = true;
+					break;
+				}
+			}
+			if (firstTable != null && !isMemSet) {
+				for (int i = 0; i < firstTable.getSymbolList().size(); i++) {
+					Symbol tmpSymbol = firstTable.getSymbolList().get(i);
+					if (tmpSymbol.symbolType == SYMBOLTYPE.CLASS
+							&& tmpSymbol.getToken().getValue()
+									.equals(symbol.getToken().getValue())) {
+						symbol.setMemory(tmpSymbol.getMemory());
+						isMemSet = true;
+						break;
+					}
+				}
+			}
 		}
 		currTable.getSymbolList().add(symbol);
 	}
@@ -236,6 +265,7 @@ public class SemanticAnalysis {
 		// + symbol.getToken().getPosition();
 		// PrintUtil.error(semanticLog, LOGTYPE.SEMATICS, msg);
 		// }
+		symbol.setMemory(4);
 		currTable.getSymbolList().add(symbol);
 		currTable = symbol.getChildTable();
 	}
@@ -412,6 +442,7 @@ public class SemanticAnalysis {
 			h2Print += tdO + "N/A" + tdC;
 		}
 		print += "\t" + symbol.getAddress() + "\t";
+		h2Print += tdO + symbol.getMemory() + tdC;
 		h2Print += tdO + symbol.getAddress() + tdC;
 		h2Print += tdO + symbol.isDuplicate() + tdC;
 		h2Print += tdO + symbol.isArray() + tdC;
@@ -485,10 +516,12 @@ public class SemanticAnalysis {
 		return false;
 	}
 
+	// copy all the symbol related values
+	// except the token and symbol table details
 	private void copySymbol(Symbol symbol, Symbol tableSymbol) {
-		symbol.setDataType(copyToken(tableSymbol.getDataType()));
-		symbol.structure = tableSymbol.structure;
 		symbol.symbolType = tableSymbol.symbolType;
+		symbol.structure = tableSymbol.structure;
+		symbol.setDataType(copyToken(tableSymbol.getDataType()));
 		symbol.setArray(tableSymbol.isArray());
 		symbol.setArrLength(tableSymbol.getArrLength());
 		symbol.setArrSize(tableSymbol.getArrSize());
@@ -518,6 +551,9 @@ public class SemanticAnalysis {
 								.getSymbolList().get(j);
 						if (thisSymb.getToken().getValue()
 								.equals(tempSymb.getToken().getValue())) {
+							copySymbol(tempSymb, thisSymb);
+							tempSymb.setClassName(tableSymbol.getToken()
+									.getValue());
 							return true;
 						}
 					}
@@ -539,5 +575,234 @@ public class SemanticAnalysis {
 			return false;
 		}
 		return false;
+	}
+
+	private ArrayList<Symbol> arrayIndice = new ArrayList<Symbol>();
+
+	// function to validate array parameters
+	// calcArrayAddr
+	public void checkArray(Symbol symbol) {
+		System.out.println("LOL");
+		if (arrayIndice.size() != symbol.getArrLength()) {
+			String msg = "ARRAY DIMENSIONS MISSMATCH:" + " REQUIRED: "
+					+ symbol.getArrLength() + " ASSIGNED: "
+					+ arrayIndice.size() + "\t FOR VARIABLE:\t"
+					+ symbol.getToken().getValue() + "\tAT LINE NUMBER:\t"
+					+ symbol.getToken().getPosition();
+			PrintUtil.error(semanticLog, LOGTYPE.SEMATICS, msg);
+		}
+		arrayIndice.clear();
+	}
+
+	// function to check index data type
+	// ifValidIndexType
+	public void checkIndex(Symbol index) {
+		System.out.println("LOL");
+		System.out.println(index.getDataType().getValue());
+		if (!(index.getDataType().getDesc().equals("T_INTEGER") || index
+				.getDataType().getDesc().equals("T_RESERVE_WORD_INT"))) {
+			String msg = "ARRAY INDEX OUT OF BOUND: ASSIGNED \t"
+					+ index.getDataType().getValue() + "["
+					+ index.getDataType().getDesc() + "]"
+					+ "\t FOR DIMENSION TYPE:\t" + "T_INTEGER"
+					+ "\tAT LINE NUMBER:\t" + index.getToken().getPosition();
+			PrintUtil.error(semanticLog, LOGTYPE.SEMATICS, msg);
+		} else {
+			arrayIndice.add(index);
+		}
+	}
+
+	// function to compare LHS datatype to RHS datatype
+	// compDateType
+	public void checkDataTypes(Symbol symLHS, Symbol symRHS) {
+		System.out.println("LOL");
+		String lhsVal = symLHS.getDataType().getValue();
+		String rhsVal = symRHS.getDataType().getValue();
+		System.out.println("LHS: " + lhsVal + " RHS: " + rhsVal);
+		if (lhsVal.equals(rhsVal)) {
+		} else if (lhsVal.equals("int") && rhsVal.equals("float")) {
+			// convert symLHS to float
+			String msg = "DATA TYPE MISSMATCH:\t CONVERTING "
+					+ symLHS.getToken().getValue()
+					+ " FROM INT DATA TYPE TO FLOAT DATA TYPE"
+					+ "\tAT LINE NUMBER:\t" + symLHS.getToken().getPosition();
+			PrintUtil.warning(semanticLog, LOGTYPE.SEMATICS, msg);
+		} else if (lhsVal.equals("float") && rhsVal.equals("int")) {
+			// convert symRHS to float
+			String msg = "DATA TYPE MISSMATCH:\t CONVERTING "
+					+ symRHS.getToken().getValue()
+					+ " FROM INT DATA TYPE TO FLOAT DATA TYPE"
+					+ "\tAT LINE NUMBER:\t" + symRHS.getToken().getPosition();
+			PrintUtil.warning(semanticLog, LOGTYPE.SEMATICS, msg);
+		} else {
+			String msg = "INVALID DATA TYPES:\t" + symLHS.getToken().getValue()
+					+ " AND " + symRHS.getToken().getValue()
+					+ " SHOULD BE OF INT OR FLOAT DATA TYPE"
+					+ "\tAT LINE NUMBER:\t" + symLHS.getToken().getPosition();
+			PrintUtil.error(semanticLog, LOGTYPE.SEMATICS, msg);
+		}
+	}
+
+	// compare addOp data types
+	// compDateTypeNum
+	public Symbol addOpComp(Symbol symLHS, Token operToken, Symbol symRHS) {
+		System.out.println("LOL");
+		String lhsVal = symLHS.getDataType().getValue();
+		String rhsVal = symRHS.getDataType().getValue();
+		System.out.println("LHS: " + lhsVal + " RHS: " + rhsVal);
+		if (lhsVal.equals("int") && rhsVal.equals("int")) {
+			return symLHS;
+		} else if (lhsVal.equals("int") && rhsVal.equals("float")) {
+			// convert symLHS to float
+			String msg = "DATA TYPE MISSMATCH:\t CONVERTING "
+					+ symLHS.getToken().getValue()
+					+ " FROM INT DATA TYPE TO FLOAT DATA TYPE"
+					+ "\tAT LINE NUMBER:\t" + symLHS.getToken().getPosition();
+			PrintUtil.warning(semanticLog, LOGTYPE.SEMATICS, msg);
+			return symRHS;
+		} else if (lhsVal.equals("float") && rhsVal.equals("int")) {
+			// convert symRHS to float
+			String msg = "DATA TYPE MISSMATCH:\t CONVERTING "
+					+ symRHS.getToken().getValue()
+					+ " FROM INT DATA TYPE TO FLOAT DATA TYPE"
+					+ "\tAT LINE NUMBER:\t" + symRHS.getToken().getPosition();
+			PrintUtil.warning(semanticLog, LOGTYPE.SEMATICS, msg);
+			return symLHS;
+		} else if (lhsVal.equals("float") && rhsVal.equals("float")) {
+			return symLHS;
+		} else {
+			String msg = "INVALID DATA TYPES:\t" + symLHS.getToken().getValue()
+					+ " AND " + symRHS.getToken().getValue()
+					+ " SHOULD BE OF INT OR FLOAT DATA TYPE"
+					+ "\tAT LINE NUMBER:\t" + symLHS.getToken().getPosition();
+			PrintUtil.error(semanticLog, LOGTYPE.SEMATICS, msg);
+			return symRHS;
+		}
+	}
+
+	public ArrayList<Symbol> aParams = new ArrayList<Symbol>();
+	public ArrayList<String> aParamVars = new ArrayList<String>();
+
+	public void checkParams(Symbol symbol) {
+		System.out.println(symbol.toString());
+		// if symbol is type of var = className.function(param p1, param p2)
+		if (symbol.symbolType == SYMBOLTYPE.ISCLASSORFUNC) {
+			if (firstTable != null) {
+				System.out.println(symbol.toString());
+				// check the class -> methods first from
+				for (int i = 0; i < firstTable.getSymbolList().size(); i++) {
+					Symbol tableSymbol = firstTable.getSymbolList().get(i);
+					System.out.println(tableSymbol.symbolType);
+					System.out.println(tableSymbol.getToken().getValue());
+					if (tableSymbol.symbolType == SYMBOLTYPE.CLASS
+							&& tableSymbol.getToken().getValue()
+									.equals(symbol.getClassName())) {
+						for (int j = 0; j < tableSymbol.getChildTable()
+								.getSymbolList().size(); j++) {
+							Symbol funcSymb = tableSymbol.getChildTable()
+									.getSymbolList().get(j);
+							if (funcSymb.symbolType == SYMBOLTYPE.FUNCTION
+									&& funcSymb
+											.getToken()
+											.getValue()
+											.equals(symbol.getToken()
+													.getValue())) {
+								if (compareParams(funcSymb.getChildTable())) {
+									symbol.symbolType = SYMBOLTYPE.FUNCTION;
+								}
+							}
+						}
+
+					}
+				}
+			}
+		} else {
+			// if symbol is type of var = functionName(param p1, param p2)
+			// check for local function call
+			if (symbol.getSelfTable() != null) {
+				for (int i = 0; i < symbol.getSelfTable().getSymbolList()
+						.size(); i++) {
+					Symbol localFunc = symbol.getSelfTable().getSymbolList()
+							.get(i);
+					if (localFunc.symbolType == SYMBOLTYPE.FUNCTION
+							&& localFunc.getToken().getValue()
+									.equals(symbol.getToken().getValue())) {
+						if (compareParams(localFunc.getChildTable())) {
+							symbol.symbolType = SYMBOLTYPE.FUNCTION;
+						}
+					}
+				}
+			} else {
+				// if symbol is type of var = functionName(param p1, param p2)
+				// and call is made to free functions from global table
+				if (firstTable != null) {
+					System.out.println(symbol.toString());
+					// check the class -> methods first from
+					for (int i = 0; i < firstTable.getSymbolList().size(); i++) {
+						Symbol tableSymbol = firstTable.getSymbolList().get(i);
+						System.out.println(tableSymbol.symbolType);
+						System.out.println(tableSymbol.getToken().getValue());
+						System.out.println();
+						if (tableSymbol.symbolType == SYMBOLTYPE.FUNCTION
+								&& tableSymbol.getToken().getValue()
+										.equals(symbol.getToken().getValue())) {
+							if (compareParams(tableSymbol.getChildTable())) {
+								symbol.symbolType = SYMBOLTYPE.FUNCTION;
+							}
+						}
+					}
+				}
+			}
+		}
+		// System.out.println("UNDECLARED PARAMETERS");
+	}
+
+	private boolean compareParams(SymbolTable childTable) {
+		int paramCount = 0;
+		for (int i = 0; i < childTable.getSymbolList().size(); i++) {
+			Symbol aParam = childTable.getSymbolList().get(i);
+			if (aParam.symbolType == SYMBOLTYPE.PARAMETER) {
+				paramCount++;
+				if (paramCount > aParams.size()) {
+					return false;
+				}
+				Symbol cParam = aParams.get(i);
+				if (!aParam.getDataType().getValue()
+						.equals(cParam.getDataType().getValue())) {
+					System.out.println("DATA TYPE MISS MATCH");
+					return false;
+				}
+			}
+		}
+		if (paramCount != aParams.size()) {
+			return false;
+		}
+		System.out.println("all is well");
+		return true;
+	}
+
+	public boolean setClassMemory(Symbol symbol) {
+		for (int i = 0; i < currTable.getSymbolList().size(); i++) {
+			Symbol tmpSymb = currTable.getSymbolList().get(i);
+			if (tmpSymb.symbolType == SYMBOLTYPE.VARIABLE) {
+				if (tmpSymb.isArray()) {
+					int arrMemory = getArrayMemory(tmpSymb);
+					System.out.println("arrMemory: " + arrMemory);
+					symbol.setMemory(symbol.getMemory() + arrMemory);
+				} else {
+					symbol.setMemory(symbol.getMemory() + tmpSymb.getMemory());
+				}
+			}
+		}
+		return true;
+	}
+
+	private int getArrayMemory(Symbol arrSymb) {
+		int arrMemory = 1;
+		for (int i = 0; i < arrSymb.getArrSize().size(); i++) {
+			if (arrSymb.getArrSize().get(i) != 0)
+				arrMemory *= arrSymb.getArrSize().get(i);
+		}
+		return arrMemory * arrSymb.getMemory();
 	}
 }

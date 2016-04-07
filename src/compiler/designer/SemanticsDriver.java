@@ -27,8 +27,8 @@ public class SemanticsDriver {
 		String inputFile = inputDir + "TEST.txt";
 
 		Lexer lexer = new Lexer(inputFile);
-
 		// 1st order parsing
+		// PrintUtil.isLog = true;
 		SynatcticParser sParser = new SynatcticParser(lexer);
 		sParser.parse();
 		SymbolTable firstTable = sParser.semantics.mainTable.clone();

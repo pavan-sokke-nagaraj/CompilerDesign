@@ -14,7 +14,7 @@ public class Symbol {
 
 	// each recognized symbol is set to a symbol type
 	public enum SYMBOLTYPE {
-		UNKNOWN, CLASS, PROGRAM, VARIABLE, PARAMETER, ARRAYSIZE, FUNCTION, QUITTABLE, ISVARDECLARED, ISCLASSORFUNC, FORLOOPVAR
+		UNKNOWN, CLASS, PROGRAM, VARIABLE, PARAMETER, ARRAYSIZE, NUM, FUNCTION, QUITTABLE, ISVARDECLARED, ISCLASSORFUNC, FORLOOPVAR
 	};
 
 	public SYMBOLTYPE symbolType;
@@ -41,6 +41,8 @@ public class Symbol {
 	// Address generated for the current Symbol
 	private String address;
 	private String link;
+	private String className;
+	private int memory;
 
 	public Token getDataType() {
 		return dataType;
@@ -154,4 +156,23 @@ public class Symbol {
 		this.link = link;
 	}
 
+	public String toString() {
+		return dataType.getValue() + "\t" + token.getValue();
+	}
+
+	public String getClassName() {
+		return className;
+	}
+
+	public void setClassName(String className) {
+		this.className = className;
+	}
+
+	public int getMemory() {
+		return memory;
+	}
+
+	public void setMemory(int memory) {
+		this.memory = memory;
+	}
 }
