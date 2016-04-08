@@ -38,6 +38,8 @@ public class SemanticsDriver {
 		sParser = new SynatcticParser(lexer);
 		sParser.parse(firstTable);
 		sParser.semantics.printSymbolTable();
+		sParser.semantics.printData();
+		sParser.semantics.printCode();
 	}
 
 }

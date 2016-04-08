@@ -1,33 +1,16 @@
-[WARNING][SEMANTICS]DATA TYPE MISSMATCH:	 CONVERTING value FROM INT DATA TYPE TO FLOAT DATA TYPE	AT LINE NUMBER:	9
 [INFO][SEMANTICS]SYMBOL TABLE:	GLOBAL
 
 [INFO][SEMANTICS]|___Name___|____ Type ____|____ Kind ____|____Structure____|___Array Dimension ___|___ NO OF PARAMS ___|_____ADDRESS____|
-[INFO][SEMANTICS]   Foo   	CLASS	class		null		N/A			N/A		GLOBAL_CLASS_Foo_POSITION_1	
-[INFO][SEMANTICS]   program   	PROGRAM	program		null		N/A			N/A		GLOBAL_PROGRAM_program_POSITION_7	
+[INFO][SEMANTICS]   Foo   	CLASS	class		null		N/A			N/A		F_C_Foo_1	
+[INFO][SEMANTICS]   program   	PROGRAM	program		null		N/A			N/A		F_P_program_3	
 [INFO][SEMANTICS]
 
 SYMBOL TABLE:	GLOBAL :: Foo
 
 [INFO][SEMANTICS]|___Name___|____ Type ____|____ Kind ____|____Structure____|___Array Dimension ___|___ NO OF PARAMS ___|_____ADDRESS____|
-[INFO][SEMANTICS]   min   	FUNCTION	int::int,int		null		N/A	2		GLOBAL_Foo_FUNCTION_min_POSITION_2	
-[INFO][SEMANTICS]   min   	FUNCTION	int::int,float		null		N/A	2		GLOBAL_Foo_FUNCTION_min_POSITION_4	
-[INFO][SEMANTICS]
-
-SYMBOL TABLE:	GLOBAL :: Foo ::  :: min
-
-[INFO][SEMANTICS]|___Name___|____ Type ____|____ Kind ____|____Structure____|___Array Dimension ___|___ NO OF PARAMS ___|_____ADDRESS____|
-[INFO][SEMANTICS]   a   	PARAMETER	int		SIMPLE		N/A			N/A		GLOBAL_Foo_min_VARIABLE_a_POSITION_2	
-[INFO][SEMANTICS]   b   	PARAMETER	int		SIMPLE		N/A			N/A		GLOBAL_Foo_min_VARIABLE_b_POSITION_2	
-[INFO][SEMANTICS]
-
-SYMBOL TABLE:	GLOBAL :: Foo ::  :: min
-
-[INFO][SEMANTICS]|___Name___|____ Type ____|____ Kind ____|____Structure____|___Array Dimension ___|___ NO OF PARAMS ___|_____ADDRESS____|
-[INFO][SEMANTICS]   a   	PARAMETER	int		SIMPLE		N/A			N/A		GLOBAL_Foo_min_VARIABLE_a_POSITION_4	
-[INFO][SEMANTICS]   b   	PARAMETER	float		SIMPLE		N/A			N/A		GLOBAL_Foo_min_VARIABLE_b_POSITION_4	
 [INFO][SEMANTICS]
 
 SYMBOL TABLE:	GLOBAL :: program
 
 [INFO][SEMANTICS]|___Name___|____ Type ____|____ Kind ____|____Structure____|___Array Dimension ___|___ NO OF PARAMS ___|_____ADDRESS____|
-[INFO][SEMANTICS]   value   	VARIABLE	int		SIMPLE		N/A			N/A		GLOBAL_program_VARIABLE_value_POSITION_8	
+[INFO][SEMANTICS]   a   	VARIABLE	int		SIMPLE		N/A			N/A		F_P_V_a_4	

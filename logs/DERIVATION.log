@@ -3,91 +3,67 @@
 [INFO][SYNTAX]ClassDecl classDeclList progBody
 [INFO][SYNTAX]class id { varDecFunDef } ; classDeclList progBody
 [INFO][SYNTAX]class Foo { varDecFunDef } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { type id var_DecFunDef1 } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int id var_DecFunDef1 } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min var_DecFunDef1 } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( fParams ) funcBody ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( type id arraySizeList f_Params_TailList ) funcBody ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int id arraySizeList f_Params_TailList ) funcBody ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a arraySizeList f_Params_TailList ) funcBody ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  f_Params_TailList ) funcBody ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  f_Param_Tail f_Params_TailList ) funcBody ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  , type id arraySizeList f_Params_TailList ) funcBody ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  , int id arraySizeList f_Params_TailList ) funcBody ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  , int b arraySizeList f_Params_TailList ) funcBody ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  , int b  f_Params_TailList ) funcBody ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) funcBody ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) { bodyCode } ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; func_Def funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; funcHead funcBody ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; type id ( fParams ) funcBody ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int id ( fParams ) funcBody ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( fParams ) funcBody ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( type id arraySizeList f_Params_TailList ) funcBody ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int id arraySizeList f_Params_TailList ) funcBody ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a arraySizeList f_Params_TailList ) funcBody ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  f_Params_TailList ) funcBody ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  f_Param_Tail f_Params_TailList ) funcBody ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , type id arraySizeList f_Params_TailList ) funcBody ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float id arraySizeList f_Params_TailList ) funcBody ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b arraySizeList f_Params_TailList ) funcBody ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b  f_Params_TailList ) funcBody ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) funcBody ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) { bodyCode } ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ; funcDefList } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ; classDeclList progBody
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  progBody
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program funcBody ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { bodyCode } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int id arraySizeList ; bodyCode } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int id arraySizeList ; bodyCode } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value arraySizeList ; bodyCode } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; bodyCode } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; id body_Code2 } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value body_Code2 } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value i_ndiceList dotList = expr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value  dotList = expr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = expr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = arithExpr subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = term arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = factor terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = num terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05 terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  addOp term arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + term arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + factor terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( arithExpr ) terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( term arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( factor terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( arithExpr ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( term arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( factor terFac arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( num terFac arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( 2.04 terFac arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( 2.04 multOp factor terFac arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( 2.04 * factor terFac arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( 2.04 * num terFac arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( 2.04 * 2.47 terFac arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( 2.04 * 2.47  arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( 2.04 * 2.47   ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( 2.04 * 2.47   )  arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( 2.04 * 2.47   )  addOp term arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( 2.04 * 2.47   )  - term arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( 2.04 * 2.47   )  - factor terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( 2.04 * 2.47   )  - num terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( 2.04 * 2.47   )  - 3.0 terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( 2.04 * 2.47   )  - 3.0  arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( 2.04 * 2.47   )  - 3.0   ) terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( 2.04 * 2.47   )  - 3.0   )  arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( 2.04 * 2.47   )  - 3.0   )  addOp term arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( 2.04 * 2.47   )  - 3.0   )  + term arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( 2.04 * 2.47   )  - 3.0   )  + factor terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( 2.04 * 2.47   )  - 3.0   )  + num terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( 2.04 * 2.47   )  - 3.0   )  + 7.0006 terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( 2.04 * 2.47   )  - 3.0   )  + 7.0006  arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( 2.04 * 2.47   )  - 3.0   )  + 7.0006   subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( 2.04 * 2.47   )  - 3.0   )  + 7.0006    ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( 2.04 * 2.47   )  - 3.0   )  + 7.0006    ;  } ; funcDefList
-[INFO][SYNTAX]class Foo { int min ( int a  , int b   ) {  } ; int min ( int a  , float b   ) {  } ;  } ;  program { int value  ; value   = 1.05  + ( ( 2.04 * 2.47   )  - 3.0   )  + 7.0006    ;  } ; 
+[INFO][SYNTAX]class Foo {  } ; classDeclList progBody
+[INFO][SYNTAX]class Foo {  } ;  progBody
+[INFO][SYNTAX]class Foo {  } ;  program funcBody ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { bodyCode } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int id arraySizeList ; bodyCode } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int id arraySizeList ; bodyCode } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a arraySizeList ; bodyCode } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; bodyCode } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; id body_Code2 } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a body_Code2 } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a i_ndiceList dotList = expr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a  dotList = expr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = expr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = arithExpr subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = term arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = factor terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = num terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10 terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  addOp term arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + term arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + factor terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + num terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 multOp factor terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * factor terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * num terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10 terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10  arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10   subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; statement S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; ctrlStat ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( expr ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( arithExpr subExpr ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( term arithERR subExpr ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( factor terFac arithERR subExpr ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( id IorP terFac arithERR subExpr ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a IorP terFac arithERR subExpr ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a  terFac arithERR subExpr ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a   arithERR subExpr ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a    subExpr ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; statement S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; ctrlStat ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( variable ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( id i_ndiceList dotNest ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a i_ndiceList dotNest ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a  dotNest ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; statement S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; ctrlStat ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; put ( expr ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; put ( arithExpr subExpr ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; put ( term arithERR subExpr ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; put ( factor terFac arithERR subExpr ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; put ( id IorP terFac arithERR subExpr ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; put ( a IorP terFac arithERR subExpr ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; put ( a  terFac arithERR subExpr ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; put ( a   arithERR subExpr ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; put ( a    subExpr ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; put ( a     ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; put ( a     ) ;  } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; put ( a     ) ;  } ; 

@@ -66,6 +66,8 @@ public class SynatcticParser {
 
 	private boolean startSymbol() {
 		printGrammar("prog", "prog");
+		semantics.moonData.add("%DATA");
+		semantics.moonCode.add("%CODE");
 		return prog();
 	}
 
@@ -167,13 +169,15 @@ public class SynatcticParser {
 				// A -4 Semantic rules - function overloading checking
 				// System.out.println(symbol.getToken().getValue());
 				semantics.isFunctionReDefined(symbol);
-				if (funcBody()
-						&& matchTokenType("T_DEL_SEMICOLON",
-								SYMBOLTYPE.QUITTABLE) && funcDefList()) {
-					PrintUtil
-							.info(grammarLog, LOGTYPE.SYNTAX,
-									"varDecFunDef1 -> ( fParams ) funcBody ; funcDefList");
-					return true;
+				if (funcBody()) {
+					semantics.returnFuncCode();
+					if (matchTokenType("T_DEL_SEMICOLON", SYMBOLTYPE.QUITTABLE)
+							&& funcDefList()) {
+						PrintUtil
+								.info(grammarLog, LOGTYPE.SYNTAX,
+										"varDecFunDef1 -> ( fParams ) funcBody ; funcDefList");
+						return true;
+					}
 				}
 			}
 		} else if (checkFirstSet("varDecFunDef1")) {
@@ -195,13 +199,18 @@ public class SynatcticParser {
 			return false;
 		}
 		if (checkFirstSet("program")) {
+			semantics.moonCode.add("");
+			semantics.moonCode.add("\t\t" + "entry\t\t%START HERE");
+			// semantics.moonCode.add("\t\t" + "r14\t\tr0\t\tr0");
 			printGrammar("progBody", "program funcBody ; funcDefList");
 			if (matchTokenValue("program") && funcBody()
-					&& matchTokenType("T_DEL_SEMICOLON", SYMBOLTYPE.QUITTABLE)
-					&& funcDefList()) {
-				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
-						"progBody -> program funcBody ; funcDefList");
-				return true;
+					&& matchTokenType("T_DEL_SEMICOLON", SYMBOLTYPE.QUITTABLE)) {
+				semantics.moonCode.add("\t\t" + "hlt");
+				if (funcDefList()) {
+					PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
+							"progBody -> program funcBody ; funcDefList");
+					return true;
+				}
 			}
 		}
 		return false;
@@ -597,6 +606,7 @@ public class SynatcticParser {
 					&& matchTokenType("T_DEL_R_RPAREN")) {
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 						"ctrlStat -> get ( variable )");
+				semantics.genGetCode(symbol);
 				return true;
 			} else
 				return false;
@@ -607,6 +617,7 @@ public class SynatcticParser {
 					&& matchTokenType("T_DEL_R_RPAREN")) {
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 						"ctrlStat -> put ( expr )");
+				semantics.genPutCode(expr);
 				return true;
 			} else
 				return false;
@@ -1133,9 +1144,9 @@ public class SynatcticParser {
 			printGrammar("IorP", "");
 			PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 					"indiceOrParam -> EPSILON");
-//			if (iSymbol.isArray()) {
-//				semantics.checkArray(iSymbol);
-//			}
+			// if (iSymbol.isArray()) {
+			// semantics.checkArray(iSymbol);
+			// }
 			copySymbol(indiceOrParam, iSymbol);
 			return true;
 		}
@@ -1771,9 +1782,11 @@ public class SynatcticParser {
 		symbol.setDataTypeDefined(tableSymbol.isDataTypeDefined());
 		symbol.setDuplicate(tableSymbol.isDuplicate());
 		symbol.setValidVarName(tableSymbol.isValidVarName());
+
 		symbol.setArray(tableSymbol.isArray());
 		symbol.setArrLength(tableSymbol.getArrLength());
-		symbol.getArrSize().addAll(tableSymbol.getArrSize());
+		symbol.setArrSize(tableSymbol.getArrSize());
+
 		symbol.setNoOfParams(tableSymbol.getNoOfParams());
 		symbol.getParams().addAll(tableSymbol.getParams());
 		symbol.setAddress(tableSymbol.getAddress());

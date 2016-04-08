@@ -1,10 +1,9 @@
 class Foo{
-	int min(int a, int b){
-	};
-	int min(int a, float b){
-	};
 };
 program{
-	int value;
-	value = 1.05 + ((2.04 * 2.47) - 3.0) + 7.0006 ;
+	int a;
+	a = 10 + 10 * 10;
+	put(a);
+	get(a);
+	put(a);
 };
