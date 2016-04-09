@@ -1037,7 +1037,7 @@ public class SemanticAnalysis {
 	}
 
 	public boolean genPutCode(Symbol symbol) {
-		loadWord(symbol, "r1", "\t\t%write  " + symbol.getToken().getValue());
+		loadWord(symbol, "r1", "\t\t% PUT  " + symbol.getToken().getValue());
 		moonCode.add("\t\t" + "jl\t" + "r15" + ",\t" + "putint");
 		return true;
 	}

@@ -13,4 +13,4 @@ SYMBOL TABLE:	GLOBAL :: Foo
 SYMBOL TABLE:	GLOBAL :: program
 
 [INFO][SEMANTICS]|___Name___|____ Type ____|____ Kind ____|____Structure____|___Array Dimension ___|___ NO OF PARAMS ___|_____ADDRESS____|
-[INFO][SEMANTICS]   a   	VARIABLE	int		SIMPLE		N/A			N/A		F_P_V_a_4	
+[INFO][SEMANTICS]   i   	VARIABLE	int[6]		ARRAY	1			N/A		F_P_V_i_4	
