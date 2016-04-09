@@ -1,14 +1,25 @@
+class Foo1{
+	int i[10][10];
+	int a; 
+	int lol[100];
+};
 class Foo{
+	int i[10][10];
+	int a; 
+	int lol[100];
 };
 program{
-	int i[6];
-	get(i[1]);
-	 i[2] = 2;
-	// i[3] = 4;
-	// i[4] = 4;
-	// i[5] = 5;
-	// i[6] = 6;
-	 i[2] = i[1] + i[1];
-	// i[1] = ((i[1]+i[2])+(i[3]+(i[4]*(i[5]))+i[6]));
-	put(i[2]);
+	Foo f;
+	Foo1 f1;
+	f.a = 100;
+	put(f.a);
+	 f.i[4][4] = f.a + f.a;
+	 put(f.i[4][4] );
+	 f.i[0][0] = f.i[4][4] *f.i[4][4] ;
+	 put(f.i[0][0] );
+	 f.lol[11][11] = 9999;
+	 put (f.lol[11][11]);
+	 f1.a = f.lol[11][11];
+	 f1.a = f1.a + 1;
+	 put(f1.a);
 };

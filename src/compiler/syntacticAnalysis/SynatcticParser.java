@@ -1153,9 +1153,9 @@ public class SynatcticParser {
 			printGrammar("IorP", "");
 			PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 					"indiceOrParam -> EPSILON");
-			// if (iSymbol.isArray()) {
-			// semantics.checkArray(iSymbol);
-			// }
+			 if (iSymbol.isArray()) {
+			 semantics.checkArray(iSymbol);
+			 }
 			copySymbol(indiceOrParam, iSymbol);
 			return true;
 		}
@@ -1318,6 +1318,7 @@ public class SynatcticParser {
 			Symbol prevSymb = new Symbol();
 			copySymbol(prevSymb, symbol);
 			Symbol arithExpr = new Symbol();
+			semantics.pushReg("r11");
 			// A - 4
 			printGrammar("indice", "[ arithExpr ]");
 			if (matchTokenType("T_DEL_S_LPAREN") && arithExpr(arithExpr)
@@ -1326,6 +1327,7 @@ public class SynatcticParser {
 						"indice -> [ arithExpr ]");
 				semantics.checkIndex(arithExpr);
 				copySymbol(symbol, prevSymb);
+				semantics.popReg("r11");
 				return true;
 			} else
 				return false;
@@ -1565,6 +1567,7 @@ public class SynatcticParser {
 				semantics.QuitPresentTable();
 			} else if (symbolType == SYMBOLTYPE.ISVARDECLARED) {
 				semantics.isVarDeclared(symbol);
+				semantics.resetOffset();
 			} else if (symbolType == SYMBOLTYPE.ISCLASSORFUNC) {
 				// tempSymb.setToken(copyToken(token));
 				if (semantics.isClassType(symbol, tempSymb)) {

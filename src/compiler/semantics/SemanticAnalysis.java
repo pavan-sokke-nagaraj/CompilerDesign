@@ -22,7 +22,7 @@ public class SemanticAnalysis {
 	public SemanticAnalysis() {
 		semanticLog = PrintUtil.setLogger("SEMANTIC.log");
 		stLog = PrintUtil.setSimpleLogger("SYMBOLTABLES.html");
-		codeLog = PrintUtil.setSimpleLogger("CODE.code");
+		codeLog = PrintUtil.setSimpleLogger("//moon//CODE.txt");
 	}
 
 	// Start of Global Table
@@ -119,7 +119,9 @@ public class SemanticAnalysis {
 			symbol.structure = STRUCTURE.SIMPLE;
 		}
 
+		
 		// allocate memory
+		System.out.println(symbol.toString());
 		if (symbol.getDataType().getValue().equals("int")
 				|| symbol.getDataType().getValue().equals("float")) {
 			symbol.setMemory(4);
@@ -129,7 +131,7 @@ public class SemanticAnalysis {
 				Symbol tmpSymbol = mainTable.getSymbolList().get(i);
 				if (tmpSymbol.symbolType == SYMBOLTYPE.CLASS
 						&& tmpSymbol.getToken().getValue()
-								.equals(symbol.getToken().getValue())) {
+								.equals(symbol.getDataType().getValue())) {
 					symbol.setMemory(tmpSymbol.getMemory());
 					isMemSet = true;
 					break;
@@ -568,7 +570,7 @@ public class SemanticAnalysis {
 	}
 
 	// Function call to check if the the type is of class or not
-	public boolean isClassType(Symbol symbol, Symbol tempSymb) {
+	public boolean isClassType(Symbol symbol, Symbol subSymb) {
 		if (firstTable != null) {
 			for (int i = 0; i < firstTable.getSymbolList().size(); i++) {
 				Symbol tableSymbol = firstTable.getSymbolList().get(i);
@@ -577,32 +579,49 @@ public class SemanticAnalysis {
 				if (tableSymbol.symbolType == SYMBOLTYPE.CLASS
 						&& tableSymbol.getToken().getValue()
 								.equals(symbol.getDataType().getValue())) {
+					int memOffSet = 0;
 					for (int j = 0; j < tableSymbol.getChildTable()
 							.getSymbolList().size(); j++) {
-						Symbol thisSymb = tableSymbol.getChildTable()
+						Symbol classSymb = tableSymbol.getChildTable()
 								.getSymbolList().get(j);
-						if (thisSymb.getToken().getValue()
-								.equals(tempSymb.getToken().getValue())) {
-							copySymbol(tempSymb, thisSymb);
-							tempSymb.setClassName(tableSymbol.getToken()
+						if (classSymb.getToken().getValue()
+								.equals(subSymb.getToken().getValue())) {
+							if (subSymb.getAddress() == null) {
+								subSymb.setAddress(symbol.getAddress());
+							}
+							subSymb.setDataType(copyToken(classSymb.getDataType()));
+							// copySymbol(subSymb, classSymb);
+							subSymb.setMemory(classSymb.getMemory());
+							subSymb.setArray(classSymb.isArray());
+							subSymb.setArrLength(classSymb.getArrLength());
+							subSymb.setArrSize(classSymb.getArrSize());
+							subSymb.setClassName(tableSymbol.getToken()
 									.getValue());
+							setClassOffset(memOffSet);
 							return true;
+						}
+						if(classSymb.symbolType == SYMBOLTYPE.VARIABLE){
+							if(classSymb.isArray()){
+								memOffSet += getArrayMemory(classSymb); 
+							}else{
+								memOffSet = classSymb.getMemory();
+							}
 						}
 					}
 					String msg = "\""
-							+ tempSymb.getToken().getValue()
+							+ subSymb.getToken().getValue()
 							+ "\" IS NOT A DECLARED MEMBER FUNCTION/VARIABLE OF \""
 							+ tableSymbol.getToken().getValue() + "\""
 							+ "  at Line Number:\t"
-							+ tempSymb.getToken().getPosition();
+							+ subSymb.getToken().getPosition();
 					PrintUtil.error(semanticLog, LOGTYPE.SEMATICS, msg);
 					return false;
 				}
 			}
 			String msg = "TOKEN FOR THE LEFT SIDE OF  \"."
-					+ tempSymb.getToken().getValue()
+					+ subSymb.getToken().getValue()
 					+ "\" SHOULD BE OF A TYPE CLASS" + "  at Line Number:\t"
-					+ tempSymb.getToken().getPosition();
+					+ subSymb.getToken().getPosition();
 			PrintUtil.error(semanticLog, LOGTYPE.SEMATICS, msg);
 			return false;
 		}
@@ -636,7 +655,7 @@ public class SemanticAnalysis {
 						+ arrSize);
 				loadWord(arrayIndice.get(i), "r2", "");
 				moonCode.add("\t\t" + "mul" + "\t" + "r1,\t" + "r1,\t" + "r2");
-				moonCode.add("\t\t" + "add" + "\t" + "r11,\t" + "r0,\t" + "r2");
+				moonCode.add("\t\t" + "add" + "\t" + "r11,\t" + "r11,\t" + "r1");
 				moonCode.add("\n");
 			}
 		}
@@ -668,7 +687,7 @@ public class SemanticAnalysis {
 		String lhsVal = symLHS.getDataType().getValue();
 		String rhsVal = symRHS.getDataType().getValue();
 		System.out.println("LHS: " + lhsVal + " RHS: " + rhsVal);
-		printCode();
+		// printCode();
 		if (lhsVal.equals(rhsVal)) {
 			loadWord(symRHS, "r1", "\t\t%" + symLHS.getToken().getValue()
 					+ " = " + symRHS.getToken().getValue());
@@ -889,7 +908,12 @@ public class SemanticAnalysis {
 					moonData.add(symbol.getAddress() + "\tres\t"
 							+ getArrayMemory(symbol));
 				} else {
-					moonData.add(symbol.getAddress() + "\tdw\t" + "0");
+					if(symbol.getMemory() > 4 && symbol.symbolType== SYMBOLTYPE.VARIABLE){
+						moonData.add(symbol.getAddress() + "\tres\t"
+								+ getArrayMemory(symbol));
+					}else{
+						moonData.add(symbol.getAddress() + "\tdw\t" + "0");
+					}
 				}
 			}
 		}
@@ -915,6 +939,7 @@ public class SemanticAnalysis {
 	private boolean genMathCode(Symbol symLHS, Token operToken, Symbol symRHS) {
 		loadWord(symRHS, "r2", "\t\t%" + symLHS.getToken().getValue()
 				+ operToken.getValue() + symRHS.getToken().getValue());
+		popOffset(symLHS);
 		loadWord(symLHS, "r1", "\t\t%");
 		String opType = "add";
 		if (operToken.getValue().equals("+")) {
@@ -1021,8 +1046,15 @@ public class SemanticAnalysis {
 				}
 			}
 		}
-		moonCode.add("\t\t" + "lw\t" + reg + ",\t" + symbol.getAddress()
-				+ "(r0)" + comment);
+
+		if (symbol.symbolType == SYMBOLTYPE.ISCLASSORFUNC
+				|| symbol.symbolType != SYMBOLTYPE.UNKNOWN && symbol.isArray()) {
+			moonCode.add("\t\t" + "lw\t" + reg + ",\t" + symbol.getAddress()
+					+ "(r11)" + comment);
+		} else {
+			moonCode.add("\t\t" + "lw\t" + reg + ",\t" + symbol.getAddress()
+					+ "(r0)" + comment);
+		}
 
 		// if(symbol.symbolType == SYMBOLTYPE.ISVARDECLARED)
 		return true;
@@ -1030,15 +1062,71 @@ public class SemanticAnalysis {
 
 	private boolean storeWord(Symbol symbol) {
 		if (firstTable != null) {
-			moonCode.add("\t\t" + "sw\t" + symbol.getAddress() + "(r0),\t"
-					+ "r1");
+			Symbol tSym = new Symbol();
+			Symbol vSym = new Symbol();
+			boolean isValid = false;
+			int offset = 0;
+
+			if (symbol.symbolType != SYMBOLTYPE.FUNCTION) {
+				for (int i = 0; i < firstTable.getSymbolList().size(); i++) {
+					tSym = firstTable.getSymbolList().get(i);
+					if (tSym.symbolType == SYMBOLTYPE.CLASS) {
+						for (int j = 0; j < tSym.getChildTable()
+								.getSymbolList().size(); j++) {
+							vSym = tSym.getChildTable().getSymbolList().get(j);
+							if (vSym.getAddress().equals(symbol.getAddress())) {
+								isValid = true;
+								break;
+							}
+							if (vSym.isArray()) {
+								offset += getArrayMemory(vSym);
+							} else {
+								offset += vSym.getMemory();
+							}
+						}
+						if (isValid) {
+							break;
+						}
+					}
+					if (tSym.symbolType == SYMBOLTYPE.PROGRAM) {
+						for (int j = 0; j < tSym.getChildTable()
+								.getSymbolList().size(); j++) {
+							vSym = tSym.getChildTable().getSymbolList().get(j);
+							if (vSym.getAddress().equals(symbol.getAddress())) {
+								isValid = true;
+								break;
+							}
+							if (vSym.isArray()) {
+								offset += getArrayMemory(vSym);
+							} else {
+								offset += vSym.getMemory();
+							}
+						}
+						if (isValid) {
+							break;
+						}
+					}
+				}
+			}
+			if (symbol.symbolType == SYMBOLTYPE.ISCLASSORFUNC
+					|| symbol.symbolType != SYMBOLTYPE.UNKNOWN
+					&& symbol.isArray()) {
+				popReg("r11");
+				moonCode.add("\t\t" + "sw\t" + symbol.getAddress() + "(r11),\t"
+						+ "r1");
+			} else {
+				moonCode.add("\t\t" + "sw\t" + symbol.getAddress() + "(r0),\t"
+						+ "r1");
+			}
 		}
 		return true;
 	}
 
 	public boolean genPutCode(Symbol symbol) {
+		pushReg("r15");
 		loadWord(symbol, "r1", "\t\t% PUT  " + symbol.getToken().getValue());
 		moonCode.add("\t\t" + "jl\t" + "r15" + ",\t" + "putint");
+		popReg("r15");
 		return true;
 	}
 
@@ -1094,22 +1182,33 @@ public class SemanticAnalysis {
 		return true;
 	}
 
+	public boolean popOffset(Symbol symbol) {
+		if (symbol.symbolType == SYMBOLTYPE.ISCLASSORFUNC
+				|| (symbol.symbolType != SYMBOLTYPE.UNKNOWN && symbol.isArray())) {
+			popReg("r11");
+		}
+		return true;
+	}
+	
+	public boolean setClassOffset(int offSet){
+		moonCode.add("\t\t" + "addi\t" + "r11,\t" + "r11,\t" + offSet
+				+ "\t% Class Variable Offset " + offSet);
+		return true;
+	}
 	public boolean pushReg(String reg) {
 		moonCode.add("");
 		moonCode.add("\t\t" + "subi\t" + "r14,\t" + "r14,\t" + "4"
 				+ "\t% PUSH " + reg);
-		moonCode.add("\t\t" + "sw\t" + "topaddr(r14),\t" + reg + ""
-				+ "");
+		moonCode.add("\t\t" + "sw\t" + "topaddr(r14),\t" + reg + "" + "");
 		moonCode.add("");
 		return true;
 	}
-	
-	private boolean popReg(String reg) {
+
+	public boolean popReg(String reg) {
 		moonCode.add("");
-		moonCode.add("\t\t" + "lw\t" + reg +",\t" + "topaddr(r14)"
+		moonCode.add("\t\t" + "lw\t" + reg + ",\t" + "topaddr(r14)"
 				+ "\t%\tPOP " + reg);
-		moonCode.add("\t\t" + "addi\t" + "r14,\t" + "r14,\t" + "4"
-				+ "");
+		moonCode.add("\t\t" + "addi\t" + "r14,\t" + "r14,\t" + "4" + "");
 		moonCode.add("");
 		return true;
 	}
