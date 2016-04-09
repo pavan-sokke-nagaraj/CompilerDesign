@@ -170,7 +170,7 @@ public class SynatcticParser {
 				// System.out.println(symbol.getToken().getValue());
 				semantics.isFunctionReDefined(symbol);
 				if (funcBody()) {
-					semantics.returnFuncCode();
+					semantics.genFuncEndCode();
 					if (matchTokenType("T_DEL_SEMICOLON", SYMBOLTYPE.QUITTABLE)
 							&& funcDefList()) {
 						PrintUtil
@@ -200,8 +200,8 @@ public class SynatcticParser {
 		}
 		if (checkFirstSet("program")) {
 			semantics.moonCode.add("");
-			semantics.moonCode.add("\t\t" + "entry\t\t%START HERE");
-			// semantics.moonCode.add("\t\t" + "r14\t\tr0\t\tr0");
+			semantics.moonCode.add("\t\t" + "entry\t\t%PROGRAM EXECUTION");
+			semantics.moonCode.add("\t\t" + "add" + "\t" + "r14,\t" + "r0,\t" + "r0" + "\t% SET STACK POINTER\n");
 			printGrammar("progBody", "program funcBody ; funcDefList");
 			if (matchTokenValue("program") && funcBody()
 					&& matchTokenType("T_DEL_SEMICOLON", SYMBOLTYPE.QUITTABLE)) {
@@ -245,6 +245,7 @@ public class SynatcticParser {
 			printGrammar("func_Def", "funcHead funcBody ;");
 			if (funcHead() && funcBody()
 					&& matchTokenType("T_DEL_SEMICOLON", SYMBOLTYPE.QUITTABLE)) {
+				semantics.genFuncEndCode();
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 						"funcDef -> funcHead funcBody ;");
 				return true;
@@ -441,12 +442,14 @@ public class SynatcticParser {
 				return false;
 		} else if (checkFirstSet("bodyCode2")) {
 			semantics.isVarDeclared(symbol);
+			semantics.resetOffset();
 			Symbol expr = new Symbol();
 			printGrammar("body_Code2", "i_ndiceList dotList = expr ; S_LIST");
 			if (indiceList()) {
 				if (dotIdList() && matchTokenValue("=")) {
 					Symbol prevSymb = new Symbol();
 					copySymbol(prevSymb, symbol);
+					semantics.pushOffset(symbol);
 					if (expr(expr)) {
 						semantics.checkDataTypes(prevSymb, expr);
 						if (matchTokenType("T_DEL_SEMICOLON")
@@ -646,6 +649,7 @@ public class SynatcticParser {
 				System.out.println(symbol.toString());
 				Symbol variable = new Symbol();
 				copySymbol(variable, symbol);
+				semantics.pushOffset(variable);
 				if (matchTokenType("T_OP_ASSIGN_EQUAL")) {
 					if (expr(expr)) {
 						PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
@@ -744,6 +748,7 @@ public class SynatcticParser {
 			printGrammar("subExpr", "relOp arithExpr");
 			Symbol arithExpr2 = new Symbol();
 			Token operToken = copyToken(token);
+			semantics.pushOffset(arithExpr);
 			if (matchTokenType("relOp") && arithExpr(arithExpr2)) {
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 						"subExpr -> relOp arithExpr");
@@ -794,6 +799,7 @@ public class SynatcticParser {
 			Symbol arithExprRight2 = new Symbol();
 			Symbol term2 = new Symbol();
 			Token operToken = copyToken(token);
+			semantics.pushOffset(term);
 			if (matchTokenType("addOp") && term(term2)
 					&& arithExprRight(term2, arithExprRight2)) {
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
@@ -908,6 +914,7 @@ public class SynatcticParser {
 			Symbol factor2 = new Symbol();
 			Symbol termFactor2 = new Symbol();
 			Token operToken = copyToken(token);
+			semantics.pushOffset(factor);
 			printGrammar("terFac", "multOp factor terFac");
 			if (matchTokenType("multOp") && factor(factor2)
 					&& termFactor(factor2, termFactor2)) {
@@ -1002,6 +1009,7 @@ public class SynatcticParser {
 			if (matchTokenType("T_LOGICAL_NOT") && factor(factor)) {
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 						"factor -> not factor");
+				semantics.genNotCode(factor);
 				return true;
 			} else
 				return false;
@@ -1026,6 +1034,7 @@ public class SynatcticParser {
 			if (matchSign() && factor(factor)) {
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 						"factor -> sign factor");
+				semantics.genSignCode(factor);
 				return true;
 			} else
 				return false;

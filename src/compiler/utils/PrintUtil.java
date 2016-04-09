@@ -42,13 +42,30 @@ public class PrintUtil {
 			FileHandler fileHandler = null;
 			try {
 				fileHandler = new FileHandler(logFile, false);
+				// SimpleFormatter textFormatter = new SimpleFormatter();
+				fileHandler.setFormatter(new FormatLog());
+				logger.addHandler(fileHandler);
+				logger.setUseParentHandlers(false);
+			} catch (SecurityException | IOException e) {
+				System.out
+						.println("Logger initialization error. Check File Permissions!!!");
+				e.printStackTrace();
+			} finally {
+			}
+		}
+		return logger;
+	}
+
+	public static Logger setSimpleLogger(String logFileName) {
+		String logFile = System.getProperty("user.dir") + "\\logs\\"
+				+ logFileName;
+		Logger logger = Logger.getLogger(logFile);
+		if (logger.getHandlers().length == 0) {
+			FileHandler fileHandler = null;
+			try {
+				fileHandler = new FileHandler(logFile, false);
 				SimpleFormatter textFormatter = new SimpleFormatter();
-				// fileHandler.setFormatter(textFormatter);
-				if (logFileName.equals("SymbolTables.html")) {
-					fileHandler.setFormatter(new HtmlFormatLog());
-				} else {
-					fileHandler.setFormatter(new FormatLog());
-				}
+				fileHandler.setFormatter(new HtmlFormatLog());
 				// fileHandler.setFormatter(new FormatLog());
 				logger.addHandler(fileHandler);
 				logger.setUseParentHandlers(false);

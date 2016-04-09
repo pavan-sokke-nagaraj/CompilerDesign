@@ -9,61 +9,73 @@
 [INFO][SYNTAX]class Foo {  } ;  program { bodyCode } ; funcDefList
 [INFO][SYNTAX]class Foo {  } ;  program { int id arraySizeList ; bodyCode } ; funcDefList
 [INFO][SYNTAX]class Foo {  } ;  program { int id arraySizeList ; bodyCode } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a arraySizeList ; bodyCode } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; bodyCode } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; id body_Code2 } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a body_Code2 } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a i_ndiceList dotList = expr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a  dotList = expr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = expr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = arithExpr subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = term arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = factor terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = num terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10 terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  addOp term arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + term arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + factor terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + num terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 multOp factor terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * factor terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * num terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10 terFac arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10  arithERR subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10   subExpr ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; statement S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; ctrlStat ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( expr ) ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( arithExpr subExpr ) ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( term arithERR subExpr ) ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( factor terFac arithERR subExpr ) ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( id IorP terFac arithERR subExpr ) ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a IorP terFac arithERR subExpr ) ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a  terFac arithERR subExpr ) ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a   arithERR subExpr ) ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a    subExpr ) ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; statement S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; ctrlStat ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( variable ) ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( id i_ndiceList dotNest ) ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a i_ndiceList dotNest ) ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a  dotNest ) ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; statement S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; ctrlStat ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; put ( expr ) ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; put ( arithExpr subExpr ) ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; put ( term arithERR subExpr ) ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; put ( factor terFac arithERR subExpr ) ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; put ( id IorP terFac arithERR subExpr ) ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; put ( a IorP terFac arithERR subExpr ) ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; put ( a  terFac arithERR subExpr ) ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; put ( a   arithERR subExpr ) ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; put ( a    subExpr ) ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; put ( a     ) ; S_LIST } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; put ( a     ) ;  } ; funcDefList
-[INFO][SYNTAX]class Foo {  } ;  program { int a  ; a   = 10  + 10 * 10    ; put ( a     ) ; get ( a   ) ; put ( a     ) ;  } ; 
+[INFO][SYNTAX]class Foo {  } ;  program { int i arraySizeList ; bodyCode } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; bodyCode } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; ctrlStat ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( variable ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( id i_ndiceList dotNest ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i i_ndiceList dotNest ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i  dotNest ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; statement S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; assignStat ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; variable = expr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; id i_ndiceList dotNest = expr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i i_ndiceList dotNest = expr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i  dotNest = expr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = expr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = arithExpr subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = term arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = factor terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( arithExpr ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( term arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( factor terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( arithExpr ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( term arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( factor terFac arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( num terFac arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3 terFac arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  addOp term arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + term arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + factor terFac arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + num terFac arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2 terFac arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2  arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  addOp term arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + term arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + factor terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( arithExpr ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( term arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( factor terFac arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( num terFac arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2 terFac arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2  arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2  addOp term arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2  + term arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2  + factor terFac arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2  + num terFac arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2  + 2 terFac arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2  + 2  arithERR ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2  + 2   ) terFac arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2  + 2   )  arithERR ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2  + 2   )   ) terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2  + 2   )   )  arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2  + 2   )   )   subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2  + 2   )   )    ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2  + 2   )   )    ; statement S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2  + 2   )   )    ; ctrlStat ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2  + 2   )   )    ; put ( expr ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2  + 2   )   )    ; put ( arithExpr subExpr ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2  + 2   )   )    ; put ( term arithERR subExpr ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2  + 2   )   )    ; put ( factor terFac arithERR subExpr ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2  + 2   )   )    ; put ( id IorP terFac arithERR subExpr ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2  + 2   )   )    ; put ( i IorP terFac arithERR subExpr ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2  + 2   )   )    ; put ( i  terFac arithERR subExpr ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2  + 2   )   )    ; put ( i   arithERR subExpr ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2  + 2   )   )    ; put ( i    subExpr ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2  + 2   )   )    ; put ( i     ) ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2  + 2   )   )    ; put ( i     ) ;  } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int i  ; get ( i   ) ; i   = ( ( 3  + 2   )  + ( 2  + 2   )   )    ; put ( i     ) ;  } ; 

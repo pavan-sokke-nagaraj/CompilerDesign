@@ -17,10 +17,12 @@ public class SemanticAnalysis {
 	public SymbolTable firstTable = null; // used for the 2nd level parsing
 	public Logger semanticLog;
 	private Logger stLog;
+	public Logger codeLog;
 
 	public SemanticAnalysis() {
 		semanticLog = PrintUtil.setLogger("SEMANTIC.log");
-		stLog = PrintUtil.setLogger("SymbolTables.html");
+		stLog = PrintUtil.setSimpleLogger("SYMBOLTABLES.html");
+		codeLog = PrintUtil.setSimpleLogger("CODE.code");
 	}
 
 	// Start of Global Table
@@ -281,7 +283,7 @@ public class SemanticAnalysis {
 		currTable.getSymbolList().add(symbol);
 		currTable = symbol.getChildTable();
 		if (symbol.isDataTypeDefined() && !symbol.isDuplicate()) {
-			genFuncCode(symbol);
+			genFuncStartCode(symbol);
 		}
 	}
 
@@ -306,7 +308,7 @@ public class SemanticAnalysis {
 						ArrayList<String> paramsF1 = function.getParams();
 						ArrayList<String> paramsF2 = tableSymbol.getParams();
 						int pCount = function.getNoOfParams();
-						int matchCount  = 0;
+						int matchCount = 0;
 						for (int j = 0; j < pCount; j++) {
 							if (paramsF1.get(j).equals(paramsF2.get(j))) {
 								matchCount++;
@@ -868,6 +870,7 @@ public class SemanticAnalysis {
 		for (int i = 0; i < moonData.size(); i++) {
 			String data = moonData.get(i);
 			System.out.println(data);
+			PrintUtil.print(codeLog, LOGTYPE.HTML, data + "\n");
 		}
 	}
 
@@ -875,26 +878,36 @@ public class SemanticAnalysis {
 		for (int i = 0; i < moonCode.size(); i++) {
 			String code = moonCode.get(i);
 			System.out.println(code);
+			PrintUtil.print(codeLog, LOGTYPE.HTML, code + "\n");
 		}
 	}
 
-	private void genVarCode(Symbol symbol) {
-		if (symbol.isArray()) {
-			moonData.add(symbol.getAddress() + "\tres\t"
-					+ getArrayMemory(symbol));
-		} else {
-			moonData.add(symbol.getAddress() + "\tdw\t" + "0");
+	private boolean genVarCode(Symbol symbol) {
+		if (symbol.getSelfTable().getParent() != null) {
+			if (symbol.getSelfTable().getParent().symbolType != SYMBOLTYPE.CLASS) {
+				if (symbol.isArray()) {
+					moonData.add(symbol.getAddress() + "\tres\t"
+							+ getArrayMemory(symbol));
+				} else {
+					moonData.add(symbol.getAddress() + "\tdw\t" + "0");
+				}
+			}
 		}
+		return true;
 	}
 
-	private void genFuncCode(Symbol symbol) {
-		moonData.add(symbol.getAddress() + "\tDW\t" + "0");
-		moonCode.add("%FUNCTION CODE:\t" + symbol.getToken().getValue());
-		moonCode.add(symbol.getAddress() + "_F_ENTRY");
+	private boolean genFuncStartCode(Symbol symbol) {
+		moonCode.add("");
+		moonData.add(symbol.getAddress() + "\tdw\t" + "0");
+		moonCode.add("%FUNCTION:\t" + symbol.getToken().getValue());
+		moonCode.add(symbol.getAddress() + "_F_START");
+		return true;
 	}
 
-	public void returnFuncCode() {
-		moonCode.add("\t\t" + "jrt\t" + "R15");
+	public boolean genFuncEndCode() {
+		moonCode.add("\t\t" + "jr\t" + "R15");
+		moonCode.add("");
+		return true;
 	}
 
 	private static String floatMask = "1000";
@@ -938,7 +951,7 @@ public class SemanticAnalysis {
 			opType = "cge";
 		}
 		moonCode.add("\t\t" + opType + "\t" + "r3,\t" + "r2,\t" + "r1");
-		String addr = "E_" + numCount++;
+		String addr = "E_" + addrCount++;
 		symLHS.symbolType = SYMBOLTYPE.UNKNOWN;
 		symLHS.setAddress(addr);
 		moonData.add(addr + "\t" + "dw" + "\t" + "0");
@@ -946,11 +959,11 @@ public class SemanticAnalysis {
 		return true;
 	}
 
-	public int numCount = 0;
+	public int addrCount = 0;
 
 	private boolean loadWord(Symbol symbol, String reg, String comment) {
 		if (symbol.symbolType == SYMBOLTYPE.NUM) {
-			String addr = "V_" + numCount++;
+			String addr = "V_" + addrCount++;
 			if (symbol.getDataType().getValue().equals("T_FLOAT")) {
 
 			} else {
@@ -1015,21 +1028,89 @@ public class SemanticAnalysis {
 		return true;
 	}
 
-	private void storeWord(Symbol symbol) {
+	private boolean storeWord(Symbol symbol) {
 		if (firstTable != null) {
 			moonCode.add("\t\t" + "sw\t" + symbol.getAddress() + "(r0),\t"
 					+ "r1");
 		}
+		return true;
 	}
 
-	public void genPutCode(Symbol symbol) {
+	public boolean genPutCode(Symbol symbol) {
 		loadWord(symbol, "r1", "\t\t%write  " + symbol.getToken().getValue());
 		moonCode.add("\t\t" + "jl\t" + "r15" + ",\t" + "putint");
+		return true;
 	}
-	
-	public void genGetCode(Symbol symbol) {
-//		loadWord(symbol, "r1", "\t\t%write  " + symbol.getToken().getValue());
+
+	public boolean genGetCode(Symbol symbol) {
+		pushReg("r15");
+		pushOffset(symbol);
 		moonCode.add("\t\t" + "jl\t" + "r15" + ",\t" + "getint");
 		storeWord(symbol);
+		popReg("r15");
+		return true;
+	}
+
+	public boolean genNotCode(Symbol symbol) {
+		String addr = "NOT_" + addrCount++;
+		loadWord(symbol, "r1", "%not " + symbol.getToken().getValue());
+		moonCode.add("\t\t" + "not\t" + "r3" + ",\t" + "r1");
+		moonData.add(addr + "\t" + "dw" + "\t" + symbol.getToken().getValue());
+		moonCode.add("\t\t" + "sw\t" + addr + "\t(r0),\t" + "r3");
+		if (symbol.symbolType == SYMBOLTYPE.NUM) {
+			symbol.symbolType = SYMBOLTYPE.UNKNOWN;
+		}
+		symbol.setAddress(addr);
+		return true;
+	}
+
+	public boolean genSignCode(Symbol symbol) {
+		String addr = "SIGN_" + addrCount++;
+		moonCode.add("\t\t" + "add\t" + "r1,\t" + "r0,\t" + "r0");
+		loadWord(symbol, "r2", "");
+		moonCode.add("\t\t" + "sub\t" + "r3,\t" + "r1,\t" + "r2");
+		moonData.add(addr + "\t" + "dw" + "\t" + symbol.getToken().getValue());
+		moonCode.add("\t\t" + "sw\t" + addr + "\t(r0),\t" + "r3");
+		if (symbol.symbolType == SYMBOLTYPE.NUM) {
+			symbol.symbolType = SYMBOLTYPE.UNKNOWN;
+		}
+		symbol.setAddress(addr);
+		return true;
+	}
+
+	public boolean resetOffset() {
+		moonCode.add("");
+		moonCode.add("\t\t" + "add\t" + "r11,\t" + "r0,\t" + "r0"
+				+ "\t% RESET OFFSET");
+		moonCode.add("");
+		return true;
+	}
+
+	public boolean pushOffset(Symbol symbol) {
+		if (symbol.symbolType == SYMBOLTYPE.ISCLASSORFUNC
+				|| (symbol.symbolType != SYMBOLTYPE.UNKNOWN && symbol.isArray())) {
+			pushReg("r11");
+		}
+		return true;
+	}
+
+	public boolean pushReg(String reg) {
+		moonCode.add("");
+		moonCode.add("\t\t" + "subi\t" + "r14,\t" + "r14,\t" + "4"
+				+ "\t% PUSH " + reg);
+		moonCode.add("\t\t" + "sw\t" + "topaddr(r14),\t" + reg + ""
+				+ "");
+		moonCode.add("");
+		return true;
+	}
+	
+	private boolean popReg(String reg) {
+		moonCode.add("");
+		moonCode.add("\t\t" + "lw\t" + reg +",\t" + "topaddr(r14)"
+				+ "\t%\tPOP " + reg);
+		moonCode.add("\t\t" + "addi\t" + "r14,\t" + "r14,\t" + "4"
+				+ "");
+		moonCode.add("");
+		return true;
 	}
 }

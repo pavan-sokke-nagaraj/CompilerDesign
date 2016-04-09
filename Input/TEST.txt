@@ -1,9 +1,8 @@
 class Foo{
 };
 program{
-	int a;
-	a = 10 + 10 * 10;
-	put(a);
-	get(a);
-	put(a);
+	int i;
+	get(i);
+	i = ((3+2)+(2+2));
+	put(i);
 };
