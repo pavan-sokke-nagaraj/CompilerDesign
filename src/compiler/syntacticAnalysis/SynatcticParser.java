@@ -201,7 +201,8 @@ public class SynatcticParser {
 		if (checkFirstSet("program")) {
 			semantics.moonCode.add("");
 			semantics.moonCode.add("\t\t" + "entry\t\t%PROGRAM EXECUTION");
-			semantics.moonCode.add("\t\t" + "add" + "\t" + "r14,\t" + "r0,\t" + "r0" + "\t% SET STACK POINTER\n");
+			semantics.moonCode.add("\t\t" + "add" + "\t" + "r14,\t" + "r0,\t"
+					+ "r0" + "\t% SET STACK POINTER\n");
 			printGrammar("progBody", "program funcBody ; funcDefList");
 			if (matchTokenValue("program") && funcBody()
 					&& matchTokenType("T_DEL_SEMICOLON", SYMBOLTYPE.QUITTABLE)) {
@@ -570,14 +571,21 @@ public class SynatcticParser {
 			if (matchTokenType("T_RESERVE_WORD_IF")
 					&& matchTokenType("T_DEL_R_LPAREN") && expr(expr)
 					&& matchTokenType("T_DEL_R_RPAREN")
-					&& matchTokenType("T_RESERVE_WORD_THEN") && statBlock()
-					&& matchTokenType("T_RESERVE_WORD_ELSE") && statBlock()) {
-				PrintUtil
-						.info(grammarLog, LOGTYPE.SYNTAX,
-								"ctrlStat -> if ( expr ) then statBlock else statBlock");
-				return true;
-			} else
-				return false;
+					&& matchTokenType("T_RESERVE_WORD_THEN")) {
+				String elseAddr = semantics.genCodeIf(expr);
+				if (statBlock() && matchTokenType("T_RESERVE_WORD_ELSE")) {
+					String elseEndAddr = semantics.genCodeElse(expr, elseAddr);
+					if (statBlock()) {
+						PrintUtil
+								.info(grammarLog, LOGTYPE.SYNTAX,
+										"ctrlStat -> if ( expr ) then statBlock else statBlock");
+						semantics.genCodeEndThen(expr, elseEndAddr);
+						return true;
+					} else
+						return false;
+				}
+			}
+
 		} else if (checkFirstSet("for")) {
 			printGrammar("ctrlStat",
 					"for ( type id = expr ; relExpr ; assignStat ) statBlock");
@@ -1031,10 +1039,13 @@ public class SynatcticParser {
 				return false;
 		} else if (checkFirstSet("sign")) {
 			printGrammar("factor", "sign factor");
+			Token sign = copyToken(token);
 			if (matchSign() && factor(factor)) {
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 						"factor -> sign factor");
-				semantics.genSignCode(factor);
+				if (sign.getValue().equals("-")) {
+					semantics.genSignCode(factor);
+				}
 				return true;
 			} else
 				return false;
@@ -1153,9 +1164,9 @@ public class SynatcticParser {
 			printGrammar("IorP", "");
 			PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
 					"indiceOrParam -> EPSILON");
-			 if (iSymbol.isArray()) {
-			 semantics.checkArray(iSymbol);
-			 }
+			if (iSymbol.isArray()) {
+				semantics.checkArray(iSymbol);
+			}
 			copySymbol(indiceOrParam, iSymbol);
 			return true;
 		}

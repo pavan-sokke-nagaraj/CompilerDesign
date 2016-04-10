@@ -119,7 +119,6 @@ public class SemanticAnalysis {
 			symbol.structure = STRUCTURE.SIMPLE;
 		}
 
-		
 		// allocate memory
 		System.out.println(symbol.toString());
 		if (symbol.getDataType().getValue().equals("int")
@@ -589,7 +588,8 @@ public class SemanticAnalysis {
 							if (subSymb.getAddress() == null) {
 								subSymb.setAddress(symbol.getAddress());
 							}
-							subSymb.setDataType(copyToken(classSymb.getDataType()));
+							subSymb.setDataType(copyToken(classSymb
+									.getDataType()));
 							// copySymbol(subSymb, classSymb);
 							subSymb.setMemory(classSymb.getMemory());
 							subSymb.setArray(classSymb.isArray());
@@ -600,10 +600,10 @@ public class SemanticAnalysis {
 							setClassOffset(memOffSet);
 							return true;
 						}
-						if(classSymb.symbolType == SYMBOLTYPE.VARIABLE){
-							if(classSymb.isArray()){
-								memOffSet += getArrayMemory(classSymb); 
-							}else{
+						if (classSymb.symbolType == SYMBOLTYPE.VARIABLE) {
+							if (classSymb.isArray()) {
+								memOffSet += getArrayMemory(classSymb);
+							} else {
 								memOffSet = classSymb.getMemory();
 							}
 						}
@@ -908,10 +908,11 @@ public class SemanticAnalysis {
 					moonData.add(symbol.getAddress() + "\tres\t"
 							+ getArrayMemory(symbol));
 				} else {
-					if(symbol.getMemory() > 4 && symbol.symbolType== SYMBOLTYPE.VARIABLE){
+					if (symbol.getMemory() > 4
+							&& symbol.symbolType == SYMBOLTYPE.VARIABLE) {
 						moonData.add(symbol.getAddress() + "\tres\t"
 								+ getArrayMemory(symbol));
-					}else{
+					} else {
 						moonData.add(symbol.getAddress() + "\tdw\t" + "0");
 					}
 				}
@@ -975,7 +976,7 @@ public class SemanticAnalysis {
 		} else if (operToken.getValue().equals(">=")) {
 			opType = "cge";
 		}
-		moonCode.add("\t\t" + opType + "\t" + "r3,\t" + "r2,\t" + "r1");
+		moonCode.add("\t\t" + opType + "\t" + "r3,\t" + "r1,\t" + "r2");
 		String addr = "E_" + addrCount++;
 		symLHS.symbolType = SYMBOLTYPE.UNKNOWN;
 		symLHS.setAddress(addr);
@@ -1126,6 +1127,14 @@ public class SemanticAnalysis {
 		pushReg("r15");
 		loadWord(symbol, "r1", "\t\t% PUT  " + symbol.getToken().getValue());
 		moonCode.add("\t\t" + "jl\t" + "r15" + ",\t" + "putint");
+
+		// print '\r\n'
+		moonCode.add("" + "addi\t" + "r1," + "r0," + "13" + "% print LFCR");
+		moonCode.add("" + "putc\t" + "r1" + "" + "");
+		moonCode.add("" + "addi\t" + "r1," + "r0," + "10");
+		moonCode.add("" + "putc\t" + "r1" + "" + "");
+		// print '\r\n'
+
 		popReg("r15");
 		return true;
 	}
@@ -1157,7 +1166,7 @@ public class SemanticAnalysis {
 		moonCode.add("\t\t" + "add\t" + "r1,\t" + "r0,\t" + "r0");
 		loadWord(symbol, "r2", "");
 		moonCode.add("\t\t" + "sub\t" + "r3,\t" + "r1,\t" + "r2");
-		moonData.add(addr + "\t" + "dw" + "\t" + symbol.getToken().getValue());
+		moonData.add(addr + "\t" + "dw" + "\t0");
 		moonCode.add("\t\t" + "sw\t" + addr + "\t(r0),\t" + "r3");
 		if (symbol.symbolType == SYMBOLTYPE.NUM) {
 			symbol.symbolType = SYMBOLTYPE.UNKNOWN;
@@ -1189,12 +1198,13 @@ public class SemanticAnalysis {
 		}
 		return true;
 	}
-	
-	public boolean setClassOffset(int offSet){
+
+	public boolean setClassOffset(int offSet) {
 		moonCode.add("\t\t" + "addi\t" + "r11,\t" + "r11,\t" + offSet
 				+ "\t% Class Variable Offset " + offSet);
 		return true;
 	}
+
 	public boolean pushReg(String reg) {
 		moonCode.add("");
 		moonCode.add("\t\t" + "subi\t" + "r14,\t" + "r14,\t" + "4"
@@ -1210,6 +1220,28 @@ public class SemanticAnalysis {
 				+ "\t%\tPOP " + reg);
 		moonCode.add("\t\t" + "addi\t" + "r14,\t" + "r14,\t" + "4" + "");
 		moonCode.add("");
+		return true;
+	}
+
+	public String genCodeIf(Symbol expr) {
+		moonCode.add("\t% IF( " + expr + ") THEN");
+		loadWord(expr, "r1", "");
+		String elseAddr = "ELSE_" + addrCount++;
+		moonCode.add("\t\t" + "bz\t" + "r1,\t" + elseAddr);
+		return elseAddr;
+	}
+
+	public String genCodeElse(Symbol expr, String elseAddr) {
+		String elseEndAddr = "ENDIF_" + addrCount++;
+		moonCode.add("\t% IF THEN ELSE");
+		moonCode.add("\t\t"+ "j\t" + elseEndAddr );
+		moonCode.add(elseAddr);
+		return elseEndAddr;
+	}
+
+	public boolean genCodeEndThen(Symbol expr, String elseEndAddr) {
+		moonCode.add("\t% END IF");
+		moonCode.add(elseEndAddr);
 		return true;
 	}
 }

@@ -1,32 +1,17 @@
-[SEVERE][SEMANTICS]ARRAY DIMENSIONS MISSMATCH: REQUIRED: 1 ASSIGNED: 2	 FOR VARIABLE:	lol	AT LINE NUMBER:	20
-[SEVERE][SEMANTICS]ARRAY DIMENSIONS MISSMATCH: REQUIRED: 1 ASSIGNED: 2	 FOR VARIABLE:	lol	AT LINE NUMBER:	21
-[SEVERE][SEMANTICS]ARRAY DIMENSIONS MISSMATCH: REQUIRED: 1 ASSIGNED: 2	 FOR VARIABLE:	lol	AT LINE NUMBER:	22
 [INFO][SEMANTICS]SYMBOL TABLE:	GLOBAL
 
 [INFO][SEMANTICS]|___Name___|____ Type ____|____ Kind ____|____Structure____|___Array Dimension ___|___ NO OF PARAMS ___|_____ADDRESS____|
-[INFO][SEMANTICS]   Foo1   	CLASS	class		null		N/A			N/A		F_C_Foo1_1	
-[INFO][SEMANTICS]   Foo   	CLASS	class		null		N/A			N/A		F_C_Foo_6	
-[INFO][SEMANTICS]   program   	PROGRAM	program		null		N/A			N/A		F_P_program_11	
-[INFO][SEMANTICS]
-
-SYMBOL TABLE:	GLOBAL :: Foo1
-
-[INFO][SEMANTICS]|___Name___|____ Type ____|____ Kind ____|____Structure____|___Array Dimension ___|___ NO OF PARAMS ___|_____ADDRESS____|
-[INFO][SEMANTICS]   i   	VARIABLE	int[10][10]		ARRAY	2			N/A		F_Foo1_V_i_2	
-[INFO][SEMANTICS]   a   	VARIABLE	int		SIMPLE		N/A			N/A		F_Foo1_V_a_3	
-[INFO][SEMANTICS]   lol   	VARIABLE	int[100]		ARRAY	1			N/A		F_Foo1_V_lol_4	
+[INFO][SEMANTICS]   Foo   	CLASS	class		null		N/A			N/A		F_C_Foo_1	
+[INFO][SEMANTICS]   program   	PROGRAM	program		null		N/A			N/A		F_P_program_4	
 [INFO][SEMANTICS]
 
 SYMBOL TABLE:	GLOBAL :: Foo
 
 [INFO][SEMANTICS]|___Name___|____ Type ____|____ Kind ____|____Structure____|___Array Dimension ___|___ NO OF PARAMS ___|_____ADDRESS____|
-[INFO][SEMANTICS]   i   	VARIABLE	int[10][10]		ARRAY	2			N/A		F_Foo_V_i_7	
-[INFO][SEMANTICS]   a   	VARIABLE	int		SIMPLE		N/A			N/A		F_Foo_V_a_8	
-[INFO][SEMANTICS]   lol   	VARIABLE	int[100]		ARRAY	1			N/A		F_Foo_V_lol_9	
+[INFO][SEMANTICS]   a   	VARIABLE	int[10][10]		ARRAY	2			N/A		F_Foo_V_a_2	
 [INFO][SEMANTICS]
 
 SYMBOL TABLE:	GLOBAL :: program
 
 [INFO][SEMANTICS]|___Name___|____ Type ____|____ Kind ____|____Structure____|___Array Dimension ___|___ NO OF PARAMS ___|_____ADDRESS____|
-[INFO][SEMANTICS]   f   	VARIABLE	Foo		CLASS		N/A			N/A		F_P_V_f_12	
-[INFO][SEMANTICS]   f1   	VARIABLE	Foo1		CLASS		N/A			N/A		F_P_V_f1_13	
+[INFO][SEMANTICS]   f   	VARIABLE	Foo[10]		CLASSARRAY	1			N/A		F_P_V_f_5	
