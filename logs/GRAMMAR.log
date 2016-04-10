@@ -1,23 +1,7 @@
 [INFO][SYNTAX]T_RESERVE_WORD_CLASS -> class
 [INFO][SYNTAX]T_IDENTIFIER -> Foo
 [INFO][SYNTAX]T_DEL_C_LPAREN -> {
-[INFO][SYNTAX]type            -> int
-[INFO][SYNTAX]T_IDENTIFIER -> a
-[INFO][SYNTAX]T_DEL_S_LPAREN -> [
-[INFO][SYNTAX]T_INTEGER -> 10
-[INFO][SYNTAX]T_DEL_S_RPAREN -> ]
-[INFO][SYNTAX]arraySizeList -> arraySize arraySizeList
-[INFO][SYNTAX]T_DEL_S_LPAREN -> [
-[INFO][SYNTAX]T_INTEGER -> 10
-[INFO][SYNTAX]T_DEL_S_RPAREN -> ]
-[INFO][SYNTAX]arraySizeList -> arraySize arraySizeList
-[INFO][SYNTAX]arraySizeList ->  EPSILON
-[INFO][SYNTAX]arraySizeList -> arraySize arraySizeList
-[INFO][SYNTAX]arraySizeList -> arraySize arraySizeList
-[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
 [INFO][SYNTAX]varDecFunDef    -> EPSILON
-[INFO][SYNTAX]varDecFunDef1 -> arraySizeList ; varDecFunDef
-[INFO][SYNTAX]varDecFunDef -> type id varDecFunDef1
 [INFO][SYNTAX]T_DEL_C_RPAREN -> }
 [INFO][SYNTAX]T_DEL_SEMICOLON -> ;
 [INFO][SYNTAX]classDecl        -> class id { varDecFunDef } ;
@@ -25,51 +9,13 @@
 [INFO][SYNTAX]classDeclList    -> classDecl classDeclList
 [INFO][SYNTAX]T_IDENTIFIER -> program
 [INFO][SYNTAX]T_DEL_C_LPAREN -> {
-[INFO][SYNTAX]T_IDENTIFIER -> Foo
-[INFO][SYNTAX]T_IDENTIFIER -> f
-[INFO][SYNTAX]T_DEL_S_LPAREN -> [
-[INFO][SYNTAX]T_INTEGER -> 10
-[INFO][SYNTAX]T_DEL_S_RPAREN -> ]
-[INFO][SYNTAX]arraySizeList -> arraySize arraySizeList
+[INFO][SYNTAX]type            -> int
+[INFO][SYNTAX]T_IDENTIFIER -> num
 [INFO][SYNTAX]arraySizeList ->  EPSILON
-[INFO][SYNTAX]arraySizeList -> arraySize arraySizeList
 [INFO][SYNTAX]T_DEL_SEMICOLON -> ;
-[INFO][SYNTAX]T_IDENTIFIER -> f
-[INFO][SYNTAX]T_DEL_S_LPAREN -> [
-[INFO][SYNTAX]num            -> T_INTEGER
-[INFO][SYNTAX]factor -> num
-[INFO][SYNTAX]termFactor -> EPSILON
-[INFO][SYNTAX]term -> factor termFactor
-[INFO][SYNTAX]arithExprRight -> EPSILON
-[INFO][SYNTAX]arithExpr -> term arithExprRight
-[INFO][SYNTAX]T_DEL_S_RPAREN -> ]
-[INFO][SYNTAX]indice -> [ arithExpr ]
+[INFO][SYNTAX]T_IDENTIFIER -> num
 [INFO][SYNTAX]indiceList -> EPSILON
-[INFO][SYNTAX]indiceList -> indice indiceList
-[INFO][SYNTAX]T_DEL_DOT -> .
-[INFO][SYNTAX]T_IDENTIFIER -> a
-[INFO][SYNTAX]T_DEL_S_LPAREN -> [
-[INFO][SYNTAX]num            -> T_INTEGER
-[INFO][SYNTAX]factor -> num
-[INFO][SYNTAX]termFactor -> EPSILON
-[INFO][SYNTAX]term -> factor termFactor
-[INFO][SYNTAX]arithExprRight -> EPSILON
-[INFO][SYNTAX]arithExpr -> term arithExprRight
-[INFO][SYNTAX]T_DEL_S_RPAREN -> ]
-[INFO][SYNTAX]indice -> [ arithExpr ]
-[INFO][SYNTAX]T_DEL_S_LPAREN -> [
-[INFO][SYNTAX]num            -> T_INTEGER
-[INFO][SYNTAX]factor -> num
-[INFO][SYNTAX]termFactor -> EPSILON
-[INFO][SYNTAX]term -> factor termFactor
-[INFO][SYNTAX]arithExprRight -> EPSILON
-[INFO][SYNTAX]arithExpr -> term arithExprRight
-[INFO][SYNTAX]T_DEL_S_RPAREN -> ]
-[INFO][SYNTAX]indice -> [ arithExpr ]
-[INFO][SYNTAX]indiceList -> EPSILON
-[INFO][SYNTAX]indiceList -> indice indiceList
-[INFO][SYNTAX]indiceList -> indice indiceList
-[INFO][SYNTAX]dotIdList -> . id indiceList
+[INFO][SYNTAX]dotIdList -> EPSILON
 [INFO][SYNTAX]T_OP_ASSIGN_EQUAL -> =
 [INFO][SYNTAX]num            -> T_INTEGER
 [INFO][SYNTAX]factor -> num
@@ -80,47 +26,31 @@
 [INFO][SYNTAX]subExpr -> EPSILON
 [INFO][SYNTAX]expr -> arithExpr subExpr
 [INFO][SYNTAX]T_DEL_SEMICOLON -> ;
+[INFO][SYNTAX]T_RESERVE_WORD_IF -> if
+[INFO][SYNTAX]T_DEL_R_LPAREN -> (
+[INFO][SYNTAX]T_IDENTIFIER -> num
+[INFO][SYNTAX]indiceOrParam -> EPSILON
+[INFO][SYNTAX]factor -> id indiceOrParam
+[INFO][SYNTAX]termFactor -> EPSILON
+[INFO][SYNTAX]term -> factor termFactor
+[INFO][SYNTAX]arithExprRight -> EPSILON
+[INFO][SYNTAX]arithExpr -> term arithExprRight
+[INFO][SYNTAX]relOp -> >
+[INFO][SYNTAX]num            -> T_INTEGER
+[INFO][SYNTAX]factor -> num
+[INFO][SYNTAX]termFactor -> EPSILON
+[INFO][SYNTAX]term -> factor termFactor
+[INFO][SYNTAX]arithExprRight -> EPSILON
+[INFO][SYNTAX]arithExpr -> term arithExprRight
+[INFO][SYNTAX]subExpr -> relOp arithExpr
+[INFO][SYNTAX]expr -> arithExpr subExpr
+[INFO][SYNTAX]T_DEL_R_RPAREN -> )
+[INFO][SYNTAX]T_RESERVE_WORD_THEN -> then
+[INFO][SYNTAX]T_DEL_C_LPAREN -> {
 [INFO][SYNTAX]T_RESERVE_WORD_PUT -> put
 [INFO][SYNTAX]T_DEL_R_LPAREN -> (
-[INFO][SYNTAX]T_IDENTIFIER -> f
-[INFO][SYNTAX]T_DEL_S_LPAREN -> [
-[INFO][SYNTAX]num            -> T_INTEGER
-[INFO][SYNTAX]factor -> num
-[INFO][SYNTAX]termFactor -> EPSILON
-[INFO][SYNTAX]term -> factor termFactor
-[INFO][SYNTAX]arithExprRight -> EPSILON
-[INFO][SYNTAX]arithExpr -> term arithExprRight
-[INFO][SYNTAX]T_DEL_S_RPAREN -> ]
-[INFO][SYNTAX]indice -> [ arithExpr ]
-[INFO][SYNTAX]indiceList -> EPSILON
-[INFO][SYNTAX]indiceList -> indice indiceList
-[INFO][SYNTAX]T_DEL_DOT -> .
-[INFO][SYNTAX]T_IDENTIFIER -> a
-[INFO][SYNTAX]T_DEL_S_LPAREN -> [
-[INFO][SYNTAX]num            -> T_INTEGER
-[INFO][SYNTAX]factor -> num
-[INFO][SYNTAX]termFactor -> EPSILON
-[INFO][SYNTAX]term -> factor termFactor
-[INFO][SYNTAX]arithExprRight -> EPSILON
-[INFO][SYNTAX]arithExpr -> term arithExprRight
-[INFO][SYNTAX]T_DEL_S_RPAREN -> ]
-[INFO][SYNTAX]indice -> [ arithExpr ]
-[INFO][SYNTAX]T_DEL_S_LPAREN -> [
-[INFO][SYNTAX]num            -> T_INTEGER
-[INFO][SYNTAX]factor -> num
-[INFO][SYNTAX]termFactor -> EPSILON
-[INFO][SYNTAX]term -> factor termFactor
-[INFO][SYNTAX]arithExprRight -> EPSILON
-[INFO][SYNTAX]arithExpr -> term arithExprRight
-[INFO][SYNTAX]T_DEL_S_RPAREN -> ]
-[INFO][SYNTAX]indice -> [ arithExpr ]
-[INFO][SYNTAX]indiceList -> EPSILON
-[INFO][SYNTAX]indiceList -> indice indiceList
-[INFO][SYNTAX]indiceList -> indice indiceList
-[INFO][SYNTAX]idFactor -> EPSILON
-[INFO][SYNTAX]indiceOrParam -> indiceList idFactor
-[INFO][SYNTAX]idFactor -> . id indiceOrParam
-[INFO][SYNTAX]indiceOrParam -> indiceList idFactor
+[INFO][SYNTAX]T_IDENTIFIER -> num
+[INFO][SYNTAX]indiceOrParam -> EPSILON
 [INFO][SYNTAX]factor -> id indiceOrParam
 [INFO][SYNTAX]termFactor -> EPSILON
 [INFO][SYNTAX]term -> factor termFactor
@@ -134,10 +64,144 @@
 [INFO][SYNTAX]statement -> ctrlStat ;
 [INFO][SYNTAX]statementList -> EPSILON
 [INFO][SYNTAX]statementList -> statement statementList
+[INFO][SYNTAX]T_DEL_C_RPAREN -> }
+[INFO][SYNTAX]statBlock -> { statementList } 
+[INFO][SYNTAX]T_RESERVE_WORD_ELSE -> else
+[INFO][SYNTAX]T_DEL_C_LPAREN -> {
+[INFO][SYNTAX]T_RESERVE_WORD_PUT -> put
+[INFO][SYNTAX]T_DEL_R_LPAREN -> (
+[INFO][SYNTAX]num            -> T_INTEGER
+[INFO][SYNTAX]factor -> num
+[INFO][SYNTAX]termFactor -> EPSILON
+[INFO][SYNTAX]term -> factor termFactor
+[INFO][SYNTAX]arithExprRight -> EPSILON
+[INFO][SYNTAX]arithExpr -> term arithExprRight
+[INFO][SYNTAX]subExpr -> EPSILON
+[INFO][SYNTAX]expr -> arithExpr subExpr
+[INFO][SYNTAX]T_DEL_R_RPAREN -> )
+[INFO][SYNTAX]ctrlStat -> put ( expr )
+[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
+[INFO][SYNTAX]statement -> ctrlStat ;
+[INFO][SYNTAX]statementList -> EPSILON
+[INFO][SYNTAX]statementList -> statement statementList
+[INFO][SYNTAX]T_DEL_C_RPAREN -> }
+[INFO][SYNTAX]statBlock -> { statementList } 
+[INFO][SYNTAX]ctrlStat -> if ( expr ) then statBlock else statBlock
+[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
+[INFO][SYNTAX]statement -> ctrlStat ;
+[INFO][SYNTAX]T_RESERVE_WORD_IF -> if
+[INFO][SYNTAX]T_DEL_R_LPAREN -> (
+[INFO][SYNTAX]T_IDENTIFIER -> num
+[INFO][SYNTAX]indiceOrParam -> EPSILON
+[INFO][SYNTAX]factor -> id indiceOrParam
+[INFO][SYNTAX]termFactor -> EPSILON
+[INFO][SYNTAX]term -> factor termFactor
+[INFO][SYNTAX]arithExprRight -> EPSILON
+[INFO][SYNTAX]arithExpr -> term arithExprRight
+[INFO][SYNTAX]relOp -> >
+[INFO][SYNTAX]num            -> T_INTEGER
+[INFO][SYNTAX]factor -> num
+[INFO][SYNTAX]termFactor -> EPSILON
+[INFO][SYNTAX]term -> factor termFactor
+[INFO][SYNTAX]arithExprRight -> EPSILON
+[INFO][SYNTAX]arithExpr -> term arithExprRight
+[INFO][SYNTAX]subExpr -> relOp arithExpr
+[INFO][SYNTAX]expr -> arithExpr subExpr
+[INFO][SYNTAX]T_DEL_R_RPAREN -> )
+[INFO][SYNTAX]T_RESERVE_WORD_THEN -> then
+[INFO][SYNTAX]statBlock -> EPSILON
+[INFO][SYNTAX]T_RESERVE_WORD_ELSE -> else
+[INFO][SYNTAX]statBlock -> EPSILON
+[INFO][SYNTAX]ctrlStat -> if ( expr ) then statBlock else statBlock
+[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
+[INFO][SYNTAX]statement -> ctrlStat ;
+[INFO][SYNTAX]T_IDENTIFIER -> num
+[INFO][SYNTAX]indiceList -> EPSILON
+[INFO][SYNTAX]dotIdNest -> EPSILON
+[INFO][SYNTAX]variable -> id indiceList dotIdNest
+[INFO][SYNTAX]T_OP_ASSIGN_EQUAL -> =
+[INFO][SYNTAX]num            -> T_INTEGER
+[INFO][SYNTAX]factor -> num
+[INFO][SYNTAX]termFactor -> EPSILON
+[INFO][SYNTAX]term -> factor termFactor
+[INFO][SYNTAX]arithExprRight -> EPSILON
+[INFO][SYNTAX]arithExpr -> term arithExprRight
+[INFO][SYNTAX]subExpr -> EPSILON
+[INFO][SYNTAX]expr -> arithExpr subExpr
+[INFO][SYNTAX]assignStat -> variable assignOp expr
+[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
+[INFO][SYNTAX]statement -> assignStat ;
+[INFO][SYNTAX]T_RESERVE_WORD_IF -> if
+[INFO][SYNTAX]T_DEL_R_LPAREN -> (
+[INFO][SYNTAX]T_IDENTIFIER -> num
+[INFO][SYNTAX]indiceOrParam -> EPSILON
+[INFO][SYNTAX]factor -> id indiceOrParam
+[INFO][SYNTAX]termFactor -> EPSILON
+[INFO][SYNTAX]term -> factor termFactor
+[INFO][SYNTAX]arithExprRight -> EPSILON
+[INFO][SYNTAX]arithExpr -> term arithExprRight
+[INFO][SYNTAX]relOp -> >
+[INFO][SYNTAX]num            -> T_INTEGER
+[INFO][SYNTAX]factor -> num
+[INFO][SYNTAX]termFactor -> EPSILON
+[INFO][SYNTAX]term -> factor termFactor
+[INFO][SYNTAX]arithExprRight -> EPSILON
+[INFO][SYNTAX]arithExpr -> term arithExprRight
+[INFO][SYNTAX]subExpr -> relOp arithExpr
+[INFO][SYNTAX]expr -> arithExpr subExpr
+[INFO][SYNTAX]T_DEL_R_RPAREN -> )
+[INFO][SYNTAX]T_RESERVE_WORD_THEN -> then
+[INFO][SYNTAX]T_DEL_C_LPAREN -> {
+[INFO][SYNTAX]T_RESERVE_WORD_PUT -> put
+[INFO][SYNTAX]T_DEL_R_LPAREN -> (
+[INFO][SYNTAX]T_IDENTIFIER -> num
+[INFO][SYNTAX]indiceOrParam -> EPSILON
+[INFO][SYNTAX]factor -> id indiceOrParam
+[INFO][SYNTAX]termFactor -> EPSILON
+[INFO][SYNTAX]term -> factor termFactor
+[INFO][SYNTAX]arithExprRight -> EPSILON
+[INFO][SYNTAX]arithExpr -> term arithExprRight
+[INFO][SYNTAX]subExpr -> EPSILON
+[INFO][SYNTAX]expr -> arithExpr subExpr
+[INFO][SYNTAX]T_DEL_R_RPAREN -> )
+[INFO][SYNTAX]ctrlStat -> put ( expr )
+[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
+[INFO][SYNTAX]statement -> ctrlStat ;
+[INFO][SYNTAX]statementList -> EPSILON
+[INFO][SYNTAX]statementList -> statement statementList
+[INFO][SYNTAX]T_DEL_C_RPAREN -> }
+[INFO][SYNTAX]statBlock -> { statementList } 
+[INFO][SYNTAX]T_RESERVE_WORD_ELSE -> else
+[INFO][SYNTAX]T_DEL_C_LPAREN -> {
+[INFO][SYNTAX]T_RESERVE_WORD_PUT -> put
+[INFO][SYNTAX]T_DEL_R_LPAREN -> (
+[INFO][SYNTAX]num            -> T_INTEGER
+[INFO][SYNTAX]factor -> num
+[INFO][SYNTAX]termFactor -> EPSILON
+[INFO][SYNTAX]term -> factor termFactor
+[INFO][SYNTAX]arithExprRight -> EPSILON
+[INFO][SYNTAX]arithExpr -> term arithExprRight
+[INFO][SYNTAX]subExpr -> EPSILON
+[INFO][SYNTAX]expr -> arithExpr subExpr
+[INFO][SYNTAX]T_DEL_R_RPAREN -> )
+[INFO][SYNTAX]ctrlStat -> put ( expr )
+[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
+[INFO][SYNTAX]statement -> ctrlStat ;
+[INFO][SYNTAX]statementList -> EPSILON
+[INFO][SYNTAX]statementList -> statement statementList
+[INFO][SYNTAX]T_DEL_C_RPAREN -> }
+[INFO][SYNTAX]statBlock -> { statementList } 
+[INFO][SYNTAX]ctrlStat -> if ( expr ) then statBlock else statBlock
+[INFO][SYNTAX]T_DEL_SEMICOLON -> ;
+[INFO][SYNTAX]statement -> ctrlStat ;
+[INFO][SYNTAX]statementList -> EPSILON
+[INFO][SYNTAX]statementList -> statement statementList
+[INFO][SYNTAX]statementList -> statement statementList
+[INFO][SYNTAX]statementList -> statement statementList
+[INFO][SYNTAX]statementList -> statement statementList
 [INFO][SYNTAX]bodyCode2 -> indiceList dotIdList assignOp expr ; statementList
 [INFO][SYNTAX]bodyCode -> id bodyCode2
-[INFO][SYNTAX]bodyCode2 -> id arraySizeList ; bodyCode
-[INFO][SYNTAX]bodyCode -> id bodyCode2
+[INFO][SYNTAX]bodyCode -> int id arraySizeList ; bodyCode
 [INFO][SYNTAX]T_DEL_C_RPAREN -> }
 [INFO][SYNTAX]funcBody -> { bodyCode }
 [INFO][SYNTAX]T_DEL_SEMICOLON -> ;

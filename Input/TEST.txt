@@ -1,8 +1,9 @@
 class Foo{
-	int a[10][10];
 };
 program{
-	Foo f[10];
-	f[1].a[1][1] = 10;
-	put(f[1].a[1][1]);
+	int num;
+	num = 10;
+	for (int i = 0; i < num ; i++){
+		write(i);
+	};
 };

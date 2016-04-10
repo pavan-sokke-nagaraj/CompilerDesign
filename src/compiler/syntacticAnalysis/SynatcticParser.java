@@ -597,16 +597,21 @@ public class SynatcticParser {
 				copySymbol(prevSymb, symbol);
 				if (expr(expr)) {
 					semantics.checkDataTypes(prevSymb, expr);
-					if (matchTokenType("T_DEL_SEMICOLON") && relExpr()
-							&& matchTokenType("T_DEL_SEMICOLON")
-							&& assignStat() && matchTokenType("T_DEL_R_RPAREN")
-							&& statBlock()) {
-						PrintUtil
-								.info(grammarLog, LOGTYPE.SYNTAX,
-										"ctrlStat -> for ( type id assignOp expr ; relExpr ; assignStat ) statBlock");
-						return true;
-					} else
-						return false;
+					if (matchTokenType("T_DEL_SEMICOLON")) {
+						String forAddr = "FOR_" + semantics.addrCount++;
+						semantics.moonCode.add(forAddr + "  %  FOR LOOP BEGIN");
+						if (relExpr() && matchTokenType("T_DEL_SEMICOLON")) {
+							if (assignStat()
+									&& matchTokenType("T_DEL_R_RPAREN")
+									&& statBlock()) {
+								PrintUtil
+										.info(grammarLog, LOGTYPE.SYNTAX,
+												"ctrlStat -> for ( type id assignOp expr ; relExpr ; assignStat ) statBlock");
+								return true;
+							} else
+								return false;
+						}
+					}
 				}
 			}
 
