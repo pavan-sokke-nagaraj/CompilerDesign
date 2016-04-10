@@ -68,7 +68,7 @@ public class SemanticAnalysis {
 
 	// Insert Variable to Symbol Table
 	public void variableDecl(Symbol symbol) {
-		// System.out.println("VARIABLE DECLERATION");
+		 System.out.println(symbol.getToken().getValue());
 		if (symbol.symbolType != SYMBOLTYPE.PARAMETER) {
 			symbol.symbolType = SYMBOLTYPE.VARIABLE;
 		}
@@ -756,7 +756,7 @@ public class SemanticAnalysis {
 	public ArrayList<Symbol> aParams = new ArrayList<Symbol>();
 	public ArrayList<String> aParamVars = new ArrayList<String>();
 
-	public void checkParams(Symbol symbol) {
+	public boolean checkParams(Symbol symbol) {
 		System.out.println(symbol.toString());
 		// if symbol is type of var = className.function(param p1, param p2)
 		if (symbol.symbolType == SYMBOLTYPE.ISCLASSORFUNC) {
@@ -782,6 +782,7 @@ public class SemanticAnalysis {
 													.getValue())) {
 								if (compareParams(funcSymb.getChildTable())) {
 									symbol.symbolType = SYMBOLTYPE.FUNCTION;
+									return true;
 								}
 							}
 						}
@@ -802,6 +803,7 @@ public class SemanticAnalysis {
 									.equals(symbol.getToken().getValue())) {
 						if (compareParams(localFunc.getChildTable())) {
 							symbol.symbolType = SYMBOLTYPE.FUNCTION;
+							return true;
 						}
 					}
 				}
@@ -821,13 +823,20 @@ public class SemanticAnalysis {
 										.equals(symbol.getToken().getValue())) {
 							if (compareParams(tableSymbol.getChildTable())) {
 								symbol.symbolType = SYMBOLTYPE.FUNCTION;
+								return true;
 							}
 						}
 					}
 				}
 			}
 		}
-		// System.out.println("UNDECLARED PARAMETERS");
+		// System.out
+		// .println("IDENTIFIER UNDECLARED - FUNCTION PARAMETERS MISS MATCH");
+		PrintUtil.print(semanticLog, LOGTYPE.SEMATICS,
+				"IDENTIFIER UNDECLARED - FUNCTION PARAMETERS MISS MATCH:\t "
+						+ symbol.getToken().getValue() + "\t AT LINE NUMBER\t"
+						+ symbol.getToken().getPosition());
+		return false;
 	}
 
 	private boolean compareParams(SymbolTable childTable) {
@@ -987,7 +996,7 @@ public class SemanticAnalysis {
 
 	public int addrCount = 0;
 
-	private boolean loadWord(Symbol symbol, String reg, String comment) {
+	public boolean loadWord(Symbol symbol, String reg, String comment) {
 		if (symbol.symbolType == SYMBOLTYPE.NUM) {
 			String addr = "V_" + addrCount++;
 			if (symbol.getDataType().getValue().equals("T_FLOAT")) {
@@ -1061,7 +1070,7 @@ public class SemanticAnalysis {
 		return true;
 	}
 
-	private boolean storeWord(Symbol symbol) {
+	public boolean storeWord(Symbol symbol) {
 		if (firstTable != null) {
 			Symbol tSym = new Symbol();
 			Symbol vSym = new Symbol();
@@ -1234,7 +1243,7 @@ public class SemanticAnalysis {
 	public String genCodeElse(Symbol expr, String elseAddr) {
 		String elseEndAddr = "ENDIF_" + addrCount++;
 		moonCode.add("\t% IF THEN ELSE");
-		moonCode.add("\t\t"+ "j\t" + elseEndAddr );
+		moonCode.add("\t\t" + "j\t" + elseEndAddr);
 		moonCode.add(elseAddr);
 		return elseEndAddr;
 	}

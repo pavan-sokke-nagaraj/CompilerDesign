@@ -447,7 +447,8 @@ public class SynatcticParser {
 			Symbol expr = new Symbol();
 			printGrammar("body_Code2", "i_ndiceList dotList = expr ; S_LIST");
 			if (indiceList()) {
-				if (dotIdList() && matchTokenValue("=")) {
+				// if (dotIdList() && matchTokenValue("=")) {
+				if (dotIdNest() && matchTokenValue("=")) {
 					Symbol prevSymb = new Symbol();
 					copySymbol(prevSymb, symbol);
 					semantics.pushOffset(symbol);
@@ -598,15 +599,28 @@ public class SynatcticParser {
 				if (expr(expr)) {
 					semantics.checkDataTypes(prevSymb, expr);
 					if (matchTokenType("T_DEL_SEMICOLON")) {
-						String forAddr = "FOR_" + semantics.addrCount++;
-						semantics.moonCode.add(forAddr + "  %  FOR LOOP BEGIN");
-						if (relExpr() && matchTokenType("T_DEL_SEMICOLON")) {
+						String forAddr = "FOR_START_" + semantics.addrCount++;
+						semantics.moonCode
+								.add(forAddr + " \t%  FOR LOOP BEGIN");
+						Symbol relExpr = new Symbol();
+						if (relExpr(relExpr)
+								&& matchTokenType("T_DEL_SEMICOLON")) {
+							String endFor = "FOR_END_" + semantics.addrCount++;
+							semantics.moonCode.add("\t%  FOR CODE");
+							semantics.loadWord(relExpr, "r1", "");
+							semantics.moonCode.add("\t\t" + "bz" + "\tr1, "
+									+ "\t" + endFor);
 							if (assignStat()
 									&& matchTokenType("T_DEL_R_RPAREN")
 									&& statBlock()) {
 								PrintUtil
 										.info(grammarLog, LOGTYPE.SYNTAX,
 												"ctrlStat -> for ( type id assignOp expr ; relExpr ; assignStat ) statBlock");
+								// code generation
+								semantics.moonCode
+										.add("\t\t" + "j\t" + forAddr);
+								semantics.moonCode.add("\t%  END FOR LOOP");
+								semantics.moonCode.add(endFor);
 								return true;
 							} else
 								return false;
@@ -837,7 +851,7 @@ public class SynatcticParser {
 	}
 
 	// relExpr -> arithExpr relOp arithExpr
-	private boolean relExpr() {
+	private boolean relExpr(Symbol relExpr) {
 		if (!skipErrors("arithExpr", "")) {
 			return false;
 		}
@@ -852,7 +866,9 @@ public class SynatcticParser {
 							"relExpr -> arithExpr relOp arithExpr");
 					Symbol result = semantics.addOpComp(arithExprL, operToken,
 							arithExprR);
-					copySymbol(result, arithExprR);
+					// Code change for the for loop code generation
+					// copySymbol(result, arithExprR);
+					copySymbol(relExpr, result);
 					return true;
 				}
 			} else
@@ -1137,6 +1153,7 @@ public class SynatcticParser {
 			ArrayList<Symbol> prevParams = semantics.aParams;
 			Symbol prevSymb = new Symbol();
 			copySymbol(prevSymb, symbol);
+			semantics.aParams = new ArrayList<Symbol>();
 			if (matchTokenType("T_DEL_R_LPAREN") && aParams()
 					&& matchTokenType("T_DEL_R_RPAREN")) {
 				PrintUtil.info(grammarLog, LOGTYPE.SYNTAX,
