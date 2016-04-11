@@ -1,22 +1,10 @@
-class Foo {
-	Type func(
-	{}
-	int func() {
-		int i[2][4]
-		float def[23 3];
-		def[23 3];			// goes to line 11 
-	};
+class FOO1 {
+	int a[5][5]; 
 };
+program {
+	FOO1 f1;
+	get(f1.a[1][1]);
+	get(f1.a[2][2]);
 
-class Foo1 {
-	float foo2() {
-		return(a not b)
-	};
-}
-program { 
-	if (1) then {
-		a = b + - c  d;
-	};
+	put(f1.a[1][1]+f1.a[2][2]);
 };
-void emptyFunc(){};
-

@@ -1531,8 +1531,12 @@ public class SynatcticParser {
 			PrintUtil.warning(parserLog, LOGTYPE.SYNTAX, "REACHED END OF FILE");
 			PrintUtil
 					.warning(grammarLog, LOGTYPE.SYNTAX, "REACHED END OF FILE");
+			return false;
 		}
-		return false;
+		PrintUtil.error(parserLog, LOGTYPE.SYNTAX, "INVALID TOKEN MATCH: "
+				+ token.getDesc() + "\t" + token.getValue());
+		// getNextToken();
+		return true;
 	}
 
 	// relOp -> < | <= | <> | == | > | >=
@@ -1624,13 +1628,19 @@ public class SynatcticParser {
 			PrintUtil.warning(parserLog, LOGTYPE.SYNTAX, "REACHED END OF FILE");
 			PrintUtil
 					.warning(grammarLog, LOGTYPE.SYNTAX, "REACHED END OF FILE");
+			return false;
 		}
-		return false;
+		PrintUtil.error(parserLog, LOGTYPE.SYNTAX, "INVALID TOKEN MATCH: "
+				+ token.getDesc() + "\t" + token.getValue());
+		// getNextToken();
+		return true;
 	}
 
 	private Token copyToken(Token token) {
-		Token cpyToken = new Token(token.getPosition(), token.getValue(),
-				token.getDesc(), token.getTokenType());
+		Token cpyToken = new Token();
+		if (token != null)
+			cpyToken = new Token(token.getPosition(), token.getValue(),
+					token.getDesc(), token.getTokenType());
 		return cpyToken;
 	}
 
@@ -1647,8 +1657,24 @@ public class SynatcticParser {
 			getNextToken();
 			return true;
 		} else {
+			PrintUtil.error(parserLog, LOGTYPE.SYNTAX,
+					"ERROR: IN LINE NUMBER:\t" + token.getPosition()
+							+ ":\tExpected One of these token Type:\t"
+							+ tokenType);
+		}
+		if (token.getValue().equals("$")) {
+			PrintUtil.warning(parserLog, LOGTYPE.SYNTAX, "REACHED END OF FILE");
+			PrintUtil
+					.warning(grammarLog, LOGTYPE.SYNTAX, "REACHED END OF FILE");
 			return false;
 		}
+		// PrintUtil.error(parserLog, LOGTYPE.SYNTAX, "INVALID TOKEN MATCH: "
+		// + token.getDesc() + "\t" + token.getValue());
+		getNextToken();
+		return true;
+		// else {
+		// return false;
+		// }
 	}
 
 	// check the first set
@@ -1718,7 +1744,6 @@ public class SynatcticParser {
 							+ "\tAT LINE NUMBER:\t" + token.getPosition());
 			getNextToken();
 		}
-
 		return true;
 	}
 
@@ -1743,10 +1768,13 @@ public class SynatcticParser {
 							+ "float | int");
 		}
 		if (token.getValue().equals("$")) {
-			grammarLog.warning("REACHED END OF FILE");
 			PrintUtil.warning(parserLog, LOGTYPE.SYNTAX, "REACHED END OF FILE");
+			PrintUtil
+					.warning(grammarLog, LOGTYPE.SYNTAX, "REACHED END OF FILE");
+			return false;
 		}
-		return false;
+		getNextToken();
+		return true;
 	}
 
 	// sign -> +
@@ -1762,8 +1790,20 @@ public class SynatcticParser {
 			printGrammar("sign", token.getValue());
 			getNextToken();
 			return true;
+		} else {
+			PrintUtil.error(parserLog, LOGTYPE.SYNTAX,
+					"ERROR: IN LINE NUMBER:\t" + token.getPosition()
+							+ ":\tExpected One of these token Type:\t"
+							+ "+ | - ");
 		}
-		return false;
+		if (token.getValue().equals("$")) {
+			PrintUtil.warning(parserLog, LOGTYPE.SYNTAX, "REACHED END OF FILE");
+			PrintUtil
+					.warning(grammarLog, LOGTYPE.SYNTAX, "REACHED END OF FILE");
+			return false;
+		}
+		getNextToken();
+		return true;
 	}
 
 	private boolean skipErrors(String firstG, String followG) {

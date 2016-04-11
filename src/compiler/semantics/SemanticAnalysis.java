@@ -250,7 +250,11 @@ public class SemanticAnalysis {
 
 	// Quit the current Symbol Table
 	public void QuitPresentTable() {
-		currTable = currTable.getParent().getSelfTable();
+		if (currTable.getParent() == null || currTable.getParent().getSelfTable() == null) {
+			System.out.println("Cannot Exit Current Table");
+		}else{
+			currTable = currTable.getParent().getSelfTable();
+		}
 		// System.out.println(currTable.getAddrLink());
 	}
 
