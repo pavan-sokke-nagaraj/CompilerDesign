@@ -1,37 +1,22 @@
-class Foo1{
-	int a;
-	int a;
-	int max(int c){
-		return (a);
+class Foo {
+	Type func(
+	{}
+	int func() {
+		int i[2][4]
+		float def[23 3];
+		def[23 3];			// goes to line 11 
 	};
 };
-class Foo{
-	int a;
-	Foo1 f1;
-	int min(int a){
-		f1.a = f1.max(a);
-		return (a);
+
+class Foo1 {
+	float foo2() {
+		return(a not b)
+	};
+}
+program { 
+	if (1) then {
+		a = b + - c  d;
 	};
 };
-program{
-	int value;
-	int a;
-	float b;
-	Foo1 f1;
-	Foo f;
-	f.a = f.f1.a;
-	f1.a = f.a;
-	value = min(value);
-	a = f.min(a);
-	put(value);
-};
-int min(int as){
-	int a;
-	a = 10;
-	return (a);
-};
-int min(float as){
-	int a;
-	a = 10;
-	return (a);
-};
+void emptyFunc(){};
+

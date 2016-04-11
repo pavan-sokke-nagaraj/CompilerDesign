@@ -29,14 +29,16 @@ public class PrintUtil {
 	};
 
 	public static boolean isLog = false;
+	public static String logFileDir = "";
 
 	/**
 	 * @param logger
 	 * 
 	 */
 	public static Logger setLogger(String logFileName) {
-		String logFile = System.getProperty("user.dir") + "\\logs\\"
-				+ logFileName;
+		String logFile = logFileDir + logFileName;
+		// String logFile = System.getProperty("user.dir") + "\\logs\\"
+		// + logFileName;
 		Logger logger = Logger.getLogger(logFile);
 		if (logger.getHandlers().length == 0) {
 			FileHandler fileHandler = null;
@@ -57,8 +59,9 @@ public class PrintUtil {
 	}
 
 	public static Logger setSimpleLogger(String logFileName) {
-		String logFile = System.getProperty("user.dir") + "\\logs\\"
-				+ logFileName;
+		String logFile = logFileDir + logFileName;
+		// String logFile = System.getProperty("user.dir") + "\\logs\\"
+		// + logFileName;
 		Logger logger = Logger.getLogger(logFile);
 		if (logger.getHandlers().length == 0) {
 			FileHandler fileHandler = null;
@@ -90,6 +93,13 @@ public class PrintUtil {
 			// msg = "[COMPILER]" + msg;
 		}
 		return msg;
+	}
+	
+	public static void consolePrint(Logger logger, LOGTYPE logType, String msg) {
+		if (isLog) {
+			msg = getLogMsg(msg, logType);
+			System.out.println(msg);
+		}
 	}
 
 	public static void print(Logger logger, LOGTYPE logType, String msg) {

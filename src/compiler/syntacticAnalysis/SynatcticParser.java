@@ -673,7 +673,7 @@ public class SynatcticParser {
 		if (checkFirstSet("variable")) {
 			printGrammar("assignStat", "variable = expr");
 			if (variable()) {
-				System.out.println(symbol.toString());
+				// System.out.println(symbol.toString());
 				Symbol variable = new Symbol();
 				copySymbol(variable, symbol);
 				semantics.pushOffset(variable);

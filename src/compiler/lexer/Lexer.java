@@ -144,6 +144,9 @@ public class Lexer {
 			} else if (token.getTokenType() == TOKENTYPE.EOF) {
 				tokens.add(token);
 				isValidToken = true;
+				// PrintUtil.warning(errorLog, LOGTYPE.LEXER, token.toString());
+				// PrintUtil.warning(commentLog, LOGTYPE.LEXER,
+				// token.toString());
 				PrintUtil.warning(tokenLog, LOGTYPE.LEXER, token.toString());
 			}
 		} while (!isValidToken);

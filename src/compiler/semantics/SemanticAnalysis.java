@@ -22,7 +22,7 @@ public class SemanticAnalysis {
 	public SemanticAnalysis() {
 		semanticLog = PrintUtil.setLogger("SEMANTIC.log");
 		stLog = PrintUtil.setSimpleLogger("SYMBOLTABLES.html");
-		codeLog = PrintUtil.setSimpleLogger("//moon//CODE.txt");
+		codeLog = PrintUtil.setSimpleLogger("CODE.txt");
 	}
 
 	// Start of Global Table
@@ -68,7 +68,7 @@ public class SemanticAnalysis {
 
 	// Insert Variable to Symbol Table
 	public void variableDecl(Symbol symbol) {
-		 System.out.println(symbol.getToken().getValue());
+		// System.out.println(symbol.getToken().getValue());
 		if (symbol.symbolType != SYMBOLTYPE.PARAMETER) {
 			symbol.symbolType = SYMBOLTYPE.VARIABLE;
 		}
@@ -120,7 +120,7 @@ public class SemanticAnalysis {
 		}
 
 		// allocate memory
-		System.out.println(symbol.toString());
+		// System.out.println(symbol.toString());
 		if (symbol.getDataType().getValue().equals("int")
 				|| symbol.getDataType().getValue().equals("float")) {
 			symbol.setMemory(4);
@@ -379,7 +379,8 @@ public class SemanticAnalysis {
 
 	// Function to print all the symbol tables
 	public void printSymbolTable() {
-		String msg = "SYMBOL TABLE:\tGLOBAL\n";
+		System.out.println("\n\n\n\n\t\t\t-----------   SYMBOL TABLES     -----------\n\n\t\t");
+		String msg = "\n\n\nSYMBOL TABLE:\tGLOBAL\n";
 		PrintUtil.info(semanticLog, LOGTYPE.SEMATICS, msg);
 		PrintUtil.print(stLog, LOGTYPE.HTML, PrintUtil.htmlStart);
 		PrintUtil.print(stLog, LOGTYPE.HTML, PrintUtil.h2O + "GLOBAL"
@@ -633,7 +634,7 @@ public class SemanticAnalysis {
 	// function to validate array parameters
 	// calcArrayAddr
 	public void checkArray(Symbol symbol) {
-		System.out.println("LOL");
+		// System.out.println("LOL");
 		if (arrayIndice.size() != symbol.getArrLength()) {
 			String msg = "ARRAY DIMENSIONS MISSMATCH:" + " REQUIRED: "
 					+ symbol.getArrLength() + " ASSIGNED: "
@@ -665,8 +666,8 @@ public class SemanticAnalysis {
 	// function to check index data type
 	// ifValidIndexType
 	public void checkIndex(Symbol index) {
-		System.out.println("LOL");
-		System.out.println(index.getDataType().getValue());
+		// System.out.println("LOL");
+		// System.out.println(index.getDataType().getValue());
 		if (!(index.getDataType().getDesc().equals("T_INTEGER") || index
 				.getDataType().getDesc().equals("T_RESERVE_WORD_INT"))) {
 			String msg = "ARRAY INDEX OUT OF BOUND: ASSIGNED \t"
@@ -683,10 +684,10 @@ public class SemanticAnalysis {
 	// function to compare LHS datatype to RHS datatype
 	// compDateType
 	public void checkDataTypes(Symbol symLHS, Symbol symRHS) {
-		System.out.println("LOL");
+		// System.out.println("LOL");
 		String lhsVal = symLHS.getDataType().getValue();
 		String rhsVal = symRHS.getDataType().getValue();
-		System.out.println("LHS: " + lhsVal + " RHS: " + rhsVal);
+		// System.out.println("LHS: " + lhsVal + " RHS: " + rhsVal);
 		// printCode();
 		if (lhsVal.equals(rhsVal)) {
 			loadWord(symRHS, "r1", "\t\t%" + symLHS.getToken().getValue()
@@ -718,10 +719,10 @@ public class SemanticAnalysis {
 	// compare addOp data types
 	// compDateTypeNum
 	public Symbol addOpComp(Symbol symLHS, Token operToken, Symbol symRHS) {
-		System.out.println("LOL");
+		// System.out.println("LOL");
 		String lhsVal = symLHS.getDataType().getValue();
 		String rhsVal = symRHS.getDataType().getValue();
-		System.out.println("LHS: " + lhsVal + " RHS: " + rhsVal);
+		// System.out.println("LHS: " + lhsVal + " RHS: " + rhsVal);
 		if (lhsVal.equals("int") && rhsVal.equals("int")) {
 			genMathCode(symLHS, operToken, symRHS);
 			return symLHS;
@@ -757,16 +758,16 @@ public class SemanticAnalysis {
 	public ArrayList<String> aParamVars = new ArrayList<String>();
 
 	public boolean checkParams(Symbol symbol) {
-		System.out.println(symbol.toString());
+		// System.out.println(symbol.toString());
 		// if symbol is type of var = className.function(param p1, param p2)
 		if (symbol.symbolType == SYMBOLTYPE.ISCLASSORFUNC) {
 			if (firstTable != null) {
-				System.out.println(symbol.toString());
+				// System.out.println(symbol.toString());
 				// check the class -> methods first from
 				for (int i = 0; i < firstTable.getSymbolList().size(); i++) {
 					Symbol tableSymbol = firstTable.getSymbolList().get(i);
-					System.out.println(tableSymbol.symbolType);
-					System.out.println(tableSymbol.getToken().getValue());
+					// System.out.println(tableSymbol.symbolType);
+					// System.out.println(tableSymbol.getToken().getValue());
 					if (tableSymbol.symbolType == SYMBOLTYPE.CLASS
 							&& tableSymbol.getToken().getValue()
 									.equals(symbol.getClassName())) {
@@ -811,13 +812,13 @@ public class SemanticAnalysis {
 				// if symbol is type of var = functionName(param p1, param p2)
 				// and call is made to free functions from global table
 				if (firstTable != null) {
-					System.out.println(symbol.toString());
+					// System.out.println(symbol.toString());
 					// check the class -> methods first from
 					for (int i = 0; i < firstTable.getSymbolList().size(); i++) {
 						Symbol tableSymbol = firstTable.getSymbolList().get(i);
-						System.out.println(tableSymbol.symbolType);
-						System.out.println(tableSymbol.getToken().getValue());
-						System.out.println();
+						// System.out.println(tableSymbol.symbolType);
+						// System.out.println(tableSymbol.getToken().getValue());
+						// System.out.println();
 						if (tableSymbol.symbolType == SYMBOLTYPE.FUNCTION
 								&& tableSymbol.getToken().getValue()
 										.equals(symbol.getToken().getValue())) {
@@ -869,7 +870,7 @@ public class SemanticAnalysis {
 			if (tmpSymb.symbolType == SYMBOLTYPE.VARIABLE) {
 				if (tmpSymb.isArray()) {
 					int arrMemory = getArrayMemory(tmpSymb);
-					System.out.println("arrMemory: " + arrMemory);
+					// System.out.println("arrMemory: " + arrMemory);
 					symbol.setMemory(symbol.getMemory() + arrMemory);
 				} else {
 					symbol.setMemory(symbol.getMemory() + tmpSymb.getMemory());
@@ -895,6 +896,7 @@ public class SemanticAnalysis {
 	public ArrayList<String> moonCode = new ArrayList<String>();
 
 	public void printData() {
+		System.out.println("\n\n\n\n\t\t\t-----------   CODE GENERATION     -----------\n\n\t\t");
 		for (int i = 0; i < moonData.size(); i++) {
 			String data = moonData.get(i);
 			System.out.println(data);
