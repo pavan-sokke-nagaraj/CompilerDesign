@@ -1,10 +1,15 @@
-class FOO1 {
-	int a[5][5]; 
+class Foo{
 };
-program {
-	FOO1 f1;
-	get(f1.a[1][1]);
-	get(f1.a[2][2]);
-
-	put(f1.a[1][1]+f1.a[2][2]);
+program{
+	int num;
+	num = 10;
+	for (int i = 0; i < num ; i = i + 1){
+		put(i);
+	};
+	
+	for (int j = 0;j < num ; j = j + 1);
+	
+	for (int k = 0;k < num ; k = k + 2){
+		put(k);
+	};
 };

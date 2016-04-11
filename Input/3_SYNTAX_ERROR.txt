@@ -1,0 +1,36 @@
+Class class Foo {
+	InputType func(
+	{}
+	int func() {
+		int i[2][4]
+		float def[23 3];
+		def[23 3];			// goes to line 12
+	};
+};
+
+class Foo1 {
+	float foo2() {
+		return(a not b)
+	};
+}
+Program program { 
+	if (1) then {
+		a = b + - c  d;
+	};
+	a = ;
+};
+class emptyFunc()){
+)]}};
+
+Program program{
+	class i;
+	j k;
+	a = k
+	a + b + c = a[10][12][a==b];
+	
+	for( int = a ; i == i + == j ; i <> m ){
+		else{
+			tesla
+		};
+	};
+}

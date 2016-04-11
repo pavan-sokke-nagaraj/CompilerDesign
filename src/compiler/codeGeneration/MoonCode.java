@@ -1,4 +1,4 @@
-package compiler.CodeGeneration;
+package compiler.codeGeneration;
 
 public class MoonCode {	
 	public String ins1 = "";
