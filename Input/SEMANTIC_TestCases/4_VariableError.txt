@@ -1,0 +1,5 @@
+program {
+int a;
+float b.b;
+String 4;
+};

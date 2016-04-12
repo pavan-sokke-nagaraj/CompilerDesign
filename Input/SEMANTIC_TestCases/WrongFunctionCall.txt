@@ -1,0 +1,25 @@
+class Rational {
+int numerator;
+int denominator;
+int setNumerator(int newNumerator)
+{
+numerator = newNumerator;
+};
+int setDenominator(int newDenominator)
+{
+denominator = newDenominator;
+};
+
+Rational multiply(Rational a)
+{
+Rational result;
+result.setNumerator=6.3;
+result.setDenominator=9.6;
+return (result);
+};
+};
+
+program
+{
+
+};

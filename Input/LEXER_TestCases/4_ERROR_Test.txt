@@ -1,0 +1,17 @@
+// invalid special characters 
+	~ @ # $ % ^ &  ?  | " " : ' ' _ 
+	
+	// invalid decimals
+	1. 2. 3. 4. 12. 123.
+	1000. 
+	200000.
+	
+	_int
+	_num
+	_;
+	_num_=
+	_5;
+	_100ABCD.
+	
+	// expected errors special characters
+	~ @ # $ % ^ & "" ' ' ? : _ \

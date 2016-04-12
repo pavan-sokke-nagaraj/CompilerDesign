@@ -1,0 +1,127 @@
+%DATA
+F_C_Foo_1	dw	0
+F_P_V_f_6	res	8
+F_P_V_a_7	dw	0
+F_P_V_s_8	dw	0
+V_0	dw	10
+V_1	dw	20
+E_2	dw	0
+E_3	dw	0
+%CODE
+
+		entry		%PROGRAM EXECUTION
+		add	r14,	r0,	r0	% SET STACK POINTER
+
+
+		add	r11,	r0,	r0	% RESET OFFSET
+
+		addi	r11,	r11,	0	% Class Variable Offset 0
+
+		subi	r14,	r14,	4	% PUSH r11
+		sw	topaddr(r14),	r11
+
+		lw	r1,	V_0(r0)		%i = 10
+
+		lw	r11,	topaddr(r14)	%	POP r11
+		addi	r14,	r14,	4
+
+		sw	F_P_V_f_6(r11),	r1
+
+		add	r11,	r0,	r0	% RESET OFFSET
+
+		addi	r11,	r11,	4	% Class Variable Offset 4
+
+		subi	r14,	r14,	4	% PUSH r11
+		sw	topaddr(r14),	r11
+
+		lw	r1,	V_1(r0)		%j = 20
+
+		lw	r11,	topaddr(r14)	%	POP r11
+		addi	r14,	r14,	4
+
+		sw	F_P_V_f_6(r11),	r1
+
+		add	r11,	r0,	r0	% RESET OFFSET
+
+
+		add	r11,	r0,	r0	% RESET OFFSET
+
+		addi	r11,	r11,	0	% Class Variable Offset 0
+
+		subi	r14,	r14,	4	% PUSH r11
+		sw	topaddr(r14),	r11
+
+
+		add	r11,	r0,	r0	% RESET OFFSET
+
+		addi	r11,	r11,	4	% Class Variable Offset 4
+		lw	r2,	F_P_V_f_6(r11)		%i+j
+
+		lw	r11,	topaddr(r14)	%	POP r11
+		addi	r14,	r14,	4
+
+		lw	r1,	F_P_V_f_6(r11)		%
+		add	r3,	r1,	r2
+		sw	E_2(r0),	r3
+		lw	r1,	E_2(r0)		%a = i
+		sw	F_P_V_a_7(r0),	r1
+
+		add	r11,	r0,	r0	% RESET OFFSET
+
+
+		add	r11,	r0,	r0	% RESET OFFSET
+
+		addi	r11,	r11,	4	% Class Variable Offset 4
+
+		subi	r14,	r14,	4	% PUSH r11
+		sw	topaddr(r14),	r11
+
+
+		add	r11,	r0,	r0	% RESET OFFSET
+
+		addi	r11,	r11,	0	% Class Variable Offset 0
+		lw	r2,	F_P_V_f_6(r11)		%j-i
+
+		lw	r11,	topaddr(r14)	%	POP r11
+		addi	r14,	r14,	4
+
+		lw	r1,	F_P_V_f_6(r11)		%
+		sub	r3,	r1,	r2
+		sw	E_3(r0),	r3
+		lw	r1,	E_3(r0)		%s = j
+		sw	F_P_V_s_8(r0),	r1
+
+		add	r11,	r0,	r0	% RESET OFFSET
+
+
+		subi	r14,	r14,	4	% PUSH r15
+		sw	topaddr(r14),	r15
+
+		lw	r1,	F_P_V_a_7(r0)		% PUT  a
+		jl	r15,	putint
+		addi	r1,r0,13
+		putc	r1
+		addi	r1,r0,10
+		putc	r1
+
+		lw	r15,	topaddr(r14)	%	POP r15
+		addi	r14,	r14,	4
+
+
+		add	r11,	r0,	r0	% RESET OFFSET
+
+
+		subi	r14,	r14,	4	% PUSH r15
+		sw	topaddr(r14),	r15
+
+		lw	r1,	F_P_V_s_8(r0)		% PUT  s
+		jl	r15,	putint
+		addi	r1,r0,13
+		putc	r1
+		addi	r1,r0,10
+		putc	r1
+
+		lw	r15,	topaddr(r14)	%	POP r15
+		addi	r14,	r14,	4
+
+		hlt

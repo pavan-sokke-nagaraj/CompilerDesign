@@ -1,0 +1,36 @@
+Class foo1{
+
+	int abc(){
+		int id;
+		int id;
+	};
+};
+
+Class foo1{
+
+};
+
+Class foo{
+int a;
+int a;
+
+int func(){
+
+};
+
+int func(){
+};
+
+};
+
+program{
+};
+
+
+int abc(){
+
+};
+
+int abc(){
+
+};

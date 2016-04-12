@@ -1,0 +1,10 @@
+class A{
+int number;
+float realNumber;
+};
+
+class A{ };
+
+
+program{
+};

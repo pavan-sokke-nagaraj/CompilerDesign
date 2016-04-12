@@ -1,0 +1,8 @@
+program {
+int A;
+int B;
+};
+int setA(int newA)
+{
+A = newA;
+};

@@ -35,8 +35,8 @@ public class CodeGenDriver {
 		System.out.println("COMP 6421 Compiler Design");
 		System.out.println("Enter the File Name:\t");
 		Scanner scan = new Scanner(System.in);
-		// String fileName = scan.nextLine();
-		String fileName = "TEST.txt";
+		String fileName = scan.nextLine();
+		// String fileName = "TEST.txt";
 
 		inputFile = inputDir + fileName;
 

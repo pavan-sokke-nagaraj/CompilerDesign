@@ -1,0 +1,23 @@
+[INFO][SYNTAX]prog
+[INFO][SYNTAX]classDeclList progBody
+[INFO][SYNTAX]ClassDecl classDeclList progBody
+[INFO][SYNTAX]class id { varDecFunDef } ; classDeclList progBody
+[INFO][SYNTAX]class Foo { varDecFunDef } ; classDeclList progBody
+[INFO][SYNTAX]class Foo {  } ; classDeclList progBody
+[INFO][SYNTAX]class Foo {  } ;  progBody
+[INFO][SYNTAX]class Foo {  } ;  program funcBody ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { bodyCode } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int id arraySizeList ; bodyCode } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int id arraySizeList ; bodyCode } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int num arraySizeList ; bodyCode } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int num  ; bodyCode } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int num  ; id body_Code2 } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int num  ; num_ body_Code2 } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int num  ; num_ i_ndiceList dotList = expr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int num  ; num_  dotList = expr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int num  ; num_  dotList = expr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int num  ; num_  dotList = arithExpr subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int num  ; num_  dotList = term arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int num  ; num_  dotList = factor terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int num  ; num_  dotList = num terFac arithERR subExpr ; S_LIST } ; funcDefList
+[INFO][SYNTAX]class Foo {  } ;  program { int 100  ; num_  dotList = num terFac arithERR subExpr ; S_LIST } ; funcDefList

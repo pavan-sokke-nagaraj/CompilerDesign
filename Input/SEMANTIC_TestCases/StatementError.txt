@@ -1,0 +1,6 @@
+program{
+};
+int setNumerator(int a,int b){
+int a;
+a = 9 = 10;
+};

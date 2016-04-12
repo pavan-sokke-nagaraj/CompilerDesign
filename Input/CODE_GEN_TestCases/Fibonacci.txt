@@ -1,0 +1,30 @@
+class Fibonacci{
+	int f1;
+	int f2;
+};
+program{
+	Fibonacci fib;
+	int n;
+	int res;
+	fib.f1 = 0;
+	fib.f2 = 1;
+	
+	get(n);
+	
+	if( n==0 or n<=1 )
+	then{
+		put(fib.f1);
+	}else;
+	
+	if( n>1 and n<=2 )
+	then{
+		put(fib.f2);
+	}else;
+	
+	for(int i = 3; i <= n; i = i+1){
+		res = fib.f1 + fib.f2;
+		put(res);
+		fib.f1 = fib.f2;
+		fib.f2 = res;
+	};
+};

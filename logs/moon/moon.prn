@@ -1,0 +1,644 @@
+MOON listing of CODE.txt.
+
+    1     0 %DATA
+    2     0 F_C_Foo_1	dw	0
+    3     4 F_P_V_f_6	res	8
+    4    12 F_P_V_a_7	dw	0
+    5    16 F_P_V_s_8	dw	0
+    6    20 V_0	dw	10
+    7    24 V_1	dw	20
+    8    28 E_2	dw	0
+    9    32 E_3	dw	0
+   10    36 %CODE
+   11    36 
+   12    36 		entry		%PROGRAM EXECUTION
+   13    36 		add	r14,	r0,	r0	% SET STACK POINTER
+   14    40 
+   15    40 
+   16    40 		add	r11,	r0,	r0	% RESET OFFSET
+   17    44 
+   18    44 		addi	r11,	r11,	0	% Class Variable Offset 0
+   19    48 
+   20    48 		subi	r14,	r14,	4	% PUSH r11
+   21    52 		sw	topaddr(r14),	r11
+   22    56 
+   23    56 		lw	r1,	V_0(r0)		%i = 10
+   24    60 
+   25    60 		lw	r11,	topaddr(r14)	%	POP r11
+   26    64 		addi	r14,	r14,	4
+   27    68 
+   28    68 		sw	F_P_V_f_6(r11),	r1
+   29    72 
+   30    72 		add	r11,	r0,	r0	% RESET OFFSET
+   31    76 
+   32    76 		addi	r11,	r11,	4	% Class Variable Offset 4
+   33    80 
+   34    80 		subi	r14,	r14,	4	% PUSH r11
+   35    84 		sw	topaddr(r14),	r11
+   36    88 
+   37    88 		lw	r1,	V_1(r0)		%j = 20
+   38    92 
+   39    92 		lw	r11,	topaddr(r14)	%	POP r11
+   40    96 		addi	r14,	r14,	4
+   41   100 
+   42   100 		sw	F_P_V_f_6(r11),	r1
+   43   104 
+   44   104 		add	r11,	r0,	r0	% RESET OFFSET
+   45   108 
+   46   108 
+   47   108 		add	r11,	r0,	r0	% RESET OFFSET
+   48   112 
+   49   112 		addi	r11,	r11,	0	% Class Variable Offset 0
+   50   116 
+   51   116 		subi	r14,	r14,	4	% PUSH r11
+   52   120 		sw	topaddr(r14),	r11
+   53   124 
+   54   124 
+   55   124 		add	r11,	r0,	r0	% RESET OFFSET
+   56   128 
+   57   128 		addi	r11,	r11,	4	% Class Variable Offset 4
+   58   132 		lw	r2,	F_P_V_f_6(r11)		%i+j
+   59   136 
+   60   136 		lw	r11,	topaddr(r14)	%	POP r11
+   61   140 		addi	r14,	r14,	4
+   62   144 
+   63   144 		lw	r1,	F_P_V_f_6(r11)		%
+   64   148 		add	r3,	r1,	r2
+   65   152 		sw	E_2(r0),	r3
+   66   156 		lw	r1,	E_2(r0)		%a = i
+   67   160 		sw	F_P_V_a_7(r0),	r1
+   68   164 
+   69   164 		add	r11,	r0,	r0	% RESET OFFSET
+   70   168 
+   71   168 
+   72   168 		add	r11,	r0,	r0	% RESET OFFSET
+   73   172 
+   74   172 		addi	r11,	r11,	4	% Class Variable Offset 4
+   75   176 
+   76   176 		subi	r14,	r14,	4	% PUSH r11
+   77   180 		sw	topaddr(r14),	r11
+   78   184 
+   79   184 
+   80   184 		add	r11,	r0,	r0	% RESET OFFSET
+   81   188 
+   82   188 		addi	r11,	r11,	0	% Class Variable Offset 0
+   83   192 		lw	r2,	F_P_V_f_6(r11)		%j-i
+   84   196 
+   85   196 		lw	r11,	topaddr(r14)	%	POP r11
+   86   200 		addi	r14,	r14,	4
+   87   204 
+   88   204 		lw	r1,	F_P_V_f_6(r11)		%
+   89   208 		sub	r3,	r1,	r2
+   90   212 		sw	E_3(r0),	r3
+   91   216 		lw	r1,	E_3(r0)		%s = j
+   92   220 		sw	F_P_V_s_8(r0),	r1
+   93   224 
+   94   224 		add	r11,	r0,	r0	% RESET OFFSET
+   95   228 
+   96   228 
+   97   228 		subi	r14,	r14,	4	% PUSH r15
+   98   232 		sw	topaddr(r14),	r15
+   99   236 
+  100   236 		lw	r1,	F_P_V_a_7(r0)		% PUT  a
+  101   240 		jl	r15,	putint
+  102   244 		addi	r1,r0,13
+  103   248 		putc	r1
+  104   252 		addi	r1,r0,10
+  105   256 		putc	r1
+  106   260 
+  107   260 		lw	r15,	topaddr(r14)	%	POP r15
+  108   264 		addi	r14,	r14,	4
+  109   268 
+  110   268 
+  111   268 		add	r11,	r0,	r0	% RESET OFFSET
+  112   272 
+  113   272 
+  114   272 		subi	r14,	r14,	4	% PUSH r15
+  115   276 		sw	topaddr(r14),	r15
+  116   280 
+  117   280 		lw	r1,	F_P_V_s_8(r0)		% PUT  s
+  118   284 		jl	r15,	putint
+  119   288 		addi	r1,r0,13
+  120   292 		putc	r1
+  121   296 		addi	r1,r0,10
+  122   300 		putc	r1
+  123   304 
+  124   304 		lw	r15,	topaddr(r14)	%	POP r15
+  125   308 		addi	r14,	r14,	4
+  126   312 
+  127   312 		hlt
+
+MOON listing of util.m.
+
+    1   316 %==============================================================%
+    2   316 % File:        util.m                                          %
+    3   316 % Author:      Nagi B. F. MIKHAIL                              %
+    4   316 % Date:        April, 1995                                     %
+    5   316 % Description: This file contains utility routines written in  %
+    6   316 %              MOON's assembly to handle string operations &   %
+    7   316 %              Input/Output.                                   %
+    8   316 %==============================================================%
+    9   316 %
+   10   316 %
+   11   316 %--------------------------------------------------------------%
+   12   316 % getint                                                       %
+   13   316 %--------------------------------------------------------------%
+   14   316 % Read an integer number from stdin. Read until a non digit char
+   15   316 % is entered. Allowes (+) & (-) signs only as first char. The
+   16   316 % digits are read in ASCII and transformed to numbers.
+   17   316 % Entry : none.
+   18   316 % Exit : result -> r1
+   19   316 %
+   20   316 getint	align
+   21   316 	add	r1,r0,r0		% Initialize input register (r1 = 0)
+   22   320 	add	r2,r0,r0		% Initialize buffer's index i
+   23   324 	add	r4,r0,r0		% Initialize sign flag
+   24   328 getint1	getc	r1			% Input ch
+   25   332 	ceqi	r3,r1,43		% ch = '+' ?
+   26   336 	bnz	r3,getint1		% Branch if true (ch = '+')
+   27   340 	ceqi	r3,r1,45		% ch = '-' ?
+   28   344 	bz	r3,getint2		% Branch if false (ch != '-')
+   29   348 	addi	r4,r0,1			% Set sign flag to true
+   30   352 	j	getint1			% Loop to get next ch
+   31   356 getint2	clti	r3,r1,48		% ch < '0' ?
+   32   360 	bnz	r3,getint3		% Branch if true (ch < '0')
+   33   364 	cgti	r3,r1,57		% ch > '9' ?
+   34   368 	bnz	r3,getint3		% Branch if true (ch > '9')
+   35   372 	sb	getint9(r2),r1		% Store ch in buffer
+   36   376 	addi	r2,r2,1			% i++
+   37   380 	j	getint1			% Loop if not finished
+   38   384 getint3	sb	getint9(r2),r0		% Store end of string in buffer (ch = '\0')
+   39   388 	add	r2,r0,r0		% i = 0
+   40   392 	add	r1,r0,r0		% N = 0
+   41   396 	add	r3,r0,r0		% Initialize r3
+   42   400 getint4	lb	r3,getint9(r2)		% Load ch from buffer
+   43   404 	bz	r3,getint5		% Branch if end of string (ch = '\0')
+   44   408 	subi	r3,r3,48		% Convert to number (M)
+   45   412 	muli	r1,r1,10		% N *= 10
+   46   416 	add	r1,r1,r3		% N += M
+   47   420 	addi	r2,r2,1			% i++
+   48   424 	j	getint4			% Loop if not finished
+   49   428 getint5	bz	r4,getint6		% Branch if sign flag false
+   50   432 	sub	r1,r0,r1		% N = -N
+   51   436 getint6	jr	r15			% Return to the caller
+   52   440 getint9	res	12			% Local buffer (12 bytes)
+   53   452 	align
+   54   452 %
+   55   452 %
+   56   452 %--------------------------------------------------------------%
+   57   452 % putint                                                       %
+   58   452 %--------------------------------------------------------------%
+   59   452 % Write an integer number to stdout. Transform the number into
+   60   452 % ASCII string taking the sign into account.
+   61   452 % Entry : integer number -> r1
+   62   452 % Exit : none.
+   63   452 %
+   64   452 putint	align
+   65   452 	add	r2,r0,r0		% Initialize buffer's index i
+   66   456 	cge	r3,r1,r0		% True if N >= 0
+   67   460 	bnz	r3,putint1		% Branch if True (N >= 0)
+   68   464 	sub	r1,r0,r1		% N = -N
+   69   468 putint1	modi	r4,r1,10		% Rightmost digit
+   70   472 	addi	r4,r4,48		% Convert to ch
+   71   476 	divi	r1,r1,10		% Truncate rightmost digit
+   72   480 	sb	putint9(r2),r4		% Store ch in buffer
+   73   484 	addi	r2,r2,1			% i++
+   74   488 	bnz	r1,putint1		% Loop if not finished
+   75   492 	bnz	r3,putint2		% Branch if True (N >= 0)
+   76   496 	addi	r3,r0,45
+   77   500 	sb	putint9(r2),r3		% Store '-' in buffer
+   78   504 	addi	r2,r2,1			% i++
+   79   508 	add	r1,r0,r0		% Initialize output register (r1 = 0)
+   80   512 putint2	subi	r2,r2,1			% i--
+   81   516 	lb	r1,putint9(r2)		% Load ch from buffer
+   82   520 	putc	r1			% Output ch
+   83   524 	bnz	r2,putint2		% Loop if not finished
+   84   528 	jr	r15			% return to the caller
+   85   532 putint9	res	12			% loacl buffer (12 bytes)
+   86   544 	align
+   87   544 %
+   88   544 %
+   89   544 %--------------------------------------------------------------%
+   90   544 % putstr                                                       %
+   91   544 %--------------------------------------------------------------%
+   92   544 % Write a string to stdout. Write char by char until end of 
+   93   544 % string.
+   94   544 % Entry : address of string -> r1
+   95   544 % Exit : none.
+   96   544 % 
+   97   544 putstr	align
+   98   544 	add	r2,r0,r0		% Initialize output register (r2 = 0)
+   99   548 putstr1	lb	r2,0(r1)		% Load ch from buffer
+  100   552 	bz	r2,putstr2		% Branch if end of string (ch = '\0')
+  101   556 	putc	r2			% Output ch
+  102   560 	addi	r1,r1,1			% i++
+  103   564 	j	putstr1			% Loop if not finished
+  104   568 putstr2	jr	r15			% Return to the caller
+  105   572 	align
+  106   572 %
+  107   572 %
+  108   572 %--------------------------------------------------------------%
+  109   572 % putsub                                                       %
+  110   572 %--------------------------------------------------------------% 
+  111   572 % Write a substring to stdout. Write char by char until end of 
+  112   572 % substring.
+  113   572 % Entry : address of substring -> r1
+  114   572 %         address of end of substring -> r3
+  115   572 % Exit : none.
+  116   572 % 
+  117   572 putsub	align
+  118   572 	add	r2,r0,r0		% Initialize output register (r2 = 0)
+  119   576 putsub1	lb	r2,0(r1)		% Load ch from buffer
+  120   580 	putc	r2			% Output ch
+  121   584 	ceq	r2,r1,r3		% Current pos. is end of substring ?
+  122   588 	bnz	r2,putsub2		% Branch if end of substring
+  123   592 	addi	r1,r1,1			% i++
+  124   596 	j	putsub1			% Loop if not finished
+  125   600 putsub2	jr	r15			% Return to the caller
+  126   604 	align
+  127   604 %
+  128   604 %
+  129   604 %--------------------------------------------------------------%
+  130   604 % getstr                                                       %
+  131   604 %--------------------------------------------------------------%
+  132   604 % Read a string from stdin. Read char by char until CR but do 
+  133   604 % not store CR.
+  134   604 % Entry : address of string var. -> r1
+  135   604 % Exit : address of string var. -> r1
+  136   604 %
+  137   604 getstr	align
+  138   604 	add	r2,r0,r0		% Initialize input register (r2 = 0)
+  139   608 	getc	r2			% Input ch
+  140   612 	ceqi	r3,r2,10		% ch = CR ?
+  141   616 	bnz	r3,getstr1		% branch if true (ch = CR)
+  142   620 	sb	0(r1),r2		% Store ch in buffer
+  143   624 	addi	r1,r1,1			% i++
+  144   628 	j	getstr			% Loop if not finished
+  145   632 getstr1	sb	0(r1),r0		% Store end of string (ch = '\0')
+  146   636 	jr	r15			% Return to the caller
+  147   640 	align
+  148   640 %
+  149   640 %
+  150   640 %--------------------------------------------------------------%
+  151   640 % catstr                                                       %
+  152   640 %--------------------------------------------------------------%
+  153   640 % Append one string to another.
+  154   640 % Entry : address of 1st string -> r1
+  155   640 %         address of 2nd string -> r2
+  156   640 % Exit : address of concatenated strings -> r1
+  157   640 %
+  158   640 catstr	align
+  159   640 	add	r3,r0,r0		% r3 = 0
+  160   644 catstr1	lb	r3,0(r1)		% Load ch from 1st string
+  161   648 	bz	r3,catstr2		% Branch if end of string (ch = `\0')
+  162   652 	addi	r1,r1,1			% i++
+  163   656 	j	catstr1			% Loop if not end of 1st string
+  164   660 catstr2	lb	r3,0(r2)		% Load ch from 2nd string
+  165   664 	sb	0(r1),r3		% Store ch at the end of 1st string
+  166   668 	bz	r3,catstr3		% Branch if end of 2nd string
+  167   672 	addi	r2,r2,1			% j++
+  168   676 	addi	r1,r1,1			% i++
+  169   680 	j	catstr2			% Loop if not end of 2nd string
+  170   684 catstr3	jr	r15			% Return to the caller
+  171   688 	align
+  172   688 %
+  173   688 %
+  174   688 %--------------------------------------------------------------%
+  175   688 % catsub                                                       %
+  176   688 %--------------------------------------------------------------%
+  177   688 % Append a substring to a string.
+  178   688 % Entry : address of string -> r1
+  179   688 %         address of substring -> r2
+  180   688 %         address of end of substring -> r4
+  181   688 % Exit : address of concatenated strings -> r1
+  182   688 % 
+  183   688 catsub	align
+  184   688 	add	r3,r0,r0		% r3 = 0
+  185   692 catsub1	lb	r3,0(r1)		% Load ch from 1st string
+  186   696 	bz	r3,catsub2		% Branch if end of string (ch = `\0')
+  187   700 	addi	r1,r1,1			% i++
+  188   704 	j	catsub1			% Loop if not end of 1st string
+  189   708 catsub2	lb	r3,0(r2)		% Load ch from substring
+  190   712 	sb	0(r1),r3		% Store ch at the end of 1st string
+  191   716 	bz	r3,catsub4		% Branch if end of string ch
+  192   720 	addi	r1,r1,1			% i++
+  193   724 	ceq	r3,r2,r4		% Check end of substring
+  194   728 	bnz	r3,catsub3		% Branch if end of substring
+  195   732 	addi	r2,r2,1			% j++
+  196   736 	j	catsub2			% Loop if not end of substring
+  197   740 catsub3	sb	0(r1),r0		% Store end of string
+  198   744 catsub4	jr	r15			% Return to the caller
+  199   748 	align
+  200   748 %
+  201   748 %
+  202   748 %--------------------------------------------------------------%
+  203   748 % eqstr                                                        %
+  204   748 %--------------------------------------------------------------%
+  205   748 % Check if string1 = string2.
+  206   748 % Entry : address of string1 -> r1
+  207   748 %         address of string2 -> r2
+  208   748 % Exit : r1 = 1 (true)
+  209   748 %        r1 = 0 (false)
+  210   748 %
+  211   748 eqstr	align
+  212   748 	add	r3,r0,r0		% Initialize r3 (r3 = 0)
+  213   752 	add	r4,r0,r0		% Initialize r4 (r4 = 0)
+  214   756 eqstr1	lb	r3,0(r1)		% Load ch1 from 1st string
+  215   760 	lb	r4,0(r2)		% Load ch2 from 2nd string
+  216   764 	ceq	r5,r3,r4		% ch1 = ch2 ?
+  217   768 	bz	r5,eqstr2		% Branch if false
+  218   772 	ceq	r5,r3,r0		% ch1 = '\0' ?
+  219   776 	bnz	r5,eqstr3		% Branch if true
+  220   780 	addi	r1,r1,1			% i++
+  221   784 	addi	r2,r2,1			% j++
+  222   788 	j	eqstr1			% Loop if not finished
+  223   792 eqstr2	add	r1,r0,r0		% Return false
+  224   796 	j	eqstr4
+  225   800 eqstr3	addi	r1,r0,1			% Return true
+  226   804 eqstr4	jr	r15			% Return to the caller
+  227   808 	align
+  228   808 %
+  229   808 %
+  230   808 %--------------------------------------------------------------%
+  231   808 % neqstr                                                       %
+  232   808 %--------------------------------------------------------------%
+  233   808 % Check if string1 != string2.
+  234   808 % Entry : address of string1 -> r1
+  235   808 %         address of string2 -> r2
+  236   808 % Exit : r1 = 1 (true)
+  237   808 %        r1 = 0 (false)
+  238   808 % 
+  239   808 neqstr	align
+  240   808 	add	r3,r0,r0		% Initialize r3 (r3 = 0)
+  241   812 	add	r4,r0,r0		% Initialize r4 (r4 = 0)
+  242   816 neqstr1	lb	r3,0(r1)		% Load ch1 from 1st string
+  243   820 	lb	r4,0(r2)		% Load ch2 from 2nd string
+  244   824 	cne	r5,r3,r4		% ch1 != ch2 ?
+  245   828 	bnz	r5,neqstr3		% Branch if true
+  246   832 	ceq	r5,r3,r0		% ch1 = '\0' ?
+  247   836 	bnz	r5,neqstr2		% Branch if true
+  248   840 	addi	r1,r1,1			% i++
+  249   844 	addi	r2,r2,1			% j++
+  250   848 	j	neqstr1			% Loop if not finished
+  251   852 neqstr2	add	r1,r0,r0		% Return false
+  252   856 	j	neqstr4
+  253   860 neqstr3	addi	r1,r0,1			% Return true
+  254   864 neqstr4	jr	r15			% Return to the caller
+  255   868 	align
+  256   868 %
+  257   868 %
+  258   868 %--------------------------------------------------------------%
+  259   868 % gtstr                                                        %
+  260   868 %--------------------------------------------------------------%
+  261   868 % Check if string1 > string2.
+  262   868 % Entry : address of string1 -> r1
+  263   868 %         address of string2 -> r2
+  264   868 % Exit : r1 = 1 (true)
+  265   868 %        r1 = 0 (false)
+  266   868 %
+  267   868 gtstr	align
+  268   868 	add	r3,r0,r0		% Initialize r3 (r3 = 0)
+  269   872 	add	r4,r0,r0		% Initialize r4 (r4 = 0)
+  270   876 gtstr1	lb	r3,0(r1)		% Load ch1 from 1st string
+  271   880 	lb	r4,0(r2)		% Load ch2 from 2nd string
+  272   884 	cgt	r5,r3,r4		% ch1 > ch2 ?
+  273   888 	bnz	r5,gtstr3		% Branch if true
+  274   892 	clt	r5,r3,r4		% ch1 < ch2 ?
+  275   896 	bnz	r5,gtstr2		% Branch if true
+  276   900 	ceq	r5,r3,r0		% ch1 = '\0' ?
+  277   904 	bnz	r5,gtstr2		% Branch if true
+  278   908 	addi	r1,r1,1			% i++
+  279   912 	addi	r2,r2,1			% j++
+  280   916 	j	gtstr1			% Loop if not finished
+  281   920 gtstr2	add	r1,r0,r0		% Return false
+  282   924 	j	gtstr4
+  283   928 gtstr3	addi	r1,r0,1			% Return true
+  284   932 gtstr4	jr	r15			% Return to the caller
+  285   936 	align
+  286   936 %
+  287   936 %
+  288   936 %--------------------------------------------------------------%
+  289   936 % gtestr                                                       %
+  290   936 %--------------------------------------------------------------%
+  291   936 % Check if string1 >= string2.
+  292   936 % Entry : address of string1 -> r1
+  293   936 %         address of string2 -> r2
+  294   936 % Exit : r1 = 1 (true)
+  295   936 %        r1 = 0 (false)
+  296   936 %
+  297   936 gtestr	align
+  298   936 	add	r3,r0,r0		% Initialize r3 (r3 = 0)
+  299   940 	add	r4,r0,r0		% Initialize r4 (r4 = 0)
+  300   944 gtestr1	lb	r3,0(r1)		% Load ch1 from 1st string
+  301   948 	lb	r4,0(r2)		% Load ch2 from 2nd string
+  302   952 	cgt	r5,r3,r4		% ch1 > ch2 ?
+  303   956 	bnz	r5,gtestr3		% Branch if true
+  304   960 	clt	r5,r3,r4		% ch1 < ch2 ?
+  305   964 	bnz	r5,gtestr2		% Branch if true
+  306   968 	ceq	r5,r3,r0		% ch1 = '\0' ?
+  307   972 	bnz	r5,gtestr3		% Branch if true
+  308   976 	addi	r1,r1,1			% i++
+  309   980 	addi	r2,r2,1			% j++
+  310   984 	j	gtestr1			% Loop if not finished
+  311   988 gtestr2	add	r1,r0,r0		% Return false
+  312   992 	j	gtestr4
+  313   996 gtestr3	addi	r1,r0,1			% Return true
+  314  1000 gtestr4	jr	r15			% Return to the caller
+  315  1004 	align
+  316  1004 %
+  317  1004 %
+  318  1004 %--------------------------------------------------------------%
+  319  1004 % ltstr                                                        %
+  320  1004 %--------------------------------------------------------------%
+  321  1004 % Check if string1 < string2.
+  322  1004 % Entry : address of string1 -> r1
+  323  1004 %         address of string2 -> r2
+  324  1004 % Exit : r1 = 1 (true)
+  325  1004 %        r1 = 0 (false)
+  326  1004 %
+  327  1004 ltstr	align
+  328  1004 	add	r3,r0,r0		% Initialize r3 (r3 = 0)
+  329  1008 	add	r4,r0,r0		% Initialize r4 (r4 = 0)
+  330  1012 ltstr1	lb	r3,0(r1)		% Load ch1 from 1st string
+  331  1016 	lb	r4,0(r2)		% Load ch2 from 2nd string
+  332  1020 	clt	r5,r3,r4		% ch1 < ch2 ?
+  333  1024 	bnz	r5,ltstr3		% Branch if true
+  334  1028 	cgt	r5,r3,r4		% ch1 > ch2 ?
+  335  1032 	bnz	r5,ltstr2		% Branch if true
+  336  1036 	ceq	r5,r3,r0		% ch1 = '\0' ?
+  337  1040 	bnz	r5,ltstr2		% Branch if true
+  338  1044 	addi	r1,r1,1			% i++
+  339  1048 	addi	r2,r2,1			% j++
+  340  1052 	j	ltstr1			% Loop if not finished
+  341  1056 ltstr2	add	r1,r0,r0		% Return false
+  342  1060 	j	ltstr4
+  343  1064 ltstr3	addi	r1,r0,1			% Return true
+  344  1068 ltstr4	jr	r15			% Return to the caller
+  345  1072 	align
+  346  1072 %
+  347  1072 %
+  348  1072 %--------------------------------------------------------------%
+  349  1072 % ltestr                                                       %
+  350  1072 %--------------------------------------------------------------%
+  351  1072 % Check if string1 <= string2.
+  352  1072 % Entry : address of string1 -> r1
+  353  1072 %         address of string2 -> r2
+  354  1072 % Exit : r1 = 1 (true)
+  355  1072 %        r1 = 0 (false)
+  356  1072 %
+  357  1072 ltestr	align
+  358  1072 	add	r3,r0,r0		% Initialize r3 (r3 = 0)
+  359  1076 	add	r4,r0,r0		% Initialize r4 (r4 = 0)
+  360  1080 ltestr1	lb	r3,0(r1)		% Load ch1 from 1st string
+  361  1084 	lb	r4,0(r2)		% Load ch2 from 2nd string
+  362  1088 	clt	r5,r3,r4		% ch1 < ch2 ?
+  363  1092 	bnz	r5,ltestr3		% Branch if true
+  364  1096 	cgt	r5,r3,r4		% ch1 > ch2 ?
+  365  1100 	bnz	r5,ltestr2		% Branch if true
+  366  1104 	ceq	r5,r3,r0		% ch1 = '\0' ?
+  367  1108 	bnz	r5,ltestr3		% Branch if true
+  368  1112 	addi	r1,r1,1			% i++
+  369  1116 	addi	r2,r2,1			% j++
+  370  1120 	j	ltestr1			% Loop if not finished
+  371  1124 ltestr2	add	r1,r0,r0		% Return false
+  372  1128 	j	ltestr4
+  373  1132 ltestr3	addi	r1,r0,1			% Return true
+  374  1136 ltestr4	jr	r15			% Return to the caller
+  375  1140 	align
+  376  1140 %
+  377  1140 %
+  378  1140 %--------------------------------------------------------------%
+  379  1140 % lenstr                                                       %
+  380  1140 %--------------------------------------------------------------%
+  381  1140 % Returns length of string. '\n' is concidered one char.
+  382  1140 % Entry : address of string -> -8(r14)
+  383  1140 % Exit : result -> -12(r14)
+  384  1140 %
+  385  1140 lenstr	align
+  386  1140 	sw	-4(r14),r15		% Store link in stack
+  387  1144 	sw	-16(r14),r1		% Save registers' old values on stack
+  388  1148 	sw	-20(r14),r2
+  389  1152 	sw	-24(r14),r3
+  390  1156 	sw	-28(r14),r4
+  391  1160 	lw	r1,-8(r14)		% Retrieve argument from stack
+  392  1164 	add	r2,r0,r0		% Initialize length counter (len = 0)
+  393  1168 	add	r3,r0,r0		% Initialize ch holder (r3 = 0)
+  394  1172 lenstr1	lb	r3,0(r1)		% Load ch from string
+  395  1176 	ceq	r4,r3,r0		% ch = '\0' ?
+  396  1180 	bnz	r4,lenstr2		% Branch if true
+  397  1184 	addi	r1,r1,1			% i++
+  398  1188 	ceqi	r4,r3,13		% ch = LF ?
+  399  1192 	bnz	r4,lenstr1		% Skip ch and loop
+  400  1196 	addi	r2,r2,1			% len++
+  401  1200 	j	lenstr1			% Loop if not finished
+  402  1204 lenstr2	add	r1,r0,r2		% Return length of the string
+  403  1208 	sw	-12(r14),r1		% Save result on stack
+  404  1212 	lw	r1,-16(r14)		% Reset registers to their old values
+  405  1216 	lw	r2,-20(r14)
+  406  1220 	lw	r3,-24(r14)
+  407  1224 	lw	r4,-28(r14)
+  408  1228 	lw	r15,-4(r14)		% Load link from stack
+  409  1232 	jr	r15			% Return to the caller
+  410  1236 	align
+  411  1236 %
+  412  1236 %
+  413  1236 %--------------------------------------------------------------%
+  414  1236 % ordstr                                                       %
+  415  1236 %--------------------------------------------------------------%
+  416  1236 % Returns ASCII number of the 1st char of a string.
+  417  1236 % Entry : address of string -> -8(r14)
+  418  1236 % Exit : result -> -12(r14)
+  419  1236 %
+  420  1236 ordstr	align
+  421  1236 	sw	-4(r14),r15		% Store link in stack
+  422  1240 	sw	-16(r14),r1		% Save registers' old values on stack
+  423  1244 	sw	-20(r14),r2
+  424  1248 	lw	r1,-8(r14)		% Retrieve argument from stack
+  425  1252 	add	r2,r0,r0		% Initialize ch holder (r2 = 0)
+  426  1256 	lb	r2,0(r1)		% Load ch from string
+  427  1260 	add	r1,r0,r2		% Return ascii code of ch
+  428  1264 	sw	-12(r14),r1		% Save result on stack
+  429  1268 	lw	r1,-16(r14)		% Reset registers to their old values
+  430  1272 	lw	r2,-20(r14)
+  431  1276 	lw	r15,-4(r14)		% Load link from stack
+  432  1280 	jr	r15			% Return to the caller
+  433  1284 	align
+  434  1284 %
+  435  1284 %
+  436  1284 %--------------------------------------------------------------%
+  437  1284 % substr                                                       %
+  438  1284 %--------------------------------------------------------------%
+  439  1284 % Returns the start & end pos. of a substring. '\n' is concidered
+  440  1284 % one char. Returns empty string in case of illegal start and/or
+  441  1284 % substring pos.
+  442  1284 % Entry : address of string -> -8(r14)
+  443  1284 %         substring start pos. -> -12(r14)
+  444  1284 %         substring end pos. -> -16(r14)
+  445  1284 % Exit : address of substring start pos. -> -20(r14)
+  446  1284 %        address of substring end pos. -> -24(r14)
+  447  1284 %
+  448  1284 substr	align
+  449  1284 	sw	-4(r14),r15		% Store link in stack
+  450  1288 	sw	-28(r14),r1		% Save registers' old values on stack
+  451  1292 	sw	-32(r14),r2
+  452  1296 	sw	-36(r14),r3
+  453  1300 	sw	-40(r14),r4
+  454  1304 	sw	-44(r14),r5
+  455  1308 	sw	-48(r14),r6
+  456  1312 	lw	r1,-8(r14)		% Retrieve arguments from stack
+  457  1316 	lw	r2,-12(r14)
+  458  1320 	lw	r3,-16(r14)
+  459  1324 	add	r5,r0,r0		% Initialize copy reg (r5 = 0)
+  460  1328 	cle	r4,r2,r0		% N < 0 ?
+  461  1332 	bnz	r4,substr4		% Branch if true
+  462  1336 	cle	r4,r2,r3		% M <= N ?
+  463  1340 	bz	r4,substr4		% Branch if true
+  464  1344 	add	r2,r2,r1		% Start pos. of the substr. in memory
+  465  1348 	subi	r2,r2,1
+  466  1352 	add	r3,r3,r1		% End pos. of substr. in memory
+  467  1356 	subi	r3,r3,1
+  468  1360 substr1	lb	r5,0(r1)		% Load ch in copy register starting from ch1
+  469  1364 	ceq	r6,r5,r0		% ch = '\0' ?
+  470  1368 	bnz	r6,substr4		% Branch if true
+  471  1372 	ceq	r4,r2,r1		% Current pos. = Start pos. ?
+  472  1376 	bnz	r4,substr2		% Branch if true
+  473  1380 	ceqi	r6,r5,13		% ch = LF ?
+  474  1384 	bz	r6,substr6		% Branch if false
+  475  1388 	addi	r2,r2,1			% Move start pos
+  476  1392 	addi	r3,r3,1			% Move end pos
+  477  1396 substr6	addi	r1,r1,1			% Move current pos.
+  478  1400 	j	substr1			% Loop if current pos. != start pos.
+  479  1404 substr2	lb	r5,0(r2)		% Load ch in copy register starting from star pos.
+  480  1408 	ceq	r6,r5,r0		% ch = '\0' ?
+  481  1412 	bnz	r6,substr4		% Branch if true
+  482  1416 	ceqi	r6,r5,13		% ch = LF ?
+  483  1420 	bz	r6,substr7		% Branch if false
+  484  1424 	addi	r3,r3,1			% Move end pos
+  485  1428 substr7	ceq	r4,r3,r2		% Current pos. = end pos. ?
+  486  1432 	bnz	r4,substr3		% Branch if true
+  487  1436 	addi	r2,r2,1			% Move current pos.
+  488  1440 	j	substr2			% Loop if current pos. != end pos.
+  489  1444 substr3	lb	r5,0(r3)		% Load ch of end pos. in copy register
+  490  1448 	ceq	r6,r5,r0		% ch = '\0' ?
+  491  1452 	bnz	r6,substr4		% Branch if true
+  492  1456 	j	substr5
+  493  1460 substr4	addi	r1,r0,EMPTY		% Start & end pos. pointing to ""
+  494  1464 	addi	r3,r0,EMPTY
+  495  1468 substr5	sw	-20(r14),r1		% Store results on stack
+  496  1472 	sw	-24(r14),r3
+  497  1476 	lw	r1,-28(r14)		% Reset regiters to old values
+  498  1480 	lw	r2,-32(r14)
+  499  1484 	lw	r3,-36(r14)
+  500  1488 	lw	r4,-40(r14)
+  501  1492 	lw	r5,-44(r14)
+  502  1496 	lw	r6,-48(r14)
+  503  1500 	lw	r15,-4(r14)		% Load link from stack
+  504  1504 	jr	r15			% Return to caller
+  505  1508 	align
+  506  1508 EMPTY	db	0			% Empty string
+  507  1509 	align
+  508  1512 %
+  509  1512 %
+  510  1512 %-------------------------  End of file -----------------------%
+  511  1512 
+

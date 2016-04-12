@@ -1,0 +1,41 @@
+class FOO1 {
+	int a[5][5]; 
+	int iE[500];
+};
+
+program {
+	FOO1 f1;
+	int x;
+	int y;
+	int i5;
+	int j10;
+	int ind;
+	
+	x=1;
+	y=2;
+	
+	i5 = 5;
+	j10 = 5 +5;
+	
+
+	get(f1.a[x][x]);
+	get(f1.a[y][y]);
+
+	f1.a[x+y][x+y]=f1.a[1][1] + f1.a[2][2];
+	put(f1.a[x+y][x+y]);
+	
+	put( ( ((x+y) * (j10/i5)) + ((j10-x) * (i5-y)) ) );
+	
+	ind = ( ((x+y) * (j10/i5)) + ((j10-x) * (i5-y)) );
+	put(ind);
+	
+	f1.iE[ind] = ind;
+	put(f1.iE[ind]);
+	
+	
+	//indice operations arithematic
+	f1.iE[ ( ((x+y) * (j10/i5)) + ((j10-x) * (i5-y)))] =  ( ((x+y) * (j10/i5)) + (j10-x) * (i5-y));
+	put(f1.iE[ ( ((x+y) * (j10/i5)) + ((j10-x) * (i5-y)))]);
+	
+	
+};

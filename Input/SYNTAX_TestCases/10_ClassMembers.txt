@@ -1,0 +1,64 @@
+class Foo{
+	int a;
+	float b;
+	int c[10][20];
+	int min(int x){
+		if(x>a)then
+			return (a);
+		else
+			return (x);
+		;
+	};
+	int min(float x){
+		if(x>b)then
+			return (b);
+		else
+			return (x);
+		;
+	};
+};
+class Foo1{
+	int a;
+	Foo foo;
+	Foo arrFoo[10];
+	Foo arrFoo2[10][20];
+	Foo arrFoo3[10][20][30];
+	Foo arrFoo4[10][20][30][40];
+	int addition(int a, int b){
+		return(a+b);
+	};	
+};
+
+program {
+
+
+	Foo f;
+	Foo1 f1;
+	
+	Foo arrF[100];
+	Foo1 arrF1[100];
+	
+	f.a = f1.a;
+	f.b = f1.foo.b;
+	f.b = f1.arrFoo.min(a);
+	f.a = arrF[1].a;
+	f.a = arrF[1].min(a);
+	f.a = arrF[1].arrFoo4[1][2][3][4].b;
+	
+	
+		 a.a = a;
+		 a[10] = a;
+		 a[10][20] = a;
+		 a.a[10] = a;
+		 a.a =a.a;
+		 a[10].a[11] = a[10].a[11] ; 
+		 a[10][12].a[11] = a[10].a[11][11] ; 
+		 left = not right;
+		 a = - a ;
+		 a = -a[a[a.a]];
+		 a=+a;
+		 a=+a[a.a[10].a.a[10]];
+		 e[-(9 + f(a, b, c))] = not a or 8 * h[1].i[2].j();
+		 f[1].f[a and (b * c / not d)] = -6.66 + a[1 * (b[2][3].c(d))].b(p, q);
+	
+};

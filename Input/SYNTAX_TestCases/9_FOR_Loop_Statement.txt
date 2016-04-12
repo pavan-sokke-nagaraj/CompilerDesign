@@ -1,0 +1,48 @@
+program {
+
+		for( int idx1 = 1; idx2 <= 99; idx3 = ( idx ) + 1);
+		
+		for( int idx1 = 1; idx2 <= 99; idx3 = ( idx ) + 1){};
+		
+		for( int idx1 = 1; idx2 <= 99; idx3 = ( idx ) + 1)
+		{
+			a[1]= b[1];
+			if(array[idx] < maxValue) then {
+				maxValue = array[idx];
+			}else{
+			};
+			return (minValue);
+		};
+		
+		for( int idx1 = 1; idx2 <= 99; idx3 = ( idx ) + 1)
+		{
+			
+			for( int idx1 = 1; idx2 <= 99; idx3 = ( idx ) + 1);
+			
+			for( int idx1 = 1; idx2 <= 99; idx3 = ( idx ) + 1){};
+			
+			for( int idx1 = 1; idx2 <= 99; idx3 = ( idx ) + 1);
+			
+		};
+
+		
+		
+		for( int idx1 = 1; idx2 <= 99; idx3 = ( idx ) + 1)
+		{
+			a[1]= b[1];
+			if(array[idx] < maxValue) then {
+				maxValue = array[idx];
+			}else{
+				for( int idx1 = 1; idx2 <= 99; idx3 = ( idx ) + 1)
+					{
+						a[1]= b[1];
+						if(array[idx] < maxValue) then {
+							maxValue = array[idx];
+						}else{
+						};
+						return (minValue);
+					};
+			};
+			return (minValue);
+		};
+};

@@ -1,0 +1,94 @@
+class Foo1 {};
+class Foo2 {
+	unknowVarType i;
+	int a;
+	flat c;
+	float d;
+	Foo1 foo[1][2][3][4];
+};
+class Foo3 {
+	unknownFuncType func(){
+	};
+	float func(float a) {
+	};
+	int func(float a, Foo b[3]) {
+		int i[2][4];
+	};
+};
+class Foo4 {
+	int array[4];
+	float realNum;
+
+	float foo2(Unknown a, float b[3]) {
+		Foo f;
+		
+		f = 9.0;
+		a = b + c;
+		b = c * d / e;
+		c = d + not e and f;
+		d.a = d[1] <= g;
+		
+		// complex expression
+		if (isTrue(p, q)) then { 
+			d.b = (-d[2]) <> g;
+			e[1].d.c = e.param(a.c, b[2]);
+		} else {
+			e[-(9 + f(a, b, c))] = not a or 8 * h[1].i[2].j();
+			f[1].f[a and (b * c / not d)] = -6.66 + a[1 * (b[2][3].c(d))].b(p, q);
+		};
+		
+		return(1);
+	};
+};
+program { 
+	float a[1][2][3];
+	
+	for (int i = 0 ; i == 10; i = i + 1 ) {
+		if (c * d) then {
+			get(a.b[1]);
+		} else {
+			put(a <> b.c.d);
+		};
+	};		
+};
+int nullFunc(){
+};
+Foo retFoo(){
+	Foo foo;
+	
+	// if else then without statement blocks
+	if(a>b) then else;
+	
+	
+	// for without statement blocks
+	for(int i = 0; i <= j; i = i + 1);
+	
+	// if else then with statement blocks
+	if(a.b.c() >= (a*b))
+	then{
+		a = a*b;
+	} else{
+		a = 2;
+	};
+	
+	// nested for and ifs
+	for(int i = 0; i <= j; i = i + 1){
+		for(int i = 0; i <= j; i = i + 1){
+			for(int i = 0; i <= j; i = i + 1){
+				a = a[1][2][3].c[1][2][3][4][5][6][7][8][9][10];
+				a[a+b-d*d] = - (+ ( not (a5 + a1 - a2 or a3 and a4[ab] ) ) );
+			};
+				if(a.b.c() >= (a*b))
+				then{
+					a = a*b;
+				} else{
+					a = 5 * 5;
+					for(int i = 0; i <= j; i = i + 1);
+					for(int i = 0; i <= j; i = i + 1){
+						if(a>b) then else;
+					};
+				};
+		};
+	};
+	
+};

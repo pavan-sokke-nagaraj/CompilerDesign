@@ -1,0 +1,55 @@
+class FOO1 {
+	float i;
+	int abc[10][5];
+};
+
+class FOO2 {
+	float value;
+	FOO1 foo1;
+	int func(float abc,int abc1,FOO1 abc2){
+	};
+	
+	int funcdf(float abc){
+	};
+	
+	int func(float abc){
+	};
+	
+	int func(float abc){
+	};
+	
+	int func(){
+	};
+	
+	int func(){
+	};
+};
+
+
+class FOO3 {
+	int i;
+	float d;
+	FOO2 abc;
+	FOO1 ds;
+	float func1(int a){
+		i=abc.func(ds.i,2,ds);
+		i=abc.func(d);
+		i=abc.func();
+		i=abc.func(2);
+		i=abc.func(3,4,5);
+		i=abc.func(3,4.0,5.0);
+	};
+};
+
+class FOO4 {
+	FOO3 abc;
+	int d;
+	int func2(int a,int b){
+		d=abc.func1(abc.abc.foo1.i);
+	};
+};
+
+
+program {
+	
+};

@@ -1,0 +1,29 @@
+program {
+
+if(a > maxValue[aa]) then else;
+if(a > maxValue[aa]) then{} else;
+if(a > maxValue[aa]) then{} else{};
+if(a > maxValue[aa]) then {
+			maxValue = array[idx];
+			if(a > maxValue[aa]) then{
+				if(a > maxValue[aa]) then else;
+			} else{
+				if(a > maxValue[aa]) then else{
+					if(a > maxValue[aa]) then else;
+				};
+			};
+			if(a > maxValue[aa]) then else;
+		}else{
+			maxValue = array[idx];
+			maxValue = array[idx];
+			if(a > maxValue[aa]) then{
+				if(a > maxValue[aa]) then else;
+			} else{
+				if(a > maxValue[aa]) then else{
+					if(a > maxValue[aa]) then else;
+				};
+			};
+			if(a > maxValue[aa]) then else;
+		
+		};
+};

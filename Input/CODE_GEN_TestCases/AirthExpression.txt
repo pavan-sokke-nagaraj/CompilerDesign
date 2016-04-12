@@ -1,0 +1,23 @@
+
+
+class FOO {
+	int i;
+	int func(){
+	};
+	
+
+	
+};
+
+
+program {
+	int value;
+	put(10);
+	value = 100 * (2 + 22 / 8);
+	put (value);
+	value = 1 + ((2 * 5) - 3) + 7;
+	put (value);
+
+	
+};
+

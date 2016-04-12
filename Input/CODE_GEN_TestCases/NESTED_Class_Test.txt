@@ -1,0 +1,17 @@
+class Foo1{
+	int b;
+	int a;
+};
+class Foo{
+	Foo1 f1;
+	int a;
+};
+program{
+	Foo f;
+	f.f1.a = 1;
+	f.f1.b = 5;
+	f.a = 10;
+	f.a = ((f.a * f.f1.b)+(f.f1.a * f.f1.b)+ (5 /5));
+	put(f.f1.a);
+	put(f.a);
+};

@@ -1,0 +1,29 @@
+class Foo1{
+	int i[10][10];
+	int a; 
+	int lol[100];
+};
+class Foo{
+	int i[10][10];
+	int a; 
+	int lol[100];
+};
+program{
+	Foo f;
+	Foo1 f1;
+	f.a = 100;
+	put(f.a);
+	 f.i[4][4] = f.a + f.a;
+	 put(f.i[4][4] );
+	 f.i[0][0] = f.i[4][4] *f.i[4][4] ;
+	 put(f.i[0][0] );
+	 f.lol[11][11] = 9999;
+	 put (f.lol[11][11]);
+	 f1.a = f.lol[11][11];
+	 f1.a = f1.a + 1;
+	 put(f1.a);
+};
+int min(){
+	int a;
+	a = 10;
+};

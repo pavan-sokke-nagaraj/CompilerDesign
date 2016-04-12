@@ -1,0 +1,11 @@
+%DATA
+F_C_Foo_13	dw	0
+F_P_V_num_95	dw	0
+%CODE
+
+		entry		%PROGRAM EXECUTION
+		add	r14,	r0,	r0	% SET STACK POINTER
+
+
+		add	r11,	r0,	r0	% RESET OFFSET
+

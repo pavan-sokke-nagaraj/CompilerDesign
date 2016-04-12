@@ -1,0 +1,16 @@
+Class foo1{
+	Unknown var;
+	known abc(){
+		int id;
+	};
+};
+
+program{
+
+foo ad;
+
+};
+
+ghf func(){
+
+};

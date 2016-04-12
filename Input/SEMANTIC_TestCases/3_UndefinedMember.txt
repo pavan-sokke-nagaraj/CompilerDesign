@@ -1,0 +1,43 @@
+Class foo1{
+	int var;
+	int abc(){
+		int id;
+	};
+	
+};
+
+Class foo2{
+	foo1 fgh;
+	int varx;
+	int abcx(){
+		int idx;
+	};
+	
+};
+
+program{
+
+int ab;
+foo1 ad;
+foo2 lop;
+
+ad.var=10;
+ad.lk=56;
+
+ab = ad.abc();
+
+ab = ad.loh();
+
+lop.fgh.var=10;
+
+lop.fgh.il=45;
+
+ab=lop.fgh.gth();
+
+};
+
+int func(){
+
+};
+
+

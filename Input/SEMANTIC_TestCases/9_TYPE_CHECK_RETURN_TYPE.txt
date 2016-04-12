@@ -1,0 +1,38 @@
+class Foo{
+	int i;
+};
+class Foo1{
+	int i;
+};
+program{
+	int i_int;
+	float f_float;
+	Foo foo;
+	Foo1 foo1;
+	
+	// int and int
+	i_int = intMax();
+	
+	// int and float
+	i_int =  floatMin();
+	
+	// int and class
+	i_int = min();
+	
+};
+Foo min(){
+	int i;
+	return (i);
+}; 
+Foo1 max(){
+	int i;
+	return (i);
+}; 
+int intMax(){
+	int i;
+	return (i);
+};
+float floatMin(){
+	int i;
+	return (i);
+};  

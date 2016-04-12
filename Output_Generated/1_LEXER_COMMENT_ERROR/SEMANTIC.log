@@ -1,0 +1,20 @@
+[SEVERE][SEMANTICS]IDENTIFIER UNDECLARED:	num_  at Line Number:	97
+[INFO][SEMANTICS]
+
+
+SYMBOL TABLE:	GLOBAL
+
+[INFO][SEMANTICS]|___Name___|____ Type ____|____ Kind ____|____Structure____|___Array Dimension ___|___ NO OF PARAMS ___|_____ADDRESS____|
+[INFO][SEMANTICS]   Foo   	CLASS	class		null		N/A			N/A		F_C_Foo_13	
+[INFO][SEMANTICS]   program   	PROGRAM	program		null		N/A			N/A		F_P_program_28	
+[INFO][SEMANTICS]
+
+SYMBOL TABLE:	GLOBAL :: Foo
+
+[INFO][SEMANTICS]|___Name___|____ Type ____|____ Kind ____|____Structure____|___Array Dimension ___|___ NO OF PARAMS ___|_____ADDRESS____|
+[INFO][SEMANTICS]
+
+SYMBOL TABLE:	GLOBAL :: program
+
+[INFO][SEMANTICS]|___Name___|____ Type ____|____ Kind ____|____Structure____|___Array Dimension ___|___ NO OF PARAMS ___|_____ADDRESS____|
+[INFO][SEMANTICS]   num   	VARIABLE	int		SIMPLE		N/A			N/A		F_P_V_num_95	

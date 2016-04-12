@@ -1,0 +1,22 @@
+program {	
+		 a.a = a;
+		 a[10] = a;
+		 a[10][20] = a;
+		 a.a[10] = a;
+		 a.a =a.a;
+		 a[10].a[11] = a[10].a[11] ; 
+		 a[10][12].a[11] = a[10].a[11][11] ; 
+		 left = not right;
+		 a = - a ;
+		 a = -a[a[a.a]];
+		 a=+a;
+		 a=+a[a.a[10].a.a[10]];
+		 e[-(9 + f(a, b, c))] = not a or 8 * h[1].i[2].j();// Test
+		 f[1].f[a and (b * c / not d)] = -6.66 + a[1 * (b[2][3].c(d))].b(p, q);
+		
+		
+		
+		
+		a[a+b*d/(not(not d and a or c - d))] = a[a+b*d/(not(not d and a or c - d))];
+	
+};

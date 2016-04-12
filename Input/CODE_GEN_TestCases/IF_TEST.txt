@@ -1,0 +1,20 @@
+class Foo{
+};
+program{
+	int num;
+	num = 10;
+	if(num > 5) then {
+		put(num); 
+	} else {
+		put(5); 
+	};
+	
+	if(num > 5) then else ;
+	
+	num = 0;
+	if(num > 5) then {
+		put(num); 
+	} else {
+		put(5); 
+	};
+};

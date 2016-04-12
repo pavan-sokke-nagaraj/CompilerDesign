@@ -1,0 +1,48 @@
+class Foo{
+};
+program{
+	int i;
+	int j;
+	int a;
+	int s;
+	int m;
+	int d;
+	int sign;
+	int or_op;
+	int and_op;
+	int not_op_i;
+	int not_op_j;
+	i = 10;
+	j = 5;
+	a = i + j;
+	s = i - j;
+	m = i * j;
+	d = i / j;
+	put(i);
+	put(j);
+	put(a);
+	put(s);
+	put(m);
+	put(d);
+	sign = + i;
+	put(sign);
+	sign = - i;
+	put(sign);
+	i = 0;
+	j = 1;
+	or_op = i or j;
+	and_op = i and j;
+	not_op_i = not i;
+	not_op_j = not j;
+	put(or_op);
+	put(and_op);
+	put(not_op_i);
+	put(not_op_j);
+	put(i<j);
+	put(i<=j);
+	put(i<>j);
+	put(i==j);
+	put(i>j);
+	put(i>=j);
+	
+};

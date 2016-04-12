@@ -1,0 +1,8 @@
+program{
+};
+	int setNumerator(int a){
+	int a;
+	34 43.5 3434;
+	;djifije;
+	int b;
+};

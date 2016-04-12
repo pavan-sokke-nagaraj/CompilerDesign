@@ -1,0 +1,41 @@
+// valid identifiers
+a b c d e f g h i j 
+
+aa abc 
+
+a01 a000a asdfoo000111 aaAKD
+
+// identifiers in capital letters of reserver words
+IF ELSE THEN FOR INT GET PUT CLASS FLOAT INT RETURN
+iF Else TheN foR InT geT pUt cLaSs floaT inT returN
+
+// identifiers with capital logical operators
+AND NOT OR 
+anD noT oR
+ANd NOt Or
+
+
+// with _
+a_
+
+b_a0_
+
+ss_
+
+a0_a
+
+a_a_a_a
+
+anvb_asdf
+
+jakdshnf_0001
+
+a00001_01
+
+sad
+sadasszdsa
+sadsadsa23232
+sadsad
+sads_
+sdsad98_
+sds_98797

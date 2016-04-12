@@ -1,0 +1,56 @@
+Class foo1{
+	int var;
+	int abc(){
+		int id;
+	};
+	
+};
+
+Class foo2{
+	foo1 fgh;
+	int varx;
+	foo1 abcx(){
+		int idx;
+	};
+	
+};
+
+program{
+
+int ab;
+float fl;
+float value;
+
+foo1 ad;
+foo2 lop;
+
+ab=10.0;
+fl=10;
+
+ab=ad.var;
+fl=ad.var;
+
+
+ab=ad.abc();
+fl=ad.abc();
+
+ad=lop.abcx();
+ab=lop.abcx();
+
+ab = ab + ad.var + lop.varx + lop.fgh.var;
+
+fl = ab + ad.var + lop.varx + lop.fgh.var;
+
+ad = ab + ad.var + lop.varx + lop.fgh.var;
+
+ab = ab + ad.var + lop.abcx() + lop.fgh.abc();
+
+fl = ab + ad.var + lop.abcx() + lop.fgh.abc();
+
+value = 100 * (2 + 3.0 / 7.0006);
+value = 1.05 + ((2.04 * 2.47) - 3.0) + 7.0006 ;
+
+};
+
+
+

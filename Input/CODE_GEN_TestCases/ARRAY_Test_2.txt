@@ -1,0 +1,10 @@
+class FOO1 {
+	int a[5][5]; 
+};
+program {
+	FOO1 f1;
+	get(f1.a[1][1]);
+	get(f1.a[2][2]);
+
+	put(f1.a[1][1]+f1.a[2][2]);
+};

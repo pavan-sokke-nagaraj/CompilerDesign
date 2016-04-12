@@ -1,0 +1,41 @@
+class Exp{
+	
+	int left;
+	int right;
+};
+program{
+	
+	int a;
+	int b;
+	int c;
+	int d;
+	int e;
+	int f;
+	int g;
+	int h;
+	Exp exp;
+	
+	a = 5;
+	b = 10;
+	c = 15;
+	d = 25;
+	
+	e = 5;
+	f = 10;
+	g = 15;
+	h = 25;
+	
+	exp.right = ( d*(b+c)) / a;
+	put(exp.right);
+	
+	exp.left = ((h*g) + (f*e));
+	put(exp.left);
+	
+	if(exp.right == exp.left)
+	then{
+		put(exp.right + exp.left)
+	}else{
+		put(exp.right + 100);
+	};
+	
+};

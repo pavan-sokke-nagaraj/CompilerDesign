@@ -1,0 +1,10 @@
+Folder,Files,LOC,SLOC-P,SLOC-L,MVG,BLOC,C&SLOC,CLOC,CWORD,HCLOC,HCWORD
+Total,25,5696,4685,2738,914,373,13,638,2458,0,0
+E:\GIT\CompilerDesign\src,25,5696,4685,2738,914,373,13,638,2458,0,0
+E:\GIT\CompilerDesign\src\compiler,16,4843,3837,2674,911,369,12,637,2456,0,0
+E:\GIT\CompilerDesign\src\compiler\codeGeneration,2,18,14,12,0,4,0,0,0,0,0
+E:\GIT\CompilerDesign\src\compiler\designer,4,216,115,97,3,47,0,54,196,0,0
+E:\GIT\CompilerDesign\src\compiler\lexer,3,933,780,543,102,71,6,82,309,0,0
+E:\GIT\CompilerDesign\src\compiler\semantics,3,1498,1247,837,268,131,6,120,596,0,0
+E:\GIT\CompilerDesign\src\compiler\syntacticAnalysis,2,2019,1560,1092,525,92,0,367,1309,0,0
+E:\GIT\CompilerDesign\src\compiler\utils,1,153,118,91,13,21,0,14,46,0,0

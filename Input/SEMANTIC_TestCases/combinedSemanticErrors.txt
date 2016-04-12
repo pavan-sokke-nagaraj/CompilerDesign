@@ -1,0 +1,107 @@
+class TestCases {
+int type;
+
+int testArray[3][9];
+int testArray2;
+TestCases abc;
+int id;
+int idx=4;
+tcase efg[3];
+int setter(int newNumerator,float ty)
+{
+int xx;
+int idy;
+int id;
+TestCases A;
+float new;
+int n[19][11];
+int testArray2;
+n=10;
+id=2;
+idy=5;
+A.testArray[1][2][7].f2= setter(1,8);
+id=5;
+get(n[1][1][1]);
+get(n[1][2]);
+n[1][2]=A[2];
+if ( ww==2 ) then {get(A.xx);} else {s=2;get(A7);} ; 
+testArray = newNumerator;
+};
+int setter(int newNumerator)
+{
+testArray = 1;
+};
+int fun2(int newDenominator)
+{
+TestCases B;
+tcase C;
+testArray2 = newDenominator;
+};
+Rational15 multiply(TestCases a, int a)
+{
+TestCases result;
+int in;
+result.setter=90;
+result.fun2=9.6;//wrong function call
+in=fun2(3,7);
+return (result);
+};
+};
+
+
+
+class Testing {
+Testing testArray;
+int testArray2;
+TestCases c;
+int setter(int newNumerator)
+{
+testArray = newNumerator;
+};
+int fun2(int newDenominator)
+{
+testArray2 = newDenominator;
+};
+TestCases multiply(TestCases a)
+{
+TestCases result;
+result.setter=90;
+result.fun2=9.6;
+return (result);
+};
+};
+
+program {
+TestCases A[4];
+TestCases B;
+Testing d;
+Rational5 f;
+int a[3];
+d.c.setter=10;
+a[2]=2;
+a=2;
+A[2].asd.setter=2;
+a=A.asd.setter(5);
+a=B.asd.setNumerator1.rter();
+A.fun2=3.1;
+B.setter=4.0;
+B.fun2=7.0;
+C = A.multiply(6);//check for for index here 
+a[1]=setNumerator2(6,9);
+put(C.testArray);
+put(C.testArray2);
+};
+int setNumerator2(int newNumerator,float rt)
+{
+int nm[2];
+TestCases A;
+testArray = newNumerator;
+
+};
+B setNumerator3(int newNumerator,float rt[5])
+{
+int nm[2];
+TestCases A;
+testArray = newNumerator;
+
+};

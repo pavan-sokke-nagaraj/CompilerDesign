@@ -1,0 +1,19 @@
+class Rational {
+int numerator;
+int denominator;
+float numerator;
+int setNumerator(int newNumerator)
+{
+numerator = newNumerator;
+};
+int setDenominator(int newDenominator)
+{
+denominator = newDenominator;
+};
+};
+
+
+program {
+int A;
+int B;
+};

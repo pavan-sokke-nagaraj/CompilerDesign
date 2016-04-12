@@ -1,0 +1,7 @@
+ABC abc class A{
+int number;
+float realNumber;
+};
+
+program{
+};

@@ -1,0 +1,90 @@
+class Foo{
+	int var1;
+	float var2;
+	int var3[10];
+	float var4[2][3][4][6][7];
+	Utility utility;
+	int FindMax(int f1, float f2, int a[1], float b[2][2], Foo foo, Foo foo[1] ){
+		int a;
+		float b;
+		int c[10];
+		float d[20];
+		Utility utility;
+		get(value); // get (id)
+		get(id.id);
+		 maxValue = 10;
+		 maxValue = minValue;	
+		 maxValue = minValue[100];	
+		 a.a = a;
+		 a[10] = a;
+		 a[10][20] = a;
+		 a.a[10] = a;
+		 a.a =a.a;
+		 a[10].a[11] = a[10].a[11] ; 
+		 a[10][12].a[11] = a[10].a[11][11] ; 
+		 left = not right;
+		 a = - a ;
+		 a = -a[a[a.a]];
+		 a=+a;
+		 a=+a[a.a[10].a.a[10]];
+		 if(a > maxValue[aa]) then {
+			maxValue = array[idx];
+		}else{
+		};
+		if(a > maxValue[aa]) then else;
+		if(a > maxValue[aa]) then{} else;
+		if(a > maxValue[aa]) then{} else{};
+		for( int idx1 = 1; idx2 <= 99; idx3 = ( idx ) + 1);
+		for( int idx1 = 1; idx2 <= 99; idx3 = ( idx ) + 1){};
+		for( int idx1 = 1; idx2 <= 99; idx3 = ( idx ) + 1)
+		{
+			a[1]= b[1];
+			if(array[idx] < maxValue) then {
+				maxValue = array[idx];
+			}else{
+			};
+			return (minValue);
+		};
+	};
+};
+
+program{
+	int var1;
+	float var2;
+	int var3[10];
+	float var4[2][3][4][6][7];
+	int findMax;
+	Utility utility;
+};
+float randomize()
+{
+	float value;
+	value = 100 * (2 + 3.0 / 7.0006);
+	value = 1.05 + ((2.04 * 2.47) - 3.0) + 7.0006 ;
+	return (value);
+};
+float lolRandomize()
+{
+	float value;
+	value = 100 * (2 + 3.0 / 7.0006);
+	value = 1.05 + ((2.04 * 2.47) - 3.0) + 7.0006 ;
+	return (value);
+	for( int idx1 = 1; idx2 <= 99; idx3 = ( idx ) + 1)
+		{
+			a[1]= b[1];
+			if(array[idx] < maxValue) then {
+				maxValue = array[idx];
+			}else{
+				for( int idx1 = 1; idx2 <= 99; idx3 = ( idx ) + 1)
+					{
+						a[1]= b[1];
+						if(array[idx] < maxValue) then {
+							maxValue = array[idx];
+						}else{
+						};
+						return (minValue);
+					};
+			};
+			return (minValue);
+		};
+};
