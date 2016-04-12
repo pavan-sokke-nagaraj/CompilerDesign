@@ -11,10 +11,13 @@ import compiler.utils.PrintUtil.LOGTYPE;
 
 public class SemanticAnalysis {
 
-	public SymbolTable mainTable = null; // main table in the semantic analysis
-	public SymbolTable currTable = null; // present table with symbolsparsing
+	// main table in the semantic analysis
+	public SymbolTable mainTable = null;
+	// present table with symbolsparsing
+	public SymbolTable currTable = null;
 	// work on the 2nd order parsing
-	public SymbolTable firstTable = null; // used for the 2nd level parsing
+	// used for the 2nd level parsing
+	public SymbolTable firstTable = null;
 	public Logger semanticLog;
 	private Logger stLog;
 	public Logger codeLog;
@@ -99,7 +102,7 @@ public class SemanticAnalysis {
 		if (!isDataTypeDefined(symbol)) {
 			symbol.setDataTypeDefined(false);
 			String msg = "DATA TYPE UNDEFINED:\t"
-					+ symbol.getDataType().getValue() + "  at Line Number:\t"
+					+ symbol.getToken().getValue() + "  at Line Number:\t"
 					+ symbol.getToken().getPosition();
 			PrintUtil.error(semanticLog, LOGTYPE.SEMATICS, msg);
 		} else {
@@ -166,7 +169,7 @@ public class SemanticAnalysis {
 
 	// Function call to check if the data type is defined or not
 	public boolean isDataTypeDefined(Symbol symbol) {
-		// System.out.println(symbol.getToken().getValue());
+		System.out.println(symbol.getToken().getPosition());
 		if (symbol.getDataType().getValue().equals("int")
 				|| symbol.getDataType().getValue().equals("float")) {
 			link = "";
@@ -177,11 +180,12 @@ public class SemanticAnalysis {
 			if (tableSymbol.symbolType == SYMBOLTYPE.CLASS
 					&& tableSymbol.getToken().getValue()
 							.equals(symbol.getDataType().getValue())) {
-				if (symbol
-						.getDataType()
-						.getValue()
-						.equals(symbol.getSelfTable().getParent().getToken()
-								.getValue())) {
+				if (symbol.getSelfTable().getParent() != null
+						&& symbol
+								.getDataType()
+								.getValue()
+								.equals(symbol.getSelfTable().getParent()
+										.getToken().getValue())) {
 				} else {
 					if (tableSymbol.getAddress() != null)
 						link = tableSymbol.getAddress();
@@ -250,9 +254,10 @@ public class SemanticAnalysis {
 
 	// Quit the current Symbol Table
 	public void QuitPresentTable() {
-		if (currTable.getParent() == null || currTable.getParent().getSelfTable() == null) {
+		if (currTable.getParent() == null
+				|| currTable.getParent().getSelfTable() == null) {
 			System.out.println("Cannot Exit Current Table");
-		}else{
+		} else {
 			currTable = currTable.getParent().getSelfTable();
 		}
 		// System.out.println(currTable.getAddrLink());
@@ -271,7 +276,7 @@ public class SemanticAnalysis {
 		if (!isDataTypeDefined(symbol)) {
 			symbol.setDataTypeDefined(false);
 			String msg = "DATA TYPE UNDEFINED:\t"
-					+ symbol.getDataType().getValue() + "  at Line Number:\t"
+					+ symbol.getToken().getValue() + "  at Line Number:\t"
 					+ symbol.getToken().getPosition();
 			PrintUtil.error(semanticLog, LOGTYPE.SEMATICS, msg);
 		} else {
@@ -383,7 +388,8 @@ public class SemanticAnalysis {
 
 	// Function to print all the symbol tables
 	public void printSymbolTable() {
-		System.out.println("\n\n\n\n\t\t\t-----------   SYMBOL TABLES     -----------\n\n\t\t");
+		System.out
+				.println("\n\n\n\n\t\t\t-----------   SYMBOL TABLES     -----------\n\n\t\t");
 		String msg = "\n\n\nSYMBOL TABLE:\tGLOBAL\n";
 		PrintUtil.info(semanticLog, LOGTYPE.SEMATICS, msg);
 		PrintUtil.print(stLog, LOGTYPE.HTML, PrintUtil.htmlStart);
@@ -900,7 +906,8 @@ public class SemanticAnalysis {
 	public ArrayList<String> moonCode = new ArrayList<String>();
 
 	public void printData() {
-		System.out.println("\n\n\n\n\t\t\t-----------   CODE GENERATION     -----------\n\n\t\t");
+		System.out
+				.println("\n\n\n\n\t\t\t-----------   CODE GENERATION     -----------\n\n\t\t");
 		for (int i = 0; i < moonData.size(); i++) {
 			String data = moonData.get(i);
 			System.out.println(data);
@@ -1144,10 +1151,10 @@ public class SemanticAnalysis {
 		moonCode.add("\t\t" + "jl\t" + "r15" + ",\t" + "putint");
 
 		// print '\r\n'
-		moonCode.add("" + "addi\t" + "r1," + "r0," + "13" + "% print LFCR");
-		moonCode.add("" + "putc\t" + "r1" + "" + "");
-		moonCode.add("" + "addi\t" + "r1," + "r0," + "10");
-		moonCode.add("" + "putc\t" + "r1" + "" + "");
+		moonCode.add("\t\t" + "addi\t" + "r1," + "r0," + "13");
+		moonCode.add("\t\t" + "putc\t" + "r1" + "" + "");
+		moonCode.add("\t\t" + "addi\t" + "r1," + "r0," + "10");
+		moonCode.add("\t\t" + "putc\t" + "r1" + "" + "");
 		// print '\r\n'
 
 		popReg("r15");
@@ -1167,7 +1174,8 @@ public class SemanticAnalysis {
 		String addr = "NOT_" + addrCount++;
 		loadWord(symbol, "r1", "%not " + symbol.getToken().getValue());
 		moonCode.add("\t\t" + "not\t" + "r3" + ",\t" + "r1");
-		moonData.add(addr + "\t" + "dw" + "\t" + symbol.getToken().getValue());
+		moonData.add(addr + "\t" + "dw" + "\t0 %"
+				+ symbol.getToken().getValue());
 		moonCode.add("\t\t" + "sw\t" + addr + "\t(r0),\t" + "r3");
 		if (symbol.symbolType == SYMBOLTYPE.NUM) {
 			symbol.symbolType = SYMBOLTYPE.UNKNOWN;
